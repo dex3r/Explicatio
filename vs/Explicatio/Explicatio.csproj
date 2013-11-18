@@ -35,16 +35,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Blocks\IMetaTexture.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Main\Utils.cs" />
-    <Compile Include="World\Chunk.cs" />
+    <Compile Include="Rendering\ChunkRenderer.cs" />
+    <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\Textures.cs" />
+    <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
