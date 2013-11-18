@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Main
 {
-    class Utilities
+    public static class Utils
     {
-        void Rotation
+        public static Rectangle RotateRectangle()
         {
-           //TODO Rotation Rectangle
+            throw new NotImplementedException();
         }
     }
 }

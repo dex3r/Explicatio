@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Explicatio.Rendering;
+using Explicatio.Entities;
 
 namespace Explicatio.Main
 {
@@ -43,7 +44,7 @@ namespace Explicatio.Main
 
         protected override void UnloadContent()
         {
-
+            
         }
 
         protected override void Update(GameTime gameTime)
