@@ -37,6 +37,10 @@
   <ItemGroup>
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Program.cs" />
+    <Compile Include="Main\Utilities.cs" />
+    <Compile Include="Map\Chunk.cs" />
+    <Compile Include="Nie wiem jak nazawc folder wiec zmien jego nazwe na fajna\Estate.cs" />
+    <Compile Include="Nie wiem jak nazawc folder wiec zmien jego nazwe na fajna\Vehicles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Rendering\Renderer.cs" />

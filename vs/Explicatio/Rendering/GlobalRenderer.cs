@@ -17,12 +17,14 @@ namespace Explicatio.Rendering
 
         public override void Draw(GameTime time)
         {
-            batch.Draw(Textures.Block, new Vector2(240, 20), Color.White);
+
+
+         /*   batch.Draw(Textures.Block, new Vector2(240, 20), Color.White);
             batch.Draw(Textures.Block, new Vector2(240 + 64, 20), Color.White);
             batch.Draw(Textures.Block, new Vector2(240, 20 + 32), Color.White);
             batch.Draw(Textures.Block, new Vector2(240 + 32, 20 + 16), Color.White);
             batch.Draw(Textures.Block, new Vector2(240 + 64, 20 + 32), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240 + 32 + 64, 20 + 16), Color.White);
+            batch.Draw(Textures.Block, new Vector2(240 + 32 + 64, 20 + 16), Color.White);*/
         }
     }
 }
