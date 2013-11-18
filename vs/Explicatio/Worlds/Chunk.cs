@@ -5,7 +5,7 @@ using System.Text;
 
 using Explicatio.Entities;
 
-namespace Explicatio.World
+namespace Explicatio.Worlds
 {
     public class Chunk
     {
@@ -21,7 +21,7 @@ namespace Explicatio.World
 
         private byte[] chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
         /// <summary>
-        ///  Metadane obiektu
+        ///  Metadane obiektów
         /// </summary>
         public byte[] ChunkGroundMeta
         {

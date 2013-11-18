@@ -9,11 +9,11 @@ namespace Explicatio.Rendering
 {
     public static class Textures
     {
-        public static Texture2D Block;
+        public static Texture2D Grass;
 
         public static void Load(ContentManager cm)
         {
-            Block = cm.Load<Texture2D>(@"gfx\terrain\1");
+            Grass = cm.Load<Texture2D>(@"gfx\terrain\1");
         }
     }
 }

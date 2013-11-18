@@ -9,18 +9,6 @@ namespace Explicatio.Rendering
 {
     public abstract class Renderer
     {
-        protected SpriteBatch batch;
-        public SpriteBatch Batch
-        {
-            get { return batch; }
-            set { batch = value; }
-        }
-
-        public Renderer(SpriteBatch batch)
-        {
-            this.batch = batch;
-        }
-
-        public abstract void Draw(GameTime time);
+        public abstract void Draw(SpriteBatch batch, GameTime time);
     }
 }

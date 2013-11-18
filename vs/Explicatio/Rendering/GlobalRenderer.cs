@@ -7,24 +7,17 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Rendering
 {
-    public sealed class GlobalRenderer : Renderer
+    public abstract class GlobalRenderer : Renderer
     {
-        public GlobalRenderer(SpriteBatch batch)
-            : base(batch)
+        public static void Draw(SpriteBatch batch, GameTime time)
         {
 
-        }
-
-        public override void Draw(GameTime time)
-        {
-
-
-         /*   batch.Draw(Textures.Block, new Vector2(240, 20), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240 + 64, 20), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240, 20 + 32), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240 + 32, 20 + 16), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240 + 64, 20 + 32), Color.White);
-            batch.Draw(Textures.Block, new Vector2(240 + 32 + 64, 20 + 16), Color.White);*/
+         /*   batch.Draw(Textures.Grass, new Vector2(240, 20), Color.White);
+            batch.Draw(Textures.Grass, new Vector2(240 + 64, 20), Color.White);
+            batch.Draw(Textures.Grass, new Vector2(240, 20 + 32), Color.White);
+            batch.Draw(Textures.Grass, new Vector2(240 + 32, 20 + 16), Color.White);
+            batch.Draw(Textures.Grass, new Vector2(240 + 64, 20 + 32), Color.White);
+            batch.Draw(Textures.Grass, new Vector2(240 + 32 + 64, 20 + 16), Color.White);*/
         }
     }
 }
