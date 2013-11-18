@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Explicatio
+namespace Explicatio.Main
 {
     public static class Program
     {
