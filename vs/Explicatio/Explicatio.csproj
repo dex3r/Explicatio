@@ -46,6 +46,7 @@
     <Compile Include="Main\Program.cs" />
     <Compile Include="Main\Utils.cs" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
+    <Compile Include="Rendering\View.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\Vehicle.cs" />
