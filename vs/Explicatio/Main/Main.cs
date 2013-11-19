@@ -31,6 +31,8 @@ namespace Explicatio.Main
         {
             base.Initialize();
             graphics.SynchronizeWithVerticalRetrace = true;
+            //? TEMP!!
+            ChunkRenderer.c = new Worlds.Chunk(0, 0);
         }
 
         protected override void LoadContent()
@@ -71,7 +73,8 @@ namespace Explicatio.Main
             camera.UpdateCamera();
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
-            GlobalRenderer.Draw(spriteBatch, gameTime);
+            //GlobalRenderer.Draw(spriteBatch, gameTime);
+            ChunkRenderer.Draw(spriteBatch, gameTime, ChunkRenderer.c);
             spriteBatch.End();
 
             base.Draw(gameTime);

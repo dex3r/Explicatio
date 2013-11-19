@@ -53,14 +53,19 @@ namespace Explicatio.Worlds
             get { return vehicles; }
         }
 
+        public int X { get; private set; }
+        public int Y { get; private set; }
+
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }
             set { chunkGround[CHUNK_SIZE * y + x] = value; }
         }
 
-        public Chunk()
+        public Chunk(int x, int y)
         {
+            this.X = x;
+            this.Y = y;
             vehicles = new List<Vehicle>[CHUNK_SIZE];
             properties = new List<Property>[CHUNK_SIZE];
             for(int i = 0; i < CHUNK_SIZE; i++)
@@ -69,11 +74,11 @@ namespace Explicatio.Worlds
                 properties[i] = new List<Property>();
             }
            
-            //? Domyślne wartości od razu wynoszą 0
-            // ResetChunkData(0);
-            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć i w przypadku 
+            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć x w przypadku 
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
+
+            ResetChunkData(1);
         }
 
         /// <summary>
@@ -83,7 +88,7 @@ namespace Explicatio.Worlds
         public void ResetChunkData(byte id)
         {
             //! for jest szybsze dla typów nieiteracyjnych :)
-            foreach (byte i in chunkGround)
+            for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++ )
             {
                 chunkGround[i] = id;
                 chunkGroundMeta[i] = 0;

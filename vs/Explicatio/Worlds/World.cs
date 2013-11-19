@@ -8,8 +8,8 @@ namespace Explicatio.Worlds
 {
     public class World
     {
-        //TODO: Lista chunków, pobieranie bloku i metadanych
-        const int WORLDSIZE = 128*128; //Wysokość i szerokość
+        //TODO: Lista chunków, pobieranie bloku x metadanych
+        const int WORLDSIZE = 128*128; //Wysokość x szerokość
         List<Chunk> chunk = new List<Chunk>(); //Lista wszystich chunków
         public World()
         {
@@ -17,7 +17,7 @@ namespace Explicatio.Worlds
             {
                 for (int y = 0; y <= WORLDSIZE/2; y++)
                 {
-                    chunk.Add(new Chunk());
+                    //chunk.Add(new Chunk());
                 }
             }
         }

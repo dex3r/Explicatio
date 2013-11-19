@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Explicatio.Worlds;
 using Microsoft.Xna.Framework.Graphics;
+using Explicatio.Worlds;
+using Explicatio.Rendering;
 
 namespace Explicatio.Blocks
 {
@@ -20,7 +21,7 @@ namespace Explicatio.Blocks
         static Block()
         {
             blocks[0] = null;
-            blocks[1] = new Block(1, "Grass");
+            blocks[1] = new Block(1, "Grass", Textures.Grass);
             blocks[2] = new Block(2, "Road");
         }
 
