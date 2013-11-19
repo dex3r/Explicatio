@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using Explicatio.Entities;
 
 namespace Explicatio.Worlds
@@ -48,33 +50,33 @@ namespace Explicatio.Worlds
             get { return vehicles; }
         }
 
-        private int y;
-        public int Y
+        public Chunk()
         {
-            get { return y; }
-        }
-        private int x;
-        public int X
-        {
-            get { return x; }
-        }
-
-        public Chunk(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
             vehicles = new List<Vehicle>();
             properties = new List<Property>();
+            ResetChunkData(0);
         }
 
-        public Chunk(int x, int y, List<Vehicle> vehicles, List<Property> properties)
+        public Chunk(List<Vehicle> vehicles, List<Property> properties)
         {
-            this.x = x;
-            this.y = y;
             this.vehicles = vehicles;
             this.properties = properties;
         }
 
+        /// <summary>
+        /// Reset wszystkich danych w chunku
+        /// </summary>
+        /// <param name="id">Id pola</param>
+        public void ResetChunkData(byte id)
+        {
+            foreach (byte i in chunkGround)
+            {
+                chunkGround[i] = id;
+                chunkGroundMeta[i] = 0;
+            }
+            vehicles.Clear();
+            properties.Clear();
+        }
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }

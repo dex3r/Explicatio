@@ -11,13 +11,12 @@ namespace Explicatio.Rendering
     {
         public void Draw(SpriteBatch batch, GameTime time)
         {
-
-         /*   batch.Draw(Textures.Grass, new Vector2(240, 20), Color.White);
-            batch.Draw(Textures.Grass, new Vector2(240 + 64, 20), Color.White);
-            batch.Draw(Textures.Grass, new Vector2(240, 20 + 32), Color.White);
-            batch.Draw(Textures.Grass, new Vector2(240 + 32, 20 + 16), Color.White);
-            batch.Draw(Textures.Grass, new Vector2(240 + 64, 20 + 32), Color.White);
-            batch.Draw(Textures.Grass, new Vector2(240 + 32 + 64, 20 + 16), Color.White);*/
+                 for (int x = 0; x < 8; x++)
+                     for (int y = 0; y < 8; y++)
+                     {
+                         batch.Draw(Textures.Grass, new Vector2(x * 64, y * 32), Color.White);
+                         batch.Draw(Textures.Grass, new Vector2(x * 64 + 32, y * 32 + 16), Color.White);
+                     }
         }
     }
 }
