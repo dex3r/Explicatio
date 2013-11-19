@@ -45,8 +45,9 @@
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Main\Utils.cs" />
+    <Compile Include="Controls\MyMouse.cs" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
-    <Compile Include="Rendering\View.cs" />
+    <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\Vehicle.cs" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
