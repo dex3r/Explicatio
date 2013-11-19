@@ -33,7 +33,7 @@ namespace Explicatio.Main
         protected override void Initialize()
         {
             base.Initialize();
-            globalRenderer = new GlobalRenderer(spriteBatch);
+            globalRenderer = new GlobalRenderer();
         }
 
         protected override void LoadContent()
@@ -62,7 +62,7 @@ namespace Explicatio.Main
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            globalRenderer.Draw(gameTime);
+            globalRenderer.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

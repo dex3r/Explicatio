@@ -9,7 +9,7 @@ namespace Explicatio.Rendering
 {
     public abstract class ChunkRenderer : Renderer
     {
-        public static void Draw(SpriteBatch batch, GameTime time)
+        public void Draw(SpriteBatch batch, GameTime time)
         {
             throw new NotImplementedException();
         }

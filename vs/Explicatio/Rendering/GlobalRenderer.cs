@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Rendering
 {
-    public abstract class GlobalRenderer : Renderer
+    public class GlobalRenderer : Renderer
     {
-        public static void Draw(SpriteBatch batch, GameTime time)
+        public void Draw(SpriteBatch batch, GameTime time)
         {
 
          /*   batch.Draw(Textures.Grass, new Vector2(240, 20), Color.White);

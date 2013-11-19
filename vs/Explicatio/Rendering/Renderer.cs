@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Rendering
 {
-    public abstract class Renderer
+    public interface Renderer
     {
-        public abstract void Draw(SpriteBatch batch, GameTime time);
+        void Draw(SpriteBatch batch, GameTime time);
     }
 }
