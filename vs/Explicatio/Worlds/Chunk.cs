@@ -54,13 +54,8 @@ namespace Explicatio.Worlds
         {
             vehicles = new List<Vehicle>();
             properties = new List<Property>();
-            ResetChunkData(0);
-        }
-
-        public Chunk(List<Vehicle> vehicles, List<Property> properties)
-        {
-            this.vehicles = vehicles;
-            this.properties = properties;
+            //? Domyślne wartości od razu wynoszą 0
+            //ResetChunkData(0);
         }
 
         /// <summary>
@@ -69,6 +64,7 @@ namespace Explicatio.Worlds
         /// <param name="id">Id pola</param>
         public void ResetChunkData(byte id)
         {
+            //! for jest szybsze dla typów nieiteracyjnych :)
             foreach (byte i in chunkGround)
             {
                 chunkGround[i] = id;
