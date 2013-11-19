@@ -9,6 +9,6 @@ namespace Explicatio.Entities
 {
     public interface Updatable
     {
-        void Update(GameTime gameTime)
+        void Update(GameTime gameTime);
     }
 }
