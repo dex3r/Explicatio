@@ -19,9 +19,9 @@ namespace Explicatio.Worlds
         /// <summary>
         ///  ID obiektów, tablice jednowymiarowe dla wydajności
         /// </summary>
-        private byte[] chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
+        private byte[] chunkGround;
 
-        private byte[] chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
+        private byte[] chunkGroundMeta;
         /// <summary>
         ///  Metadane obiektów
         /// </summary>
@@ -30,32 +30,50 @@ namespace Explicatio.Worlds
             get { return chunkGroundMeta; }
         }
 
-        private List<Property> properties;
+        private List<Property>[] properties;
         /// <summary>
         /// Lista wszystkich nieruchomości w tym chunku
         /// Gdy nieruchmość stoi na granicy (na dwóch chunkach) jej referencja jest w obu
+        /// Jednowymiarowa, CHUNK_SIZE elementowa tablica List w celach optymalizacyjnych
+        /// Index to X
         /// </summary>
-        public List<Property> Properties
+        public List<Property>[] Properties
         {
             get { return properties; }
         }
 
-        private List<Vehicle> vehicles;
+        private List<Vehicle>[] vehicles;
         /// <summary>
         /// Lista wszystkich pojazdów w tym chunku
-        /// TODO: Znaleźć wydajniesze rozwiązanie niż "List"
+        /// Jednowymiarowa, CHUNK_SIZE elementowa tablica List w celach optymalizacyjnych
+        /// Index to X
         /// </summary>
-        public List<Vehicle> Vehicles
+        public List<Vehicle>[] Vehicles
         {
             get { return vehicles; }
         }
 
+        public byte this[ushort x, ushort y]
+        {
+            get { return chunkGround[CHUNK_SIZE * y + x]; }
+            set { chunkGround[CHUNK_SIZE * y + x] = value; }
+        }
+
         public Chunk()
         {
-            vehicles = new List<Vehicle>();
-            properties = new List<Property>();
+            vehicles = new List<Vehicle>[CHUNK_SIZE];
+            properties = new List<Property>[CHUNK_SIZE];
+            for(int i = 0; i < CHUNK_SIZE; i++)
+            {
+                vehicles[i] = new List<Vehicle>();
+                properties[i] = new List<Property>();
+            }
+           
             //? Domyślne wartości od razu wynoszą 0
-            //ResetChunkData(0);
+            // ResetChunkData(0);
+            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć i w przypadku 
+            chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
+            chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
         }
 
         /// <summary>
@@ -70,13 +88,22 @@ namespace Explicatio.Worlds
                 chunkGround[i] = id;
                 chunkGroundMeta[i] = 0;
             }
-            vehicles.Clear();
-            properties.Clear();
+            //TODO: Podmienić
+            //vehicles.Clear();
+            //properties.Clear();
         }
-        public byte this[ushort x, ushort y]
+        
+        public Vehicle GetVehicleAt(float x, float y)
         {
-            get { return chunkGround[CHUNK_SIZE * y + x]; }
-            set { chunkGround[CHUNK_SIZE * y + x] = value; }
+            int iX = (int)x;
+            for(int i = 0; i < vehicles[iX].Count; i++)
+            {
+                if(vehicles[iX][i].Intersect(x, y))
+                {
+                    return vehicles[iX][i];
+                }
+            }
+            return null;
         }
     }
 }

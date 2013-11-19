@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Explicatio.Entities;
 
 namespace Explicatio.Worlds
 {
@@ -23,6 +24,20 @@ namespace Explicatio.Worlds
         public Chunk Chunk(int id)
         {
             return chunk[id];
+        }
+
+        /// <summary>
+        /// Przemieszcza pojazd w nowe miejsce
+        /// UWAGA!
+        /// Nie zmienia pól w obiekcie vehicle
+        /// </summary>
+        /// <param name="vehicle">Pojazd do przesunięcia</param>
+        /// <param name="x">Nowa pozycja X</param>
+        /// <param name="y">Nowa pozycja Y</param>
+        public void MoveVehicle(Vehicle vehicle, float x, float y)
+        {
+            //!? Zmienić pozycję pojazdu w chunku, zmienić chunk jeżeli konieczne
+            throw new NotImplementedException();
         }
     }
 }
