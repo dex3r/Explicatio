@@ -18,7 +18,7 @@ namespace Explicatio.Main
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Camera camera; float zoom = 1;
-
+        float i = 0,x=0,y=0;
 
         public Main()
             : base()
@@ -30,6 +30,7 @@ namespace Explicatio.Main
         protected override void Initialize()
         {
             base.Initialize();
+            graphics.SynchronizeWithVerticalRetrace = true;
         }
 
         protected override void LoadContent()
@@ -53,10 +54,14 @@ namespace Explicatio.Main
             }
             //TODO Przeniść w fajne miejsce
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                zoom -= 0.005f;
+                zoom -= 0.01f;
             else if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                zoom += 0.005f;
-            camera.Update(gameTime, 0, new Vector2(GraphicsDevice.Viewport.Width/2, GraphicsDevice.Viewport.Height/2), zoom);
+                zoom += 0.01f;
+            if(Keyboard.GetState().IsKeyDown(Keys.Left)) x++;
+            if(Keyboard.GetState().IsKeyDown(Keys.Right)) x--;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up)) y--;
+            if (Keyboard.GetState().IsKeyDown(Keys.Down)) y++;
+            camera.Update(gameTime, i+=0.05f, new Vector2(GraphicsDevice.Viewport.Width/2+x, GraphicsDevice.Viewport.Height/2+y), zoom);
             base.Update(gameTime);
         }
 
