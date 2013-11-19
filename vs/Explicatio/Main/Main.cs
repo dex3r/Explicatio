@@ -16,13 +16,6 @@ namespace Explicatio.Main
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        private GlobalRenderer globalRenderer;
-        public GlobalRenderer GlobalRenderer
-        {
-            get { return globalRenderer; }
-            set { globalRenderer = value; }
-        }
-
         public Main()
             : base()
         {
@@ -33,7 +26,6 @@ namespace Explicatio.Main
         protected override void Initialize()
         {
             base.Initialize();
-            globalRenderer = new GlobalRenderer();
         }
 
         protected override void LoadContent()
@@ -62,7 +54,7 @@ namespace Explicatio.Main
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            globalRenderer.Draw(spriteBatch, gameTime);
+            GlobalRenderer.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

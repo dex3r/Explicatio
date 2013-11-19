@@ -51,7 +51,6 @@
     <Compile Include="Entities\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
-    <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\Textures.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>

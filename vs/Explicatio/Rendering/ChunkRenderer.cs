@@ -4,14 +4,25 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Explicatio.Worlds;
+using Explicatio.Blocks;
 
 namespace Explicatio.Rendering
 {
-    public abstract class ChunkRenderer : Renderer
+    public static class ChunkRenderer
     {
-        public void Draw(SpriteBatch batch, GameTime time)
+        public static void Draw(SpriteBatch batch, GameTime time, Chunk chunk)
         {
-            throw new NotImplementedException();
+
+            //for(ushort i = 0; i < Chunk.CHUNK_SIZE; i++)
+            //{
+            //    for(ushort j = 0; j < Chunk.CHUNK_SIZE; j++)
+            //    {
+                    
+            //        batch.Draw(Block.Blocks[chunk[i, j]].Texture,
+            //    }
+            //}
+                //TODO: dodać renderowanie pojazdów i budynków
         }
     }
 }
