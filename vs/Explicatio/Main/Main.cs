@@ -20,6 +20,8 @@ namespace Explicatio.Main
         private SpriteBatch spriteBatch;
         private Camera camera;
 
+        private bool fullScreen;
+
         private Text log;
 
         public Main()
@@ -27,10 +29,11 @@ namespace Explicatio.Main
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.graphics.PreferredBackBufferHeight = 1080;
-            this.graphics.PreferredBackBufferWidth = 1920;
+            //this.graphics.PreferredBackBufferHeight = 1080;
+            //this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
-            this.graphics.IsFullScreen = true;
+            fullScreen = true;
+            this.graphics.IsFullScreen = fullScreen;
             this.graphics.SynchronizeWithVerticalRetrace = true;
         }
 
@@ -64,11 +67,11 @@ namespace Explicatio.Main
             }
 
             //TODO Nie działają oba :(
-            if ( Keyboard.GetState().IsKeyDown(Keys.F4))
+            if (Keyboard.GetState().IsKeyDown(Keys.F4))
             {
-                this.graphics.ToggleFullScreen();
-                //if (graphics.IsFullScreen == true) graphics.IsFullScreen = false;
-                //else graphics.IsFullScreen = true;
+                //this.graphics.ToggleFullScreen();
+                if (fullScreen == true) { fullScreen = false; graphics.IsFullScreen = fullScreen; }
+                else { fullScreen = true; graphics.IsFullScreen = fullScreen; }
             }
             const int step = 7;
             const int bordersize = 15; //Wielkość przesuwaka?
@@ -89,8 +92,8 @@ namespace Explicatio.Main
             }
             else
             {
-                camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X)/40;
-                camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y)/40;
+                camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X) / 40 / camera.Zoom;
+                camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y) / 40 / camera.Zoom;
             }
 
             base.Update(gameTime);

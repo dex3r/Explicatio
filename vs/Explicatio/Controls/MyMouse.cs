@@ -10,7 +10,7 @@ namespace Explicatio.Controls
 {
     public static class MyMouse
     {
-        private static bool middleButtonStatus = false;
+        private static bool middleButtonStatus = false; 
         public static int MouseHoldPositionX { get; private set; }
         public static int MouseHoldPositionY { get; private set; }
         public static int OverallScrollWheelValue { get; private set; }
@@ -40,7 +40,7 @@ namespace Explicatio.Controls
                 MouseHoldPositionY = Mouse.GetState().Y;
                 middleButtonStatus = true;
             }
-            else if (middleButtonStatus == true && Mouse.GetState().MiddleButton == ButtonState.Pressed)
+            else if (middleButtonStatus == true && Mouse.GetState().MiddleButton == ButtonState.Released)
             {
                 middleButtonStatus = false;
             }
