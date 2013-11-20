@@ -8,22 +8,42 @@ namespace Explicatio.Worlds
 {
     public class World
     {
-        //TODO: Lista chunków, pobieranie bloku x metadanych
-        const int WORLDSIZE = 128*128; //Wysokość x szerokość
-        List<Chunk> chunk = new List<Chunk>(); //Lista wszystich chunków
+        //TODO: pobieranie bloku x metadanych
+        private int size;
+        public int Size
+        {
+            get { return size; }
+        }
+
+        /// <summary>
+        /// Ilość wszystkich chunków dla obecnej wielkości świata
+        /// </summary>
+        public int ChunkNumbers { get; private set; }
+        /// <summary>
+        /// Ilość chunków w jednym rzędzie (pierwiastek z ChunkNumbers)
+        /// </summary>
+        public int ChunksInRow { get; private set; }
+
+        private Chunk[] chunks;
+
         public World()
         {
-            for (int x = 0; x <= WORLDSIZE/2; x++)
+            size = 128;
+            ChunkNumbers = (int)Math.Pow(size / Chunk.CHUNK_SIZE, 2);
+            ChunksInRow = size / Chunk.CHUNK_SIZE;
+            chunks = new Chunk[ChunkNumbers];
+            for (int x = 0; x < ChunksInRow; x++)
             {
-                for (int y = 0; y <= WORLDSIZE/2; y++)
+                for (int y = 0; y < ChunksInRow; y++)
                 {
-                    //chunk.Add(new Chunk());
+                    chunks[ChunksInRow * y + x] = new Chunk(this, x, y);
                 }
             }
         }
-        public Chunk Chunk(int id)
+
+        public Chunk GetChunk(int x, int y)
         {
-            return chunk[id];
+            return chunks[ChunksInRow * y + x];
         }
 
         /// <summary>

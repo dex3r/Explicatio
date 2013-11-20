@@ -11,21 +11,17 @@ namespace Explicatio.Rendering
 {
     public static class ChunkRenderer
     {
-        //? TEMP!!!
-        public static Chunk c;
-        public static void Draw(SpriteBatch batch, GameTime time, Chunk chunk)
+        public static void DrawChunk(SpriteBatch batch, Chunk chunk)
         {
-
             for (ushort x = 0; x < Chunk.CHUNK_SIZE; x++)
             {
                 for (ushort y = 0; y < Chunk.CHUNK_SIZE; y++)
                 {
                     // Wszystkie bloki są obracane w prawo 0 45* aby stworzyć wrażenie izometrii
-                    //!? Poprawić, jak chcesz to naprawiaj
-                    batch.Draw(Block.Blocks[chunk[x, y]].Texture, new Vector2((Chunk.CHUNK_SIZE - y + x) * 32, (Chunk.CHUNK_SIZE + x - y) * 32), Color.White);
+                    batch.Draw(Block.Blocks[chunk[x, y]].Texture, new Vector2((Chunk.CHUNK_SIZE - y + x) * 32, (x + y) * 16), Color.White);
                 }
             }
-            //TODO: dodać renderowanie pojazdów x budynków
+            //TODO: dodać renderowanie pojazdów i budynków
         }
     }
 }

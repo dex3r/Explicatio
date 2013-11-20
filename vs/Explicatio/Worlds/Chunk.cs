@@ -56,14 +56,17 @@ namespace Explicatio.Worlds
         public int X { get; private set; }
         public int Y { get; private set; }
 
+        public World WorldObj { get; private set; }
+
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }
             set { chunkGround[CHUNK_SIZE * y + x] = value; }
         }
 
-        public Chunk(int x, int y)
+        public Chunk(World world, int x, int y)
         {
+            this.WorldObj = world;
             this.X = x;
             this.Y = y;
             vehicles = new List<Vehicle>[CHUNK_SIZE];

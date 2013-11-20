@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Explicatio.Rendering;
 using Explicatio.Entities;
 using Explicatio.Controls;
+using Explicatio.Worlds;
 
 namespace Explicatio.Main
 {
@@ -24,16 +25,27 @@ namespace Explicatio.Main
 
         private Text log;
 
+        public static Main Instance { get; private set; }
+
+        private World currentWorld;
+        public World CurrentWorld
+        {
+            get { return currentWorld; }
+            set { currentWorld = value; }
+        }
+
+
         public Main()
             : base()
         {
+            Instance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             //this.graphics.PreferredBackBufferHeight = 1080;
             //this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
             fullScreen = true;
-            this.graphics.IsFullScreen = fullScreen;
+            //this.graphics.IsFullScreen = fullScreen;
             this.graphics.SynchronizeWithVerticalRetrace = true;
         }
 
@@ -42,7 +54,7 @@ namespace Explicatio.Main
             base.Initialize();
             graphics.SynchronizeWithVerticalRetrace = true;
             //? TEMP!!
-            ChunkRenderer.c = new Worlds.Chunk(0, 0);
+            currentWorld = new World();
         }
 
         protected override void LoadContent()
@@ -105,12 +117,28 @@ namespace Explicatio.Main
             camera.UpdateCamera();
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
-            //GlobalRenderer.Draw(spriteBatch, gameTime);
-            ChunkRenderer.Draw(spriteBatch, gameTime, ChunkRenderer.c);
+            GlobalRenderer.Draw(spriteBatch, gameTime);
             log.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Wróć do pozycji kamery
+        /// </summary>
+        public void BeginNormalDrawing()
+        {
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
+        }
+
+        /// <summary>
+        /// Zastosuj transofrmację (trans * camera)
+        /// </summary>
+        /// <param name="transformation"></param>
+        public void BeginDrawingAndApplyTransformation(Matrix transformation)
+        {
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * camera.Transform);
         }
     }
 
