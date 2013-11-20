@@ -53,7 +53,6 @@ namespace Explicatio.Main
         {
             base.Initialize();
             graphics.SynchronizeWithVerticalRetrace = true;
-            //? TEMP!!
             currentWorld = new World();
         }
 
@@ -116,7 +115,7 @@ namespace Explicatio.Main
             GraphicsDevice.Clear(Color.CornflowerBlue);
             camera.UpdateCamera();
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
+            BeginNormalDrawing();
             GlobalRenderer.Draw(spriteBatch, gameTime);
             log.Draw(spriteBatch, gameTime);
             spriteBatch.End();
@@ -129,7 +128,7 @@ namespace Explicatio.Main
         /// </summary>
         public void BeginNormalDrawing()
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
+            BeginDrawingAndApplyTransformation(Matrix.Identity);
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Explicatio.Rendering
                 }
             }
             // Przywrócenie pozycji kamery
-            Main.Main.Instance.BeginNormalDrawing();
+           Main.Main.Instance.BeginNormalDrawing();
         }
     }
 }
