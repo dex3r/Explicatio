@@ -23,8 +23,6 @@ namespace Explicatio.Main
 
         private bool fullScreen;
 
-        private Text log;
-
         public static Main Instance { get; private set; }
 
         private World currentWorld;
@@ -45,7 +43,7 @@ namespace Explicatio.Main
             //this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
             fullScreen = true;
-            //this.graphics.IsFullScreen = fullScreen;
+            this.graphics.IsFullScreen = fullScreen;
             this.graphics.SynchronizeWithVerticalRetrace = true;
         }
 
@@ -63,7 +61,8 @@ namespace Explicatio.Main
 
             Textures.Load(this.Content);
             camera = new Camera(new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
-            log = new Text(new Vector2(10, 10), this.Content);
+            Text.Load(spriteBatch,this.Content);
+            Text.LoadDefaultFont();
         }
 
         protected override void UnloadContent()
@@ -118,7 +117,10 @@ namespace Explicatio.Main
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transform);
             GlobalRenderer.Draw(spriteBatch, gameTime);
-            log.Draw(spriteBatch, gameTime);
+            Text.Draw(Text.Log,new Vector2(camera.X,camera.Y));
+
+            Text.Draw("Test", new Vector2(15, 15));
+            Text.Draw("Test123", new Vector2(115, 115));
             spriteBatch.End();
 
             base.Draw(gameTime);
