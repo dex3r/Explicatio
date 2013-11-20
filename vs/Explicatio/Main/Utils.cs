@@ -16,9 +16,7 @@ namespace Explicatio.Main
             throw new NotImplementedException();
         }
     }
-    /// <summary>
-    /// NIE DZIAŁA JESZCZE!!
-    /// </summary>
+    //TODO Przydał by się drobny rework
     public class Text
     {
         private static string textString;
@@ -40,7 +38,7 @@ namespace Explicatio.Main
             textString = "";
             Postion = position;
             Font = null;
-            //Font = cm.Load<SpriteFont>("fonts/Courier New");
+            Font = cm.Load<SpriteFont>("fonts/Courier New");
             TextColor = Color.Black;
         }
         public void Draw(SpriteBatch batch, GameTime time)

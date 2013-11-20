@@ -24,10 +24,11 @@ namespace Explicatio.Controls
             OverallScrollWheelValue = Mouse.GetState().ScrollWheelValue;
         }
 
-        public static bool ChceckMouse(Rectangle rect)
+        public static bool ChceckMouse(float x1,float y1,float x2,float y2)
         {
-            if (mouseState.X>=rect.X && mouseState.X <= rect.X+rect.Width && mouseState.Y >= rect.Y && mouseState.Y <= rect.Y+rect.Height) return true;
-            return false;
+            mouseState = Mouse.GetState();
+            if (mouseState.X>=x1 && mouseState.X <= x2 && mouseState.Y >= y1 && mouseState.Y <= y2) return true;
+            else return false;
         }
     }
 }
