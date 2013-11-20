@@ -31,6 +31,7 @@ namespace Explicatio.Main
             this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
             this.graphics.IsFullScreen = true;
+            this.graphics.SynchronizeWithVerticalRetrace = true;
         }
 
         protected override void Initialize()
@@ -74,11 +75,11 @@ namespace Explicatio.Main
             camera.Zoom += 0.05f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 60);
             const int step = 5;
             const int bordersize = 15; //Wielkość przesuwaka?
-            //TODO Debug
-            if (MyMouse.ChceckMouse(0, 0, camera.View.Width, camera.View.Height / camera.View.Height * bordersize)) camera.Y -= step / camera.Zoom;
-            if (MyMouse.ChceckMouse(0, camera.View.Height - camera.View.Height / camera.View.Height * bordersize, camera.View.Width, camera.View.Height)) camera.Y += step / camera.Zoom;
-            if (MyMouse.ChceckMouse(0, 0, camera.View.Width / camera.View.Width * bordersize, camera.View.Height)) camera.X -= step / camera.Zoom;
-            if (MyMouse.ChceckMouse(camera.View.Width - camera.View.Width / camera.View.Width * bordersize, 0, camera.View.Width, camera.View.Height)) camera.X += step / camera.Zoom;
+            //! Już nie trzeba nic zmieniać żeby działało ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
+            if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
+            if (MyMouse.ChceckMouse(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
+            if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
+            if (MyMouse.ChceckMouse(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;

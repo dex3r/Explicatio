@@ -24,7 +24,7 @@ namespace Explicatio.Controls
             OverallScrollWheelValue = Mouse.GetState().ScrollWheelValue;
         }
 
-        public static bool ChceckMouse(float x1,float y1,float x2,float y2)
+        public static bool ChceckMouse(int x1,int y1,int x2,int y2)
         {
             mouseState = Mouse.GetState();
             if (mouseState.X>=x1 && mouseState.X <= x2 && mouseState.Y >= y1 && mouseState.Y <= y2) return true;
