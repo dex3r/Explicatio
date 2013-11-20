@@ -16,35 +16,49 @@ namespace Explicatio.Main
             throw new NotImplementedException();
         }
     }
-    //TODO Przydał by się drobny rework
-    public class Text
+    /// <summary>
+    /// Narzędzie słóżące do wyświetlania tekstu
+    /// jak i również logu!
+    /// </summary>
+    public static class Text
     {
-        private static string textString;
-        public string TextString
+        private static SpriteBatch spriteBatch;
+        private static ContentManager contentManager;
+        /// <summary>Zmiana string do loga. Możliwość implementacji w każdej metodzie i klasie </summary>
+        public static string Log { get; private set; }
+        public static void Load(SpriteBatch batch, ContentManager cm)
         {
-            get { return textString; }
-            set { textString = value;}
+            spriteBatch = batch;
+            contentManager = cm;
+            Log = "";
         }
-        public Vector2 Postion { get; private set; }
-        private static SpriteFont font;
-        public SpriteFont Font 
+        public static SpriteFont getFont(string fontName)
         {
-            get { return font; }
-            set { font = value;}
+            return contentManager.Load<SpriteFont>("fonts/" + fontName);
         }
-        public Color TextColor { get; private set;} 
-        public Text(Vector2 position, ContentManager cm)
+        public static void LoadDefaultFont()
         {
-            textString = "";
-            Postion = position;
-            Font = null;
-            Font = cm.Load<SpriteFont>("fonts/Courier New");
-            TextColor = Color.Black;
+            SpriteFont font = getFont("Courier New");
         }
-        public void Draw(SpriteBatch batch, GameTime time)
+        /// <summary>
+        /// Wyświetlanie tekstu na różne możliwości żeby wywołać wystarczy wpisać Text.Draw(string,newVector2...); w jakiejkolwiek metodzei draw
+        /// </summary>
+        public static void Draw(string textString, Vector2 position)
         {
-            batch.DrawString(Font, TextString, Postion, TextColor,
-        0, Font.MeasureString(TextString) / 2, 1.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(getFont("Courier New"), textString, position, Color.Black, 0, getFont("Courier New").MeasureString(textString) / 2, 1.0f, SpriteEffects.None, 0.5f);
+        }
+        public static void Draw(string textString, Vector2 position, Color textColor)
+        {
+            spriteBatch.DrawString(getFont("Courier New"), textString, position, textColor, 0, getFont("Courier New").MeasureString(textString) / 2, 1.0f, SpriteEffects.None, 0.5f);
+        }
+        public static void Draw(string textString, Vector2 position, Color textColor, float textSize)
+        {
+            spriteBatch.DrawString(getFont("Courier New"), textString, position, textColor, 0, getFont("Courier New").MeasureString(textString) / 2, textSize, SpriteEffects.None, 0.5f);
+        }
+        public static void Draw(string textString, Vector2 position, Color textColor, float textSize, string fontName)
+        {
+            SpriteFont font = getFont(fontName);
+            spriteBatch.DrawString(font, textString, position, textColor, 0, font.MeasureString(textString) / 2, textSize, SpriteEffects.None, 0.5f);
         }
     }
 }
