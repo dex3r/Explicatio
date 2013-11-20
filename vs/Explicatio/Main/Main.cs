@@ -63,27 +63,35 @@ namespace Explicatio.Main
                 Exit();
             }
 
-            //TODO Nie działa :(
+            //TODO Nie działają oba :(
             if ( Keyboard.GetState().IsKeyDown(Keys.F4))
             {
                 this.graphics.ToggleFullScreen();
                 //if (graphics.IsFullScreen == true) graphics.IsFullScreen = false;
                 //else graphics.IsFullScreen = true;
             }
-
-            MyMouse.Update();
-            camera.Zoom += 0.05f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 60);
-            const int step = 5;
+            const int step = 7;
             const int bordersize = 15; //Wielkość przesuwaka?
-            //! Już nie trzeba nic zmieniać żeby działało ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
-            if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
-            if (MyMouse.ChceckMouse(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
-            if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
-            if (MyMouse.ChceckMouse(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
-            if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;
-            if (Keyboard.GetState().IsKeyDown(Keys.Down)) camera.Y += step / camera.Zoom;
+
+            if (MyMouse.ToogleMiddleButton() == false)
+            {
+                MyMouse.ScrollWheelMoveUpdate();
+                camera.Zoom += 0.05f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 60);
+                //! Już nie trzeba nic zmieniać żeby działało jak coś się zmieni z rozdzielczością ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
+                if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
+                if (MyMouse.ChceckMouse(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
+                if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
+                if (MyMouse.ChceckMouse(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Down)) camera.Y += step / camera.Zoom;
+            }
+            else
+            {
+                camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X)/40;
+                camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y)/40;
+            }
 
             base.Update(gameTime);
         }

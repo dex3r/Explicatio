@@ -10,7 +10,9 @@ namespace Explicatio.Controls
 {
     public static class MyMouse
     {
-        private static MouseState mouseState = Mouse.GetState();
+        private static bool middleButtonStatus = false;
+        public static int MouseHoldPositionX { get; private set; }
+        public static int MouseHoldPositionY { get; private set; }
         public static int OverallScrollWheelValue { get; private set; }
         /// <summary>
         /// Różnica obrotów kółkiem od ostatniego Update 
@@ -18,17 +20,31 @@ namespace Explicatio.Controls
         /// </summary>
         public static int ScrollWheelDelta { get; private set; }
 
-        public static void Update()
+        public static void ScrollWheelMoveUpdate()
         {
             ScrollWheelDelta = OverallScrollWheelValue - Mouse.GetState().ScrollWheelValue;
             OverallScrollWheelValue = Mouse.GetState().ScrollWheelValue;
         }
-
+        //Intercośtam nie działa
         public static bool ChceckMouse(int x1,int y1,int x2,int y2)
         {
-            mouseState = Mouse.GetState();
-            if (mouseState.X>=x1 && mouseState.X <= x2 && mouseState.Y >= y1 && mouseState.Y <= y2) return true;
+            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2) return true;
             else return false;
+        }
+        /// <returns>True - ON, False - OFF</returns>
+        public static bool ToogleMiddleButton()
+        {
+            if (middleButtonStatus == false && Mouse.GetState().MiddleButton == ButtonState.Pressed)
+            {
+                MouseHoldPositionX = Mouse.GetState().X;
+                MouseHoldPositionY = Mouse.GetState().Y;
+                middleButtonStatus = true;
+            }
+            else if (middleButtonStatus == true && Mouse.GetState().MiddleButton == ButtonState.Pressed)
+            {
+                middleButtonStatus = false;
+            }
+                return middleButtonStatus;
         }
     }
 }
