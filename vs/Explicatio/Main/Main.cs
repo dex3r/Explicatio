@@ -25,6 +25,10 @@ namespace Explicatio.Main
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            //this.graphics.PreferredBackBufferHeight = 1080;
+            //this.graphics.PreferredBackBufferWidth = 1920;
+            //! Ustawianie fullscreena
+            //this.graphics.IsFullScreen = true;
         }
 
         protected override void Initialize()
@@ -55,10 +59,20 @@ namespace Explicatio.Main
                 Exit();
             }
 
-            MyMouse.Update();
+            //TODO Nie działa :(
+            if ( Keyboard.GetState().IsKeyDown(Keys.F4))
+            {
+                this.graphics.ToggleFullScreen();
+                //if (graphics.IsFullScreen == true) graphics.IsFullScreen = false;
+                //else graphics.IsFullScreen = true;
+            }
 
+            MyMouse.Update();
             camera.Zoom += 0.05f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 60);
-            const int step = 5;
+            const int step = 15;
+
+            //TODO Debug
+            if (MyMouse.ChceckMouse(new Rectangle((int)camera.X, (int)camera.Y, (int)camera.X + GraphicsDevice.Viewport.Width, (int)camera.Y + GraphicsDevice.Viewport.Height))) camera.X -= step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
             if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;
