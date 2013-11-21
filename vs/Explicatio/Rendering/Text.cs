@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Explicatio.Utils
+namespace Explicatio.Rendering
 {
     /// <summary>
     /// Narzędzie słóżące do wyświetlania tekstu

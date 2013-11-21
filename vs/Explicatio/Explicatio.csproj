@@ -48,7 +48,7 @@
     <Compile Include="Controls\MyMouse.cs" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
     <Compile Include="Rendering\Camera.cs" />
-    <Compile Include="Utils\Text.cs" />
+    <Compile Include="Rendering\Text.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\Vehicle.cs" />
