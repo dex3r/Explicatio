@@ -32,8 +32,8 @@ namespace Explicatio.Rendering
                     int mx = (world.ChunksInRow - y + x) * o1;
                     int my = (x + y) * o2;
                     const float outsize = 1.3f;
-                    if (mx >= camera.X - camera.View.Width / camera.Zoom / outsize && mx <= camera.X + camera.View.Width / camera.Zoom / outsize)
-                        if (my >= camera.Y - camera.View.Height / camera.Zoom / outsize && my <= camera.Y + camera.View.Height / camera.Zoom / outsize)
+                    if (mx >= camera.X - camera.View.Width / (camera.Zoom / outsize) && mx <= camera.X + camera.View.Width / (camera.Zoom / outsize))
+                        if (my >= camera.Y - camera.View.Height / (camera.Zoom / outsize) && my <= camera.Y + camera.View.Height / (camera.Zoom / outsize))
                             for (ushort cx = 0; cx < Chunk.CHUNK_SIZE; cx++)
                             {
                                 for (ushort cy = 0; cy < Chunk.CHUNK_SIZE; cy++)
