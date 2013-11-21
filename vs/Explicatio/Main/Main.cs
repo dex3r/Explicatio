@@ -12,6 +12,7 @@ using Explicatio.Rendering;
 using Explicatio.Entities;
 using Explicatio.Controls;
 using Explicatio.Worlds;
+using Explicatio.Utils;
 
 namespace Explicatio.Main
 {
@@ -44,7 +45,6 @@ namespace Explicatio.Main
             //! Ustawianie fullscreena
             fullScreen = true;
             this.graphics.IsFullScreen = fullScreen;
-            this.graphics.SynchronizeWithVerticalRetrace = true;
         }
 
         protected override void Initialize()
@@ -114,12 +114,19 @@ namespace Explicatio.Main
             GraphicsDevice.Clear(Color.CornflowerBlue);
             camera.UpdateCamera();
 
+            //Wyświetlanie po transformacji
             BeginNormalDrawing();
             GlobalRenderer.Draw(spriteBatch, gameTime);
-            Text.Draw(Text.Log,new Vector2(camera.X,camera.Y));
-
-            Text.Draw("Test", new Vector2(15, 15));
-            Text.Draw("Test123", new Vector2(115, 115));
+            spriteBatch.End();
+            //Wyświetlanie bez transformacji
+            spriteBatch.Begin();
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+            {
+                Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
+                           "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" 
+                           ;
+                Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
