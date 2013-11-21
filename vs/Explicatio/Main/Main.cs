@@ -12,7 +12,6 @@ using Explicatio.Rendering;
 using Explicatio.Entities;
 using Explicatio.Controls;
 using Explicatio.Worlds;
-using Explicatio.Rendering;
 
 namespace Explicatio.Main
 {
@@ -91,7 +90,9 @@ namespace Explicatio.Main
             if (MyMouse.ToogleMiddleButton() == false)
             {
                 MyMouse.ScrollWheelMoveUpdate();
-                camera.Zoom += 0.05f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 60);
+                camera.Zoom += 0.25f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 30);
+                camera.Zoom = Math.Min(4.5f, Math.Max(0.07f, (float)Math.Round(camera.Zoom, 1)));
+                //camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
                 //! Już nie trzeba nic zmieniać żeby działało jak coś się zmieni z rozdzielczością ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
                 if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
                 if (MyMouse.ChceckMouse(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;

@@ -8,7 +8,7 @@ namespace Explicatio.Worlds
 {
     public class World
     {
-        //TODO: pobieranie bloku x metadanych
+        //TODO: pobieranie bloku cx metadanych
         private int size;
         public int Size
         {
@@ -52,8 +52,8 @@ namespace Explicatio.Worlds
         /// Nie zmienia pól w obiekcie vehicle
         /// </summary>
         /// <param name="vehicle">Pojazd do przesunięcia</param>
-        /// <param name="x">Nowa pozycja X</param>
-        /// <param name="y">Nowa pozycja Y</param>
+        /// <param name="cx">Nowa pozycja X</param>
+        /// <param name="cy">Nowa pozycja Y</param>
         public void MoveVehicle(Vehicle vehicle, float x, float y)
         {
             //!? Zmienić pozycję pojazdu w chunku, zmienić chunk jeżeli konieczne

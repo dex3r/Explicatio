@@ -77,7 +77,7 @@ namespace Explicatio.Worlds
                 properties[i] = new List<Property>();
             }
            
-            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć x w przypadku 
+            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć cx w przypadku 
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
 

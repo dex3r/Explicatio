@@ -104,8 +104,8 @@ namespace Explicatio.Entities
         /// <summary>
         /// Przemieść pojazd
         /// </summary>
-        /// <param name="x">X wektora przemieszczenia</param>
-        /// <param name="y">Y wektora przemieszczenia</param>
+        /// <param name="cx">X wektora przemieszczenia</param>
+        /// <param name="cy">Y wektora przemieszczenia</param>
         public void Move(float x, float y)
         {
             this.x += x;
