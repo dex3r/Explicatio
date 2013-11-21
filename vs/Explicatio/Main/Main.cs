@@ -43,8 +43,9 @@ namespace Explicatio.Main
             //this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
             fullScreen = true;
-            this.graphics.IsFullScreen = fullScreen;
-            this.graphics.SynchronizeWithVerticalRetrace = true;
+            //this.graphics.IsFullScreen = fullScreen;
+            this.graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = true;
         }
 
         protected override void Initialize()
@@ -139,7 +140,7 @@ namespace Explicatio.Main
         /// <param name="transformation"></param>
         public void BeginDrawingAndApplyTransformation(Matrix transformation)
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * camera.Transform);
+            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * camera.Transform);
         }
     }
 

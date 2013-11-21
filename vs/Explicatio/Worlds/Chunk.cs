@@ -14,7 +14,7 @@ namespace Explicatio.Worlds
         /// <summary>
         /// Rozmiar chunku, "const" dla wydajności
         /// </summary>
-        public const byte CHUNK_SIZE = 16;
+        public const int CHUNK_SIZE = 32;
 
         /// <summary>
         ///  ID obiektów, tablice jednowymiarowe dla wydajności
