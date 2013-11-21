@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 
+using System.Threading;
+
 using Explicatio.Rendering;
 using Explicatio.Entities;
 using Explicatio.Controls;
@@ -39,13 +41,13 @@ namespace Explicatio.Main
             Instance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //this.graphics.PreferredBackBufferHeight = 1080;
-            //this.graphics.PreferredBackBufferWidth = 1920;
+            this.graphics.PreferredBackBufferHeight = 1080;
+            this.graphics.PreferredBackBufferWidth = 1920;
             //! Ustawianie fullscreena
             fullScreen = true;
-            //this.graphics.IsFullScreen = fullScreen;
-	this.graphics.SynchronizeWithVerticalRetrace = false;
-            this.IsFixedTimeStep = true; 
+            this.graphics.IsFullScreen = fullScreen;
+            this.IsFixedTimeStep = true;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
         }
 
         protected override void Initialize()
@@ -91,7 +93,7 @@ namespace Explicatio.Main
             {
                 MyMouse.ScrollWheelMoveUpdate();
                 camera.Zoom += 0.25f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 30);
-                camera.Zoom = Math.Min(4.5f, Math.Max(0.07f, (float)Math.Round(camera.Zoom, 1)));
+                camera.Zoom = Math.Min(4.5f, Math.Max(0.4f, (float)Math.Round(camera.Zoom, 1)));
                 //camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
                 //! Już nie trzeba nic zmieniać żeby działało jak coś się zmieni z rozdzielczością ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
                 if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
@@ -119,14 +121,14 @@ namespace Explicatio.Main
 
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
-            GlobalRenderer.Draw(spriteBatch, gameTime);
+            GlobalRenderer.Draw(spriteBatch, gameTime,camera);
             spriteBatch.End();
             //Wyświetlanie bez transformacji
             spriteBatch.Begin();
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
             {
                 Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
-                           "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" 
+                           "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n";
                            ;
                 Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             }
