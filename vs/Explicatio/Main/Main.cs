@@ -43,7 +43,7 @@ namespace Explicatio.Main
             Options.Init(graphicsDeviceManager);
             this.IsFixedTimeStep = false;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            
+
         }
 
         protected override void Initialize()
@@ -59,7 +59,7 @@ namespace Explicatio.Main
 
             Textures.Load(this.Content);
             camera = new Camera(new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
-            Text.Load(spriteBatch,this.Content);
+            Text.Load(spriteBatch, this.Content);
             Text.LoadDefaultFont();
         }
 
@@ -107,7 +107,7 @@ namespace Explicatio.Main
 
         protected override void Draw(GameTime gameTime)
         {
-            if(lastSec != (long)gameTime.TotalGameTime.TotalSeconds)
+            if (lastSec != (long)gameTime.TotalGameTime.TotalSeconds)
             {
                 lastFps = currentFps;
                 currentFps = 0;
@@ -117,22 +117,22 @@ namespace Explicatio.Main
             spriteBatch.Begin();
             GraphicsDevice.Clear(Color.Red);
             spriteBatch.End();
-       
+
             camera.UpdateCamera();
 
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
-            GlobalRenderer.Draw(spriteBatch, gameTime,camera);
+            GlobalRenderer.Draw(spriteBatch, gameTime, camera);
             spriteBatch.End();
             //Wyświetlanie bez transformacji
             spriteBatch.Begin();
             //if (Keyboard.GetState().IsKeyDown(Keys.F2))
             //{
-                Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
-                           "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
-                           "Fps2: " + lastFps + "\n";
-                           ;
-                Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
+            Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
+                       "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
+                       "Fps2: " + lastFps + "\n";
+            ;
+            Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
             spriteBatch.End();
 

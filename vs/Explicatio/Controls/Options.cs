@@ -60,16 +60,18 @@ namespace Explicatio.Controls
         public static void Init(GraphicsDeviceManager graphicsDeviceManager)
         {
             const bool DEBUGMODE = false;
-            if(DEBUGMODE == false)
+            if (DEBUGMODE == false)
             {
-            //Rozdzielczość domyślna 1920x1080
-            resolutionStatus = 0;
-            //! Ustawianie FullScreena na początku
-            toogleFullScreeen(graphicsDeviceManager); 
+                //Rozdzielczość domyślna 1920x1080
+                resolutionStatus = 0;
+                updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
+                //! Ustawianie FullScreena na początku
+                toogleFullScreeen(graphicsDeviceManager);
             }
             if (DEBUGMODE == true)
             {
                 resolutionStatus = 15;
+                updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
             }
         }
 
@@ -79,34 +81,34 @@ namespace Explicatio.Controls
         /// </summary>
         public static void KeyPressed(GraphicsDeviceManager graphicsDeviceManager)
         {
-           bool status = true;
-           if (Keyboard.GetState().IsKeyDown(Keys.F4) && status)
-           {
-               status = false;
-               toogleFullScreeen(graphicsDeviceManager);
-           }
-           if (Keyboard.GetState().IsKeyDown(Keys.F5) && status)
-           {
-               if (resolutionStatus < 14)
-               {
-                   status = false;
-                   resolutionStatus++;
-                   updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
-                   ResolutionChange = 1;
-               }
-           }
-           if (Keyboard.GetState().IsKeyDown(Keys.F6) && status)
-           {
-               if (resolutionStatus > 0)
-               {
-                   status = false;
-                   resolutionStatus--;
-                   updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
-                   ResolutionChange = 1;
-               }
-           }
-           //Zmiana rozdzielczości w przypadku uruchomionego fullscreena
-           updateResolutionOnFullScreenFix(graphicsDeviceManager);
+            bool status = true;
+            if (Keyboard.GetState().IsKeyDown(Keys.F4) && status)
+            {
+                status = false;
+                toogleFullScreeen(graphicsDeviceManager);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.F5) && status)
+            {
+                if (resolutionStatus < 14)
+                {
+                    status = false;
+                    resolutionStatus++;
+                    updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
+                    ResolutionChange = 1;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.F6) && status)
+            {
+                if (resolutionStatus > 0)
+                {
+                    status = false;
+                    resolutionStatus--;
+                    updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
+                    ResolutionChange = 1;
+                }
+            }
+            //Zmiana rozdzielczości w przypadku uruchomionego fullscreena
+            updateResolutionOnFullScreenFix(graphicsDeviceManager);
         }
 
         /// <summary>

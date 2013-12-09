@@ -10,7 +10,7 @@ namespace Explicatio.Controls
 {
     public static class MyMouse
     {
-        private static bool middleButtonStatus = false; 
+        private static bool middleButtonStatus = false;
         public static int MouseHoldPositionX { get; private set; }
         public static int MouseHoldPositionY { get; private set; }
         public static int OverallScrollWheelValue { get; private set; }
@@ -32,7 +32,7 @@ namespace Explicatio.Controls
         /// <param name="y1">Left</param>
         /// <param name="x2">Bottom</param>
         /// <param name="y2">Right</param>
-        public static bool ChceckMouseRectangle(int x1,int y1,int x2,int y2)
+        public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
         {
             if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
             {
@@ -59,7 +59,7 @@ namespace Explicatio.Controls
             {
                 middleButtonStatus = false;
             }
-                return middleButtonStatus;
+            return middleButtonStatus;
         }
     }
 }
