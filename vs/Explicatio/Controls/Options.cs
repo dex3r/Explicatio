@@ -59,20 +59,16 @@ namespace Explicatio.Controls
         /// </summary>
         public static void Init(GraphicsDeviceManager graphicsDeviceManager)
         {
-            const bool DEBUGMODE = false;
-            if (DEBUGMODE == false)
-            {
-                //Rozdzielczość domyślna 1920x1080
-                resolutionStatus = 0;
-                updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
-                //! Ustawianie FullScreena na początku
-                toogleFullScreeen(graphicsDeviceManager);
-            }
-            if (DEBUGMODE == true)
-            {
-                resolutionStatus = 15;
-                updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
-            }
+#if DEBUG
+            resolutionStatus = 15;
+            updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
+#else
+            //Rozdzielczość domyślna 1920x1080
+            resolutionStatus = 0;
+            updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
+            //! Ustawianie FullScreena na początku
+            toogleFullScreeen(graphicsDeviceManager);
+#endif
         }
 
         /// <summary>
