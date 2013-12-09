@@ -20,8 +20,6 @@ namespace Explicatio.Main
         private SpriteBatch spriteBatch;
         private Camera camera;
 
-        private bool fullScreen;
-
         public static Main Instance { get; private set; }
 
         private World currentWorld;
@@ -41,11 +39,8 @@ namespace Explicatio.Main
             Instance = this;
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.graphicsDeviceManager.PreferredBackBufferHeight = 768;
-            this.graphicsDeviceManager.PreferredBackBufferWidth = 1024;
-            //! Ustawianie fullscreena
-            fullScreen = false;
-            //this.graphicsDeviceManager.IsFullScreen = fullScreen;
+            //Ustawianie fullscreena początkowego i rozdziałki jest teraz w obiekcjie options
+            Options.Init(graphicsDeviceManager);
             this.IsFixedTimeStep = false;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             
@@ -80,7 +75,7 @@ namespace Explicatio.Main
                 Exit();
             }
 
-            //TODO Nie działają oba :(
+            Options.KeyPressed(graphicsDeviceManager);
 
             const int step = 7;
             const int bordersize = 15; //Wielkość przesuwaka?
@@ -92,10 +87,10 @@ namespace Explicatio.Main
                 //camera.Zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(camera.Zoom, 1)));
                 //camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
                 //! Już nie trzeba nic zmieniać żeby działało jak coś się zmieni z rozdzielczością ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
-                //if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
-                //if (MyMouse.ChceckMouse(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
-                //if (MyMouse.ChceckMouse(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
-                //if (MyMouse.ChceckMouse(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
+                //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
+                //if (MyMouse.ChceckMouseRectangle(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
+                //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
+                //if (MyMouse.ChceckMouseRectangle(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
                 if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
                 if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
                 if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;

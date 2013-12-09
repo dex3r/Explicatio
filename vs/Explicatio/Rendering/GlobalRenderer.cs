@@ -20,7 +20,7 @@ namespace Explicatio.Rendering
             batch.End();
             batch.GraphicsDevice.SetRenderTarget(renderTarget);
             batch.Begin();
-            batch.GraphicsDevice.Clear(Color.Black);
+            batch.GraphicsDevice.Clear(Color.Transparent);
             World world = Main.Main.Instance.CurrentWorld;
             Vector2 v;
             Chunk c = c = world.GetChunk(0, 0);

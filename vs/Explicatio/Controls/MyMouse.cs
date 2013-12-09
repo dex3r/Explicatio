@@ -25,12 +25,27 @@ namespace Explicatio.Controls
             ScrollWheelDelta = OverallScrollWheelValue - Mouse.GetState().ScrollWheelValue;
             OverallScrollWheelValue = Mouse.GetState().ScrollWheelValue;
         }
-        //Intercośtam nie działa
-        public static bool ChceckMouse(int x1,int y1,int x2,int y2)
+        /// <summary>
+        /// Sprawdza czy mysz znajduje się w kwadracie 
+        /// </summary>
+        /// <param name="x1">Top</param>
+        /// <param name="y1">Left</param>
+        /// <param name="x2">Bottom</param>
+        /// <param name="y2">Right</param>
+        public static bool ChceckMouseRectangle(int x1,int y1,int x2,int y2)
         {
-            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2) return true;
-            else return false;
+            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        /// <summary>
+        /// Fukncja pomocnicza służy do przesuwania obrazu po przytrzymaniu środkowego przycisku myszy
+        /// </summary>
         /// <returns>True - ON, False - OFF</returns>
         public static bool ToogleMiddleButton()
         {
