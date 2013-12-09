@@ -28,7 +28,9 @@ namespace Explicatio.Rendering
         {
             Transform = Matrix.Identity;
             View = view;
-            zoom = 0.1f;
+            zoom = 0.01f;
+            X = 50000f;
+            Y = 5000f;
         }
         public void UpdateCamera()
         {

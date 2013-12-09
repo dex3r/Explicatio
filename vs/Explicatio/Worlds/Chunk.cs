@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Graphics;
 using Explicatio.Entities;
 
 namespace Explicatio.Worlds
@@ -14,7 +13,7 @@ namespace Explicatio.Worlds
         /// <summary>
         /// Rozmiar chunku, "const" dla wydajności
         /// </summary>
-        public const int CHUNK_SIZE = 32;
+        public const int CHUNK_SIZE = 16;
 
         /// <summary>
         ///  ID obiektów, tablice jednowymiarowe dla wydajności
@@ -58,6 +57,10 @@ namespace Explicatio.Worlds
 
         public World WorldObj { get; private set; }
 
+        public RenderTarget2D RenderTarget { get; set; }
+
+        public bool NeedsRedrawing { get; private set; }
+
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }
@@ -80,8 +83,9 @@ namespace Explicatio.Worlds
             // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć cx w przypadku 
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
-
             ResetChunkData(1);
+
+            RenderTarget = new RenderTarget2D(Main.Main.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32, false, SurfaceFormat.Bgra5551, DepthFormat.None);
         }
 
         /// <summary>
@@ -112,6 +116,11 @@ namespace Explicatio.Worlds
                 }
             }
             return null;
+        }
+
+        public void MarkToRedraw()
+        {
+            NeedsRedrawing = true;
         }
     }
 }
