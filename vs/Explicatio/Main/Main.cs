@@ -86,7 +86,6 @@ namespace Explicatio.Main
                 camera.Zoom += 0.25f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 120);
                 //camera.Zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(camera.Zoom, 1)));
                 //camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
-                //! Już nie trzeba nic zmieniać żeby działało jak coś się zmieni z rozdzielczością ale generalnie kod jest teraz całkeim nieczytelny. TODO Delete this comment
                 //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
                 //if (MyMouse.ChceckMouseRectangle(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
                 //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
@@ -130,7 +129,8 @@ namespace Explicatio.Main
             //{
             Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
                        "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
-                       "Fps2: " + lastFps + "\n";
+                       "Fps2: " + lastFps + "\n" +
+                       "Resolution: " + Options.resolution[Options.ResolutionStatus, 0] + " " +Options.resolution[Options.ResolutionStatus, 1];
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}

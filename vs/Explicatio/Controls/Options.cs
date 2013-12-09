@@ -36,7 +36,7 @@ namespace Explicatio.Controls
         /// <summary>
         /// Tablica dostępnych rozdzielczości
         /// </summary>
-        private static int[,] resolution = new int[15, 2]
+        public static readonly int[,] resolution = new int[15, 2]
         {
             {1920,1080},
             {1680,1050},
@@ -60,7 +60,7 @@ namespace Explicatio.Controls
         public static void Init(GraphicsDeviceManager graphicsDeviceManager)
         {
 #if DEBUG
-            resolutionStatus = 15;
+            resolutionStatus = 14;
             updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
 #else
             //Rozdzielczość domyślna 1920x1080
@@ -77,27 +77,24 @@ namespace Explicatio.Controls
         /// </summary>
         public static void KeyPressed(GraphicsDeviceManager graphicsDeviceManager)
         {
-            bool status = true;
-            if (Keyboard.GetState().IsKeyDown(Keys.F4) && status)
+            if (Keyboard.GetState().IsKeyDown(Keys.F4))
             {
-                status = false;
                 toogleFullScreeen(graphicsDeviceManager);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.F5) && status)
+            if (Keyboard.GetState().IsKeyDown(Keys.F5))
             {
                 if (resolutionStatus < 14)
                 {
-                    status = false;
                     resolutionStatus++;
                     updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
                     ResolutionChange = 1;
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.F6) && status)
+            if (Keyboard.GetState().IsKeyDown(Keys.F6))
             {
                 if (resolutionStatus > 0)
                 {
-                    status = false;
+
                     resolutionStatus--;
                     updateResolution(graphicsDeviceManager, resolution[resolutionStatus, 0], resolution[resolutionStatus, 1]);
                     ResolutionChange = 1;
