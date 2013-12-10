@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Explicatio.Worlds;
 using Explicatio.Blocks;
 
@@ -30,9 +31,9 @@ namespace Explicatio.Rendering
                 {
                     // Wszystkie bloki są obracane w prawo o 45* aby stworzyć wrażenie izometrii
                     v = new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16);
-
-                    //batch.Draw(Block.Blocks[chunk[cx, cy]].Texture, new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32 + ((chunk.WorldObj.ChunksInRow - chunk.Y + chunk.X) * Chunk.CHUNK_SIZE * 32), (cx + cy) * 16 + ((chunk.X + chunk.Y) * 16 * Chunk.CHUNK_SIZE)), Color.White);
+                    //batch.Draw(Block.Blocks[chunk[cx, cy]].Texture, new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32 + ((chunk.WorldObj.ChunksInRow - chunk.Y + chunk.X) * Chunk.CHUNK_SIZE * 32), (cx + cy) * 16 + ((chunk.X + chunk.Y) * 16 * Chunk.CHUNK_SIZE)), Color.White);                
                     batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.White);
+                    Text.Draw(v.X + " " + v.Y, v,Color.Azure,0.4f);
                 }
             }
             batch.End();
@@ -48,16 +49,16 @@ namespace Explicatio.Rendering
         {
             Chunk c;
             Vector2 v;
-            const int o1 = Chunk.CHUNK_SIZE * 32;
-            const int o2 = 16 * Chunk.CHUNK_SIZE;
+            const int o1 = 32;//Chunk.CHUNK_SIZE * 32;
+            const int o2 = 16;//16 * Chunk.CHUNK_SIZE;
             for (int x = 0; x < world.ChunksInRow; x++)
             {
                 for (int y = 0; y < world.ChunksInRow; y++)
                 {
-                    c = world.GetChunk(x, y);
+                    //c = world.GetChunk(x, y);
                     int mx = (world.ChunksInRow - y + x) * o1;
                     int my = (x + y) * o2;
-                    v = new Vector2(mx, my);
+                    v = new Vector2(x, y);
                     batch.Draw(renderTarget, v, Color.White);
                 }
             }

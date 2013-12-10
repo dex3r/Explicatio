@@ -16,6 +16,7 @@ namespace Explicatio.Main
 {
     public class Main : Game
     {
+        private GameWindow gameWindow;
         private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
 
@@ -50,6 +51,8 @@ namespace Explicatio.Main
             base.Initialize();
             graphicsDeviceManager.SynchronizeWithVerticalRetrace = true;
             currentWorld = new World();
+            //Ustawienie pozycji okna
+            Window.SetPosition(new Point(400,100));
         }
 
         protected override void LoadContent()
@@ -96,20 +99,23 @@ namespace Explicatio.Main
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
             GlobalRenderer.Draw(spriteBatch, gameTime);
+            MouseTest.MouseObject(GraphicsDevice, this);
             spriteBatch.End();
             //Wyświetlanie bez transformacji
             spriteBatch.Begin();
             //if (Keyboard.GetState().IsKeyDown(Keys.F2))
             //{
             Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
-                       "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
-                       "Fps2: " + lastFps + "\n" +
-                       "Resolution: " + Options.resolution[Options.ResolutionStatus, 0] + " " + Options.resolution[Options.ResolutionStatus, 1];
+                //"Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
+                       "Fps: " + lastFps + "\n" +
+                       "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
+                       "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
+                       GraphicsDevice.Viewport + "\n" +
+                       GraphicsDevice.Viewport.Bounds + "\n"
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
             spriteBatch.End();
-
             base.Draw(gameTime);
         }
 

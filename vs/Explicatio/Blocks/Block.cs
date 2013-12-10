@@ -59,7 +59,6 @@ namespace Explicatio.Blocks
         {
             this.texture = texture;
         }
-
         #endregion
     }
 }

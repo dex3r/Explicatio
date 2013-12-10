@@ -44,6 +44,7 @@
     <Compile Include="Controls\Consol.cs" />
     <Compile Include="Controls\Options.cs" />
     <Compile Include="Entities\Updatable.cs" />
+    <Compile Include="Main\GameWindowControl.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Main\Utils.cs" />

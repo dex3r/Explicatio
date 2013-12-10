@@ -24,7 +24,7 @@ namespace Explicatio.Rendering
             get { return Camera.transform; }
             set { Camera.transform = value; }
         }
-        static private float zoom = 0.01f;
+        static private float zoom = 1f;
         /// <summary>
         /// Zoom kamery
         /// </summary>
@@ -33,7 +33,7 @@ namespace Explicatio.Rendering
             get { return zoom; }
             set { zoom = value; }
         }
-        static private float x = 50000f;
+        static private float x = 0f;
         /// <summary>
         /// Pozycja X kamrry
         /// </summary>
@@ -42,7 +42,7 @@ namespace Explicatio.Rendering
             get { return Camera.x; }
             set { Camera.x = value; }
         }
-        static private float y = 5000f;
+        static private float y = 0f;
         /// <summary>
         /// Pozycja Y kamery
         /// </summary>
@@ -69,7 +69,9 @@ namespace Explicatio.Rendering
         /// Wielkość krawędzi do przesuwania ekranu
         /// </summary>
         private const int BORDERSIZE = 15;
-
+        /// <summary>
+        /// Przesuwanie kamery na wszystkei sposoby
+        /// </summary>
         static public void Interaction(GraphicsDeviceManager graphicsDeviceManager, GraphicsDevice graphicDevice)
         {
             if (MyMouse.ToogleMiddleButton() == false)
