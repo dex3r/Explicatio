@@ -32,7 +32,14 @@ namespace Explicatio.Rendering
                     // Wszystkie bloki są obracane w prawo o 45* aby stworzyć wrażenie izometrii
                     v = new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16);
                     //batch.Draw(Block.Blocks[chunk[cx, cy]].Texture, new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32 + ((chunk.WorldObj.ChunksInRow - chunk.Y + chunk.X) * Chunk.CHUNK_SIZE * 32), (cx + cy) * 16 + ((chunk.X + chunk.Y) * 16 * Chunk.CHUNK_SIZE)), Color.White);                
-                    batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.White);
+                    if (Controls.MouseRelative.ChceckMouseRectangle((int)v.X + cx, (int)v.Y + cy, (int)v.X + cx + 32, (int)v.Y + cy + 32))
+                    {
+                        batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.Black);
+                    }
+                    else
+                    {
+                        batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.White);
+                    }
                     Text.Draw(v.X + " " + v.Y, v,Color.Azure,0.4f);
                 }
             }

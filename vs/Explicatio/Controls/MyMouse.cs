@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Controls
 {
-    public static class MyMouse
+    public static class MouseAbsolute
     {
         private static bool middleButtonStatus = false;
         public static int MouseHoldPositionX { get; private set; }
@@ -34,24 +34,6 @@ namespace Explicatio.Controls
         /// <param name="x2">Bottom</param>
         /// <param name="y2">Right</param>
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
-        {
-            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// Sprawdza czy mysz znajduje się w transformowanym kwadracie
-        /// </summary>
-        /// <param name="x1">Top</param>
-        /// <param name="y1">Left</param>
-        /// <param name="x2">Bottom</param>
-        /// <param name="y2">Right</param>
-        public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2, Matrix matrix)
         {
             if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
             {
@@ -100,6 +82,16 @@ namespace Explicatio.Controls
             Rendering.Text.Draw(positionRelative.X + " " + positionRelative.Y, new Vector2(positionRelative.X, positionRelative.Y));
         }
 
-
+        public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
+        {
+            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
