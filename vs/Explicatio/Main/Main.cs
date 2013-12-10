@@ -106,8 +106,6 @@ namespace Explicatio.Main
             //if (Keyboard.GetState().IsKeyDown(Keys.F2))
             //{
             Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +       
-                       "Render FPS: " + Window.GetForm().RenderFrequency + "\n" +
-                       "Update FPS: " + Window.GetForm().UpdateFrequency + "\n" +
                        "Fps: " + lastFps + "\n" +
                        "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
                        "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
@@ -115,7 +113,7 @@ namespace Explicatio.Main
                        Window.GetForm().Bounds + "\n" +
                        Window.GetForm().WindowState + "\n" +
                        Window.GetForm().WindowBorder + "\n" +
-                       Window.GetForm().WindowInfo
+                       Window.GetForm().WindowInfo 
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}

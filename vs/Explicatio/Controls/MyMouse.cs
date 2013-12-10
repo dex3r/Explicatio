@@ -93,5 +93,16 @@ namespace Explicatio.Controls
                 return false;
             }
         }
+        public static bool ChceckMouseDiamond(int x1, int y1, int x2, int y2)
+        {
+            if (positionRelative.X >= x1 && positionRelative.X <= x2 && positionRelative.Y >= y1 && positionRelative.Y <= y2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

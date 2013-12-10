@@ -40,7 +40,6 @@ namespace Explicatio.Rendering
                     {
                         batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.White);
                     }
-                    Text.Draw(v.X + " " + v.Y, v,Color.Azure,0.4f);
                 }
             }
             batch.End();
@@ -56,16 +55,17 @@ namespace Explicatio.Rendering
         {
             Chunk c;
             Vector2 v;
-            const int o1 = 32;//Chunk.CHUNK_SIZE * 32;
-            const int o2 = 16;//16 * Chunk.CHUNK_SIZE;
+            const int o1 = Chunk.CHUNK_SIZE * 32;
+            const int o2 = 16 * Chunk.CHUNK_SIZE;
             for (int x = 0; x < world.ChunksInRow; x++)
             {
                 for (int y = 0; y < world.ChunksInRow; y++)
                 {
-                    //c = world.GetChunk(x, y);
+                    c = world.GetChunk(x, y);
                     int mx = (world.ChunksInRow - y + x) * o1;
                     int my = (x + y) * o2;
-                    v = new Vector2(x, y);
+                    v = new Vector2(mx, my);
+                    Text.Draw(v.X + " " + v.Y, v, Color.Azure, 0.4f);
                     batch.Draw(renderTarget, v, Color.White);
                 }
             }
