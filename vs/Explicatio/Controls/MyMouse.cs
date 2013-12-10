@@ -82,33 +82,22 @@ namespace Explicatio.Controls
         }
     }
 
-    public static class MouseTest
+    public static class MouseRelative
     {
-        private static Vector3 positionRelative;
+        private static Vector2 positionRelative;
 
-        public static Vector3 PositionRelative
+        public static Vector2 PositionRelative
         {
-            get { return MouseTest.positionRelative; }
-            set { MouseTest.positionRelative = value; }
-        }
-        private static Vector2 positionAbsolute;
-
-        public static Vector2 PositionAbsolute
-        {
-            get { return MouseTest.positionAbsolute; }
-            set { MouseTest.positionAbsolute = value; }
+            get { return MouseRelative.positionRelative; }
+            set { MouseRelative.positionRelative = value; }
         }
         public static void MouseObject(GraphicsDevice graphics, Game game)
         {
-            positionAbsolute.X = Mouse.GetState().X;
-            positionAbsolute.Y = Mouse.GetState().Y;
 
-            positionRelative = Rendering.Camera.Transform.Translation*-1;
-            
+            positionRelative.X = Rendering.Camera.Transform.Translation.X * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().X * (float)Math.Pow(Rendering.Camera.Zoom, -1);
+            positionRelative.Y = Rendering.Camera.Transform.Translation.Y * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().Y * (float)Math.Pow(Rendering.Camera.Zoom, -1);
 
-
-            Rendering.Text.Draw("RELATIVE", new Vector2(positionRelative.X,positionRelative.Y));
-            Rendering.Text.Draw("ABSOLUTE", positionAbsolute);
+            Rendering.Text.Draw(positionRelative.X + " " + positionRelative.Y, new Vector2(positionRelative.X, positionRelative.Y));
         }
 
 

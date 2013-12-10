@@ -99,19 +99,22 @@ namespace Explicatio.Main
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
             GlobalRenderer.Draw(spriteBatch, gameTime);
-            MouseTest.MouseObject(GraphicsDevice, this);
+            MouseRelative.MouseObject(GraphicsDevice, this);
             spriteBatch.End();
             //Wyświetlanie bez transformacji
             spriteBatch.Begin();
             //if (Keyboard.GetState().IsKeyDown(Keys.F2))
             //{
-            Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
-                //"Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
+            Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +       
+                       "Render FPS: " + Window.GetForm().RenderFrequency + "\n" +
+                       "Update FPS: " + Window.GetForm().UpdateFrequency + "\n" +
                        "Fps: " + lastFps + "\n" +
                        "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
                        "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
-                       GraphicsDevice.Viewport + "\n" +
-                       GraphicsDevice.Viewport.Bounds + "\n"
+                       Camera.Transform.Translation + "\n" +
+                       Window.GetForm().WindowState + "\n" +
+                       Window.GetForm().WindowBorder + "\n" +
+                       Window.GetForm().WindowInfo
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
