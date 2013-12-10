@@ -75,32 +75,8 @@ namespace Explicatio.Main
 
             Options.KeyPressed(graphicsDeviceManager);
 
-            const int step = 7;
-            const int bordersize = 15; //Wielkość przesuwaka?
-            if (MyMouse.ToogleMiddleButton() == false)
-            {
-                MyMouse.ScrollWheelMoveUpdate();
-                Camera.Zoom += 0.25f * Camera.Zoom * (-MyMouse.ScrollWheelDelta / 120);
-                //Camera.Zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(Camera.Zoom, 1)));
-                //Camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
-                if (graphicsDeviceManager.IsFullScreen == true)
-                {
-                    if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) Camera.Y -= step / Camera.Zoom;
-                    if (MyMouse.ChceckMouseRectangle(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) Camera.Y += step / Camera.Zoom;
-                    if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) Camera.X -= step / Camera.Zoom;
-                    if (MyMouse.ChceckMouseRectangle(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) Camera.X += step / Camera.Zoom;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Left)) Camera.X -= step / Camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Right)) Camera.X += step / Camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Up)) Camera.Y -= step / Camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Down)) Camera.Y += step / Camera.Zoom;
-            }
-            else
-            {
-                Camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X) / 40 / Camera.Zoom;
-                Camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y) / 40 / Camera.Zoom;
-            }
-
+            Camera.Interaction(graphicsDeviceManager, GraphicsDevice);
+            Camera.Update(GraphicsDevice);
             base.Update(gameTime);
         }
 
@@ -116,8 +92,6 @@ namespace Explicatio.Main
             spriteBatch.Begin();
             GraphicsDevice.Clear(Color.Red);
             spriteBatch.End();
-
-            Camera.UpdateCamera(GraphicsDevice);
 
             //Wyświetlanie po transformacji
             BeginNormalDrawing();

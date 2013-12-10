@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\IMetaTexture.cs" />
+    <Compile Include="Controls\Consol.cs" />
     <Compile Include="Controls\Options.cs" />
     <Compile Include="Entities\Updatable.cs" />
     <Compile Include="Main\Main.cs" />
