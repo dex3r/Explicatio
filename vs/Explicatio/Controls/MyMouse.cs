@@ -84,7 +84,7 @@ namespace Explicatio.Controls
 
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
         {
-            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
+            if (positionRelative.X >= x1 && positionRelative.X <= x2 && positionRelative.Y >= y1 && positionRelative.Y <= y2)
             {
                 return true;
             }
