@@ -18,7 +18,6 @@ namespace Explicatio.Main
     {
         private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
-        private Camera camera;
 
         public static Main Instance { get; private set; }
 
@@ -58,7 +57,6 @@ namespace Explicatio.Main
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Textures.Load(this.Content);
-            camera = new Camera(new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             Text.Load(spriteBatch, this.Content);
             Text.LoadDefaultFont();
         }
@@ -79,26 +77,28 @@ namespace Explicatio.Main
 
             const int step = 7;
             const int bordersize = 15; //Wielkość przesuwaka?
-
             if (MyMouse.ToogleMiddleButton() == false)
             {
                 MyMouse.ScrollWheelMoveUpdate();
-                camera.Zoom += 0.25f * camera.Zoom * (-MyMouse.ScrollWheelDelta / 120);
-                //camera.Zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(camera.Zoom, 1)));
-                //camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
-                //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) camera.Y -= step / camera.Zoom;
-                //if (MyMouse.ChceckMouseRectangle(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.Y += step / camera.Zoom;
-                //if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) camera.X -= step / camera.Zoom;
-                //if (MyMouse.ChceckMouseRectangle(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) camera.X += step / camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Left)) camera.X -= step / camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Right)) camera.X += step / camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Up)) camera.Y -= step / camera.Zoom;
-                if (Keyboard.GetState().IsKeyDown(Keys.Down)) camera.Y += step / camera.Zoom;
+                Camera.Zoom += 0.25f * Camera.Zoom * (-MyMouse.ScrollWheelDelta / 120);
+                //Camera.Zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(Camera.Zoom, 1)));
+                //Camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
+                if (graphicsDeviceManager.IsFullScreen == true)
+                {
+                    if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize)) Camera.Y -= step / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(0, GraphicsDevice.Viewport.Height - GraphicsDevice.Viewport.Height / GraphicsDevice.Viewport.Height * bordersize, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) Camera.Y += step / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(0, 0, GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, GraphicsDevice.Viewport.Height)) Camera.X -= step / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(GraphicsDevice.Viewport.Width - GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Width * bordersize, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)) Camera.X += step / Camera.Zoom;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Left)) Camera.X -= step / Camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right)) Camera.X += step / Camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Up)) Camera.Y -= step / Camera.Zoom;
+                if (Keyboard.GetState().IsKeyDown(Keys.Down)) Camera.Y += step / Camera.Zoom;
             }
             else
             {
-                camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X) / 40 / camera.Zoom;
-                camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y) / 40 / camera.Zoom;
+                Camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X) / 40 / Camera.Zoom;
+                Camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y) / 40 / Camera.Zoom;
             }
 
             base.Update(gameTime);
@@ -117,11 +117,11 @@ namespace Explicatio.Main
             GraphicsDevice.Clear(Color.Red);
             spriteBatch.End();
 
-            camera.UpdateCamera();
+            Camera.UpdateCamera(GraphicsDevice);
 
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
-            GlobalRenderer.Draw(spriteBatch, gameTime, camera);
+            GlobalRenderer.Draw(spriteBatch, gameTime);
             spriteBatch.End();
             //Wyświetlanie bez transformacji
             spriteBatch.Begin();
@@ -130,7 +130,7 @@ namespace Explicatio.Main
             Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
                        "Fps: " + (1000 / gameTime.ElapsedGameTime.Milliseconds) + "\n" +
                        "Fps2: " + lastFps + "\n" +
-                       "Resolution: " + Options.resolution[Options.ResolutionStatus, 0] + " " +Options.resolution[Options.ResolutionStatus, 1];
+                       "Resolution: " + Options.resolution[Options.ResolutionStatus, 0] + " " + Options.resolution[Options.ResolutionStatus, 1];
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
@@ -148,12 +148,12 @@ namespace Explicatio.Main
         }
 
         /// <summary>
-        /// Zastosuj transofrmację (trans * camera)
+        /// Zastosuj transofrmację (trans * Camera)
         /// </summary>
         /// <param name="transformation"></param>
         public void BeginDrawingAndApplyTransformation(Matrix transformation)
         {
-            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * camera.Transform);
+            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * Camera.Transform);
         }
     }
 

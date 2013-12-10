@@ -13,7 +13,7 @@ namespace Explicatio.Rendering
     {
         private static RenderTarget2D renderTarget;
 
-        public static void Draw(SpriteBatch batch, GameTime time, Camera camera)
+        public static void Draw(SpriteBatch batch, GameTime time)
         {
             //DrawWorld(batch, Main.Main.Instance.CurrentWorld, camera);
             renderTarget = new RenderTarget2D(Main.Main.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32);
@@ -39,12 +39,12 @@ namespace Explicatio.Rendering
             batch.GraphicsDevice.SetRenderTarget(null);
             batch.GraphicsDevice.Clear(Color.CornflowerBlue);
             Main.Main.Instance.BeginNormalDrawing();
-            DrawWorld(batch, Main.Main.Instance.CurrentWorld, camera);
+            DrawWorld(batch, Main.Main.Instance.CurrentWorld);
         }
 
 
 
-        public static void DrawWorld(SpriteBatch batch, World world, Camera camera)
+        public static void DrawWorld(SpriteBatch batch, World world)
         {
             Chunk c;
             Vector2 v;

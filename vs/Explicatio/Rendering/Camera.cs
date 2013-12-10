@@ -10,34 +10,53 @@ using Microsoft.Xna.Framework;
 
 namespace Explicatio.Rendering
 {
-    public class Camera
+    public static class Camera
     {
-        internal Matrix Transform { get; private set; }
-        internal Viewport View { get; private set; }
 
-        private float zoom;
-        public float Zoom
+        static private Matrix transform = Matrix.Identity;
+        /// <summary>
+        /// Matrix do wykonywania obliczeń
+        /// </summary>
+        public static Matrix Transform
+        {
+            get { return Camera.transform; }
+            set { Camera.transform = value; }
+        }
+        static private float zoom = 0.01f;
+        /// <summary>
+        /// Zoom kamery
+        /// </summary>
+        static public float Zoom
         {
             get { return zoom; }
-            set { zoom = value;  }
+            set { zoom = value; }
         }
-        public float X { get; set; }
-        public float Y { get; set; }
-
-        public Camera(Viewport view)
+        static private float x = 50000f;
+        /// <summary>
+        /// Pozycja X kamrry
+        /// </summary>
+        public static float X
         {
-            Transform = Matrix.Identity;
-            View = view;
-            zoom = 0.01f;
-            X = 50000f;
-            Y = 5000f;
+            get { return Camera.x; }
+            set { Camera.x = value; }
         }
-        public void UpdateCamera()
+        static private float y = 5000f;
+        /// <summary>
+        /// Pozycja Y kamery
+        /// </summary>
+        public static float Y
         {
-             Transform = Matrix.CreateTranslation(-(View.Width / 2 + X), -(View.Height / 2 + Y), 0) *
-                        Matrix.CreateScale(zoom) *
-                        Matrix.CreateTranslation(View.Width / 2, View.Height / 2, 0);
+            get { return Camera.y; }
+            set { Camera.y = value; }
+        }
+        /// <summary>
+        /// Aktualizacja kamery
+        /// </summary>
+        static public void UpdateCamera(GraphicsDevice graphicDevice)
+        {
+            Transform = Matrix.CreateTranslation(-(graphicDevice.Viewport.Width / 2 + X), -(graphicDevice.Viewport.Height / 2 + Y), 0) *
+                       Matrix.CreateScale(zoom) *
+                       Matrix.CreateTranslation(graphicDevice.Viewport.Width / 2, graphicDevice.Viewport.Height / 2, 0);
         }
     }
 }
- 
