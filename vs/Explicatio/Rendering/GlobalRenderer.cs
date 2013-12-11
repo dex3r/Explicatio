@@ -7,52 +7,36 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Explicatio.Worlds;
 using Explicatio.Blocks;
+using Explicatio.Main;
 
 namespace Explicatio.Rendering
 {
     public static class GlobalRenderer
     {
-        private static RenderTarget2D renderTarget;
-
-        public static void Draw(SpriteBatch batch, GameTime time)
+        public static void Draw(GameTime time)
         {
-            //DrawWorld(batch, Main.Main.Instance.CurrentWorld, camera);
-            renderTarget = new RenderTarget2D(Main.Main.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32);
-            batch.End();
-            batch.GraphicsDevice.SetRenderTarget(renderTarget);
-            batch.Begin();
-            batch.GraphicsDevice.Clear(Color.Transparent);
-            World world = Main.Main.Instance.CurrentWorld;
-            Vector2 v;
-            Chunk c = c = world.GetChunk(0, 0);
-            for (ushort cx = 0; cx < Chunk.CHUNK_SIZE; cx++)
+            GameMain.SpriteBatch.End();
+            World world = Main.GameMain.Instance.CurrentWorld;
+            Chunk c;
+            for (int x = 0; x < world.ChunksInRow; x++)
             {
-                for (ushort cy = 0; cy < Chunk.CHUNK_SIZE; cy++)
+                for (int y = 0; y < world.ChunksInRow; y++)
                 {
-                    // Wszystkie bloki są obracane w prawo o 45* aby stworzyć wrażenie izometrii
-                    v = new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16);
-                    //batch.Draw(Block.Blocks[chunk[cx, cy]].Texture, new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32 + ((chunk.WorldObj.ChunksInRow - chunk.Y + chunk.X) * Chunk.CHUNK_SIZE * 32), (cx + cy) * 16 + ((chunk.X + chunk.Y) * 16 * Chunk.CHUNK_SIZE)), Color.White);                
-                    if (Controls.MouseRelative.ChceckMouseRectangle((int)v.X + cx, (int)v.Y + cy, (int)v.X + cx + 32, (int)v.Y + cy + 32))
+                    c = world.GetChunk(x, y);
+                    if(c.NeedsRedrawing)
                     {
-                        batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.Black);
-                    }
-                    else
-                    {
-                        batch.Draw(Block.Blocks[c[cx, cy]].Texture, v, Color.White);
+                        ChunkRenderer.RenderChunk(c);
                     }
                 }
             }
-            batch.End();
-            batch.GraphicsDevice.SetRenderTarget(null);
-            batch.GraphicsDevice.Clear(Color.CornflowerBlue);
-            Main.Main.Instance.BeginNormalDrawing();
-            DrawWorld(batch, Main.Main.Instance.CurrentWorld);
+            GameMain.BeginNormalDrawing();
+            GameMain.SpriteBatch.GraphicsDevice.Clear(Color.CornflowerBlue);
+            DrawWorld(Main.GameMain.Instance.CurrentWorld);
         }
 
-
-
-        public static void DrawWorld(SpriteBatch batch, World world)
+        public static void DrawWorld(World world)
         {
+            int couter = 0;
             Chunk c;
             Vector2 v;
             const int o1 = Chunk.CHUNK_SIZE * 32;
@@ -65,10 +49,17 @@ namespace Explicatio.Rendering
                     int mx = (world.ChunksInRow - y + x) * o1;
                     int my = (x + y) * o2;
                     v = new Vector2(mx, my);
-                    Text.Draw(v.X + " " + v.Y, v, Color.Azure, 0.4f);
-                    batch.Draw(renderTarget, v, Color.White);
+                    //Text.Draw(v.X + " " + v.Y, v, Color.Azure, 0.4f);
+                    GameMain.SpriteBatch.Draw(c.RenderTarget, v, Color.White);
+                    couter++;
+                    if(couter == 15)
+                    {
+                        GameMain.SpriteBatch.End();
+                        GameMain.BeginNormalDrawing();
+                    }
                 }
             }
+
             //Vector2 v;
             //Chunk c;
             //// Dwie wartości stworzone w celach optymalizacyjnych
@@ -96,7 +87,7 @@ namespace Explicatio.Rendering
             //        if (counter % 15 == 0)
             //        {
             //            batch.End();
-            //            Main.Main.Instance.BeginNormalDrawing();
+            //            GameMain.GameMain.Instance.BeginNormalDrawing();
             //        }
             //        counter++;
             //    }

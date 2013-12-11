@@ -14,13 +14,15 @@ using System.Threading;
 
 namespace Explicatio.Main
 {
-    public class Main : Game
+    public class GameMain : Game
     {
+        #region static
+        public static GameMain Instance { get; private set; }
+        public static SpriteBatch SpriteBatch { get; private set; }
+        #endregion
+
         private GameWindow gameWindow;
         private GraphicsDeviceManager graphicsDeviceManager;
-        private SpriteBatch spriteBatch;
-
-        public static Main Instance { get; private set; }
 
         private World currentWorld;
         public World CurrentWorld
@@ -33,7 +35,7 @@ namespace Explicatio.Main
         private int lastFps;
         private long lastSec;
 
-        public Main()
+        public GameMain()
             : base()
         {
             Instance = this;
@@ -41,7 +43,7 @@ namespace Explicatio.Main
             Content.RootDirectory = "Content";
             //Ustawianie fullscreena początkowego i rozdziałki jest teraz w obiekcjie options
             Options.Init(graphicsDeviceManager);
-            this.IsFixedTimeStep = true;
+            this.IsFixedTimeStep = false;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
 
         }
@@ -57,10 +59,10 @@ namespace Explicatio.Main
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Textures.Load(this.Content);
-            Text.Load(spriteBatch, this.Content);
+            Text.Load(SpriteBatch, this.Content);
             Text.LoadDefaultFont();
         }
 
@@ -92,17 +94,17 @@ namespace Explicatio.Main
                 lastSec = (long)gameTime.TotalGameTime.TotalSeconds;
             }
             currentFps++;
-            spriteBatch.Begin();
+            SpriteBatch.Begin();
             GraphicsDevice.Clear(Color.Red);
-            spriteBatch.End();
+            SpriteBatch.End();
 
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
-            GlobalRenderer.Draw(spriteBatch, gameTime);
+            GlobalRenderer.Draw(gameTime);
             MouseRelative.MouseObject(GraphicsDevice, this);
-            spriteBatch.End();
+            SpriteBatch.End();
             //Wyświetlanie bez transformacji
-            spriteBatch.Begin();
+            SpriteBatch.Begin();
             //if (Keyboard.GetState().IsKeyDown(Keys.F2))
             //{
             Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +       
@@ -110,21 +112,21 @@ namespace Explicatio.Main
                        "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
                        "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
                        Camera.Transform.Translation + "\n" +
-                       Window.GetForm().Bounds + "\n" +
-                       Window.GetForm().WindowState + "\n" +
-                       Window.GetForm().WindowBorder + "\n" +
-                       Window.GetForm().WindowInfo 
+                       Window.GetForm().Bounds + "\n"
+                       //Window.GetForm().WindowState + "\n" +
+                       //Window.GetForm().WindowBorder + "\n"
+                       //Window.GetForm().WindowInfo 
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
-            spriteBatch.End();
+            SpriteBatch.End();
             base.Draw(gameTime);
         }
 
         /// <summary>
         /// Wróć do pozycji kamery
         /// </summary>
-        public void BeginNormalDrawing()
+        public static void BeginNormalDrawing()
         {
             BeginDrawingAndApplyTransformation(Matrix.Identity);
         }
@@ -133,9 +135,9 @@ namespace Explicatio.Main
         /// Zastosuj transofrmację (trans * Camera)
         /// </summary>
         /// <param name="transformation"></param>
-        public void BeginDrawingAndApplyTransformation(Matrix transformation)
+        public static void BeginDrawingAndApplyTransformation(Matrix transformation)
         {
-            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * Camera.Transform);
+            SpriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * Camera.Transform);
         }
     }
 

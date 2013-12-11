@@ -54,12 +54,9 @@ namespace Explicatio.Worlds
 
         public int X { get; private set; }
         public int Y { get; private set; }
-
         public World WorldObj { get; private set; }
-
         public RenderTarget2D RenderTarget { get; set; }
-
-        public bool NeedsRedrawing { get; private set; }
+        public bool NeedsRedrawing { get; set; }
 
         public byte this[ushort x, ushort y]
         {
@@ -85,7 +82,8 @@ namespace Explicatio.Worlds
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
 
-            RenderTarget = new RenderTarget2D(Main.Main.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32, false, SurfaceFormat.Bgra5551, DepthFormat.None);
+            RenderTarget = new RenderTarget2D(Main.GameMain.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32 + 16, false, SurfaceFormat.Bgra5551, DepthFormat.None);
+            NeedsRedrawing = true;
         }
 
         /// <summary>

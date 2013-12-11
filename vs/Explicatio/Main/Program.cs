@@ -9,7 +9,7 @@ namespace Explicatio.Main
         [STAThread]
         static void Main()
         {
-            using (var game = new Main())
+            using (var game = new GameMain())
                 game.Run();
         }
     }
