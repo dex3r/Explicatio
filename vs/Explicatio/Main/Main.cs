@@ -31,6 +31,8 @@ namespace Explicatio.Main
             set { currentWorld = value; }
         }
 
+        public int LastDrawedChunksCount { get; set; }
+
         private int currentFps;
         private int lastFps;
         private long lastSec;
@@ -43,7 +45,7 @@ namespace Explicatio.Main
             Content.RootDirectory = "Content";
             //Ustawianie fullscreena początkowego i rozdziałki jest teraz w obiekcjie options
             Options.Init(graphicsDeviceManager);
-            this.IsFixedTimeStep = false;
+            this.IsFixedTimeStep = true;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
 
         }
@@ -112,10 +114,8 @@ namespace Explicatio.Main
                        "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
                        "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
                        Camera.Transform.Translation + "\n" +
-                       Window.GetForm().Bounds + "\n"
-                       //Window.GetForm().WindowState + "\n" +
-                       //Window.GetForm().WindowBorder + "\n"
-                       //Window.GetForm().WindowInfo 
+                       Window.GetForm().Bounds + "\n" +
+                       "Drawed chunks: " + LastDrawedChunksCount + "\n"
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}

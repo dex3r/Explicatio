@@ -47,7 +47,8 @@
     <Compile Include="Main\GameWindowControl.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Program.cs" />
-    <Compile Include="Main\Utils.cs" />
+    <Compile Include="Utils\Primitives2D.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Controls\MyMouse.cs" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
     <Compile Include="Rendering\Camera.cs" />

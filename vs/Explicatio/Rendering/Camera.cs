@@ -15,21 +15,25 @@ namespace Explicatio.Rendering
     public static class Camera
     {
 #if DEBUG
-        private static float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
+        private static readonly float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
 #else
-        private static float[] zoomSteps = { 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
+        private static readonly float[] zoomSteps = {0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
 #endif
         public static float[] ZoomSteps
         {
             get { return Camera.zoomSteps; }
-            set { Camera.zoomSteps = value; }
         }
 
-        private static int currentZoomStep = 1;
-        public static int CurrentZoomStep
+        private static int currentZoomStepNumber = 1;
+        public static int CurrentZoomStepNumber
         {
-            get { return Camera.currentZoomStep; }
-            set { Camera.currentZoomStep = value; }
+            get { return Camera.currentZoomStepNumber; }
+            set { Camera.currentZoomStepNumber = value; }
+        }
+
+        public static float CurrentZoomStep
+        {
+            get { return zoomSteps[currentZoomStepNumber]; }
         }
 
         static private Matrix transform = Matrix.Identity;
@@ -95,16 +99,16 @@ namespace Explicatio.Rendering
             {
                 MouseAbsolute.ScrollWheelMoveUpdate();
                 int steps = -MouseAbsolute.ScrollWheelDelta / 120;
-                currentZoomStep += steps;
-                if (currentZoomStep < 0)
+                currentZoomStepNumber += steps;
+                if (currentZoomStepNumber < 0)
                 {
-                    currentZoomStep = 0;
+                    currentZoomStepNumber = 0;
                 }
-                else if (currentZoomStep >= zoomSteps.Length)
+                else if (currentZoomStepNumber >= zoomSteps.Length)
                 {
-                    currentZoomStep = zoomSteps.Length - 1;
+                    currentZoomStepNumber = zoomSteps.Length - 1;
                 }
-                zoom = zoomSteps[currentZoomStep];
+                zoom = zoomSteps[currentZoomStepNumber];
 
                 //double z = 0.2f * Camera.Zoom * (-MouseAbsolute.ScrollWheelDelta / 120);
                 //if(MouseAbsolute.ScrollWheelDelta != 0 && z == 0)

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Explicatio.Main
+namespace Explicatio.Utils
 {
     public static class Utils
     {
