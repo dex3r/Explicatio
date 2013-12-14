@@ -11,9 +11,6 @@ namespace Explicatio.Utils
 {
     public static class Utils
     {
-        public static Rectangle RotateRectangle()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

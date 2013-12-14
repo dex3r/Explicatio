@@ -260,7 +260,6 @@ namespace Explicatio.Utils
 		/// <param name="thickness">The thickness of the lines</param>
 		public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float thickness)
 		{
-
 			// TODO: Handle rotations
 			// TODO: Figure out the pattern for the offsets required and then handle it in the line instead of here
 

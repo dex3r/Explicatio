@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Explicatio.Entities;
+using Explicatio.Main;
 
 namespace Explicatio.Worlds
 {
@@ -100,7 +101,7 @@ namespace Explicatio.Worlds
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
 
-            RenderTarget = new RenderTarget2D(Main.GameMain.Instance.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32 + 16, false, SurfaceFormat.Bgra5551, DepthFormat.None);
+            RenderTarget = new RenderTarget2D(GameMain.SpriteBatch.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32 + 16, false, SurfaceFormat.Bgra5551, DepthFormat.None);
             NeedsRedrawing = true;
         }
 

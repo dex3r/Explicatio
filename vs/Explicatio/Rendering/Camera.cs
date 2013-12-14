@@ -72,15 +72,6 @@ namespace Explicatio.Rendering
             get { return Camera.y; }
             set { Camera.y = value; }
         }
-        /// <summary>
-        /// Aktualizacja kamery
-        /// </summary>
-        static public void Update(GraphicsDevice graphicDevice)
-        {
-            Transform = Matrix.CreateTranslation(-(graphicDevice.Viewport.Width / 2 + X), -(graphicDevice.Viewport.Height / 2 + Y), 0) *
-                       Matrix.CreateScale(zoom) *
-                       Matrix.CreateTranslation(graphicDevice.Viewport.Width / 2, graphicDevice.Viewport.Height / 2, 0);
-        }
 
         /// <summary>
         /// Szybkość przesuwania kamery
@@ -90,15 +81,24 @@ namespace Explicatio.Rendering
         /// Wielkość krawędzi do przesuwania ekranu
         /// </summary>
         private const int BORDERSIZE = 15;
+
+        /// <summary>
+        /// Aktualizacja kamery
+        /// </summary>
+        static public void Update(GraphicsDevice graphicDevice)
+        {
+            Transform = Matrix.CreateTranslation(-(graphicDevice.Viewport.Width / 2 + X), -(graphicDevice.Viewport.Height / 2 + Y), 0) *
+                       Matrix.CreateScale(zoom) *
+                       Matrix.CreateTranslation(graphicDevice.Viewport.Width / 2, graphicDevice.Viewport.Height / 2, 0);
+        }
         /// <summary>
         /// Przesuwanie kamery na wszystkei sposoby
         /// </summary>
         static public void Interaction(GraphicsDeviceManager graphicsDeviceManager, GraphicsDevice graphicDevice)
         {
-            if (MouseAbsolute.ToogleMiddleButton() == false)
+            if (MyMouse.ToogleMiddleButton() == false)
             {
-                MouseAbsolute.ScrollWheelMoveUpdate();
-                int steps = -MouseAbsolute.ScrollWheelDelta / 120;
+                int steps = -MyMouse.ScrollWheelDelta / 120;
                 currentZoomStepNumber += steps;
                 if (currentZoomStepNumber < 0)
                 {
@@ -110,20 +110,12 @@ namespace Explicatio.Rendering
                 }
                 zoom = zoomSteps[currentZoomStepNumber];
 
-                //double z = 0.2f * Camera.Zoom * (-MouseAbsolute.ScrollWheelDelta / 120);
-                //if(MouseAbsolute.ScrollWheelDelta != 0 && z == 0)
-                //{
-                //     z = 0.2f;
-                //}
-                //z += Camera.zoom;
-                //Camera.zoom = Math.Min(4.5f, Math.Max(0.01f, (float)Math.Round(z, 1)));
-                ////Camera.Zoom += 0.2f * (-MyMouse.ScrollWheelDelta / 120);
                 if (graphicsDeviceManager.IsFullScreen == true)
                 {
-                    if (MouseAbsolute.ChceckMouseRectangle(0, 0, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height / graphicDevice.Viewport.Height * BORDERSIZE)) Camera.Y -= STEP / Camera.Zoom;
-                    if (MouseAbsolute.ChceckMouseRectangle(0, graphicDevice.Viewport.Height - graphicDevice.Viewport.Height / graphicDevice.Viewport.Height * BORDERSIZE, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height)) Camera.Y += STEP / Camera.Zoom;
-                    if (MouseAbsolute.ChceckMouseRectangle(0, 0, graphicDevice.Viewport.Width / graphicDevice.Viewport.Width * BORDERSIZE, graphicDevice.Viewport.Height)) Camera.X -= STEP / Camera.Zoom;
-                    if (MouseAbsolute.ChceckMouseRectangle(graphicDevice.Viewport.Width - graphicDevice.Viewport.Width / graphicDevice.Viewport.Width * BORDERSIZE, 0, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height)) Camera.X += STEP / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(0, 0, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height / graphicDevice.Viewport.Height * BORDERSIZE)) Camera.Y -= STEP / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(0, graphicDevice.Viewport.Height - graphicDevice.Viewport.Height / graphicDevice.Viewport.Height * BORDERSIZE, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height)) Camera.Y += STEP / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(0, 0, graphicDevice.Viewport.Width / graphicDevice.Viewport.Width * BORDERSIZE, graphicDevice.Viewport.Height)) Camera.X -= STEP / Camera.Zoom;
+                    if (MyMouse.ChceckMouseRectangle(graphicDevice.Viewport.Width - graphicDevice.Viewport.Width / graphicDevice.Viewport.Width * BORDERSIZE, 0, graphicDevice.Viewport.Width, graphicDevice.Viewport.Height)) Camera.X += STEP / Camera.Zoom;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Left)) Camera.X -= STEP / Camera.Zoom;
                 if (Keyboard.GetState().IsKeyDown(Keys.Right)) Camera.X += STEP / Camera.Zoom;
@@ -132,8 +124,8 @@ namespace Explicatio.Rendering
             }
             else
             {
-                Camera.X -= (MouseAbsolute.MouseHoldPositionX - Mouse.GetState().X) / 40 / Camera.Zoom;
-                Camera.Y -= (MouseAbsolute.MouseHoldPositionY - Mouse.GetState().Y) / 40 / Camera.Zoom;
+                Camera.X -= (MyMouse.MouseHoldPositionX - Mouse.GetState().X) / 40 / Camera.Zoom;
+                Camera.Y -= (MyMouse.MouseHoldPositionY - Mouse.GetState().Y) / 40 / Camera.Zoom;
             }
         }
     }
