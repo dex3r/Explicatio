@@ -22,7 +22,7 @@ namespace Explicatio.Blocks
         {
             blocks[0] = null;
             blocks[1] = new Block(1, "Grass", Textures.Grass);
-            blocks[2] = new Block(2, "Road");
+            blocks[2] = new Block(2, "Snow", Textures.Snow);
         }
 
         #endregion

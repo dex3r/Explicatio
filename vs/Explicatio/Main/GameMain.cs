@@ -1,4 +1,5 @@
-﻿using Explicatio.Controls;
+﻿using System;
+using Explicatio.Controls;
 using Explicatio.Rendering;
 using Explicatio.Worlds;
 using Microsoft.Xna.Framework;
@@ -116,7 +117,30 @@ namespace Explicatio.Main
             BeginNormalDrawing();
             // Rysowanie świata i obiektów
             GlobalRenderer.Draw(gameTime);
-            MyMouse.RenderMousePosition(GraphicsDevice, this);
+            SpriteBatch.End();
+            //? TEMP
+            BeginNormalDrawing();
+            const int o1 = Chunk.CHUNK_SIZE * 32;
+            const int o2 = Chunk.CHUNK_SIZE * 16;
+            //mx = (world.ChunksInRow - y + x) * o1;
+            //my = (x + y) * o2;
+            int y = (int)(((MyMouse.PositionRelative.Y / o2) - (MyMouse.PositionRelative.X / o1) + currentWorld.ChunksInRow) / 2);
+            int x = (int)((MyMouse.PositionRelative.X / o1) + ((MyMouse.PositionRelative.Y / o2) - (MyMouse.PositionRelative.X / o1) + currentWorld.ChunksInRow) / 2) - currentWorld.ChunksInRow;
+            //int x = (int)((MyMouse.PositionRelative.X  - currentWorld.ChunksInRow +(MyMouse.PositionRelative.Y) / (Chunk.CHUNK_SIZE * 32))) - 1;
+            //int y = (int)(MyMouse.PositionRelative.Y / (Chunk.CHUNK_SIZE * 16) - (MyMouse.PositionRelative.X / (Chunk.CHUNK_SIZE * 32))) + currentWorld.ChunksInRow ;
+            Text.Draw(x + " " + y, MyMouse.PositionRelative);
+            if (x >= 0 && y >= 0 && x < currentWorld.ChunksInRow && y < currentWorld.ChunksInRow)
+            {
+                Chunk c = currentWorld.GetChunk(x, y);
+                for (int i = 0; i < Chunk.CHUNK_SIZE; i++)
+                {
+                    for (int j = 0; j < Chunk.CHUNK_SIZE; j++)
+                    {
+                        c[(ushort)i, (ushort)j] = 2;
+                    }
+                }
+                c.MarkToRedraw();
+            }
             SpriteBatch.End();
 
             //Wyświetlanie bez transformacji

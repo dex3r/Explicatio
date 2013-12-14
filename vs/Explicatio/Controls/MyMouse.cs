@@ -33,17 +33,22 @@ namespace Explicatio.Controls
         {
             ScrollWheelDelta = OverallScrollWheelValue - Mouse.GetState().ScrollWheelValue;
             OverallScrollWheelValue = Mouse.GetState().ScrollWheelValue;
-        }
-
-        public static void RenderMousePosition(GraphicsDevice graphics, Game game)
-        {
             positionRelative.X = Rendering.Camera.Transform.Translation.X * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().X * (float)Math.Pow(Rendering.Camera.Zoom, -1);
             positionRelative.Y = Rendering.Camera.Transform.Translation.Y * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().Y * (float)Math.Pow(Rendering.Camera.Zoom, -1);
-
-            Rendering.Text.Draw(positionRelative.X + " " + positionRelative.Y, new Vector2(positionRelative.X, positionRelative.Y));
         }
 
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
+        {
+            if (Mouse.GetState().X >= x1 && Mouse.GetState().X <= x2 && Mouse.GetState().Y >= y1 && Mouse.GetState().Y <= y2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool ChceckMouseRectangleRelative(int x1, int y1, int x2, int y2)
         {
             if (positionRelative.X >= x1 && positionRelative.X <= x2 && positionRelative.Y >= y1 && positionRelative.Y <= y2)
             {

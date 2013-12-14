@@ -55,7 +55,7 @@ namespace Explicatio.Rendering
             get { return zoom; }
             set { zoom = value; }
         }
-        static private float x = 0f;
+        static private float x = 5000f;
         /// <summary>
         /// Pozycja X kamrry
         /// </summary>
@@ -64,7 +64,7 @@ namespace Explicatio.Rendering
             get { return Camera.x; }
             set { Camera.x = value; }
         }
-        static private float y = 0f;
+        static private float y = 5000f;
         /// <summary>
         /// Pozycja Y kamery
         /// </summary>
