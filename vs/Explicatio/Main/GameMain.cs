@@ -5,7 +5,6 @@ using Explicatio.Worlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace Explicatio.Main
 {
@@ -19,6 +18,7 @@ namespace Explicatio.Main
         private static int currentFps;
         private static int lastFps;
         private static long lastSec;
+        private static int updateTime;
 
         //!? Public:
         private static World currentWorld;
@@ -132,10 +132,12 @@ namespace Explicatio.Main
                            Camera.Transform.Translation + "\n" +
                            Window.GetForm().Bounds + "\n" +
                            "Drawed chunks: " + LastDrawedChunksCount + "\n" +
+                           "Loop time: " + gameTime.ElapsedGameTime.Milliseconds + "\n" +
                            Text.Log
                 ;
                 Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
                 Text.Log = "";
+                //gameTime.ElapsedGameTime
             }
             SpriteBatch.End();
             base.Draw(gameTime);
