@@ -55,6 +55,13 @@ namespace Explicatio.Rendering
         {
             spriteBatch.DrawString(loadedFont, textString, position, textColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
         }
+
+        public static void DrawTextWithShaddow(string textString, Vector2 position)
+        {
+            spriteBatch.DrawString(loadedFont, textString, new Vector2(position.X + 1, position.Y + 1), Color.Gray, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(loadedFont, textString, position, Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0.5f);
+        }
+
         public static void Draw(string textString, Vector2 position, Color textColor, float textSize, string fontName)
         {
             spriteBatch.DrawString(SetFont(fontName), textString, position, textColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
