@@ -50,6 +50,8 @@ namespace Explicatio.Rendering
             // Pozycja pierwszego widocznego pixela
             float startscreenX = -Camera.Transform.Translation.X * (1 / Camera.Zoom);
             float startscreenY = -Camera.Transform.Translation.Y * (1 / Camera.Zoom);
+            //TODO: Wykonywać pętlę tylko dla widocznych chunków (obliczać) Potem wykonać jeszcze jedną pętlę dla wartości z ostatniego przebiegu (usunięcie chunków)
+            //int startX = (int)(((startscreenY / o2) - (startscreenX / o1) + world.ChunksInRow) / 2);
             float startscreenXUnzoomed = -Camera.CreateVirtualTransofrmation(0.2f).Translation.X * (1 / 0.2f);
             float startscreenYUnzoomed = -Camera.CreateVirtualTransofrmation(0.2f).Translation.Y * (1 / 0.2f);
             // Pozycja ostatniego widocznego pixela
@@ -65,14 +67,15 @@ namespace Explicatio.Rendering
                     mx = (world.ChunksInRow - y + x) * o1;
                     my = (x + y) * o2;
                     // Rysowanie tylko widocznych chunków
-                    if (mx + ChunkRenderer.CHUNK_SURFACE_WIDTH < startscreenX || my + ChunkRenderer.CHUNK_SURFACE_HEIGHT < startscreenY || mx > endscreenX || my > endscreenY)
+                    if (mx + ChunkRenderer.CHUNK_SURFACE_WIDTH < startscreenX || my + (2 * ChunkRenderer.CHUNK_SURFACE_HEIGHT) < startscreenY || mx > endscreenX || my > endscreenY)
                     {
                         // Usuwanie z pamięci tylko niewidocznych chunków przy max oddapelni (minimalny zoom)
-                        if(mx + ChunkRenderer.CHUNK_SURFACE_WIDTH < startscreenXUnzoomed || my + ChunkRenderer.CHUNK_SURFACE_HEIGHT < startscreenYUnzoomed || mx > endscreenXUnzoomed || my > endscreenYUnzoomed)
+                        if (mx + ChunkRenderer.CHUNK_SURFACE_WIDTH < startscreenXUnzoomed || my + ChunkRenderer.CHUNK_SURFACE_HEIGHT < startscreenYUnzoomed || mx > endscreenXUnzoomed || my > endscreenYUnzoomed)
                         {
                             // "world.GetChunk(x, y)" zamiact "c" ze względu na wydajność
-                            if (c.NeedsRedrawing != null)
+                            if (c.RenderTarget != null)
                             {
+                                c.RenderTarget.Dispose();
                                 c.RenderTarget = null;
                             }
                         }
