@@ -101,7 +101,7 @@ namespace Explicatio.Main
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
             GlobalRenderer.Draw(gameTime);
-            MouseRelative.MouseObject(GraphicsDevice, this);
+            //
             SpriteBatch.End();
             //Wyświetlanie bez transformacji
             SpriteBatch.Begin();
@@ -119,6 +119,7 @@ namespace Explicatio.Main
             ;
             Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
             //}
+            MouseRelative.MouseObject(GraphicsDevice, this);
             SpriteBatch.End();
             base.Draw(gameTime);
         }

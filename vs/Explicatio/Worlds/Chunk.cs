@@ -55,8 +55,26 @@ namespace Explicatio.Worlds
         public int X { get; private set; }
         public int Y { get; private set; }
         public World WorldObj { get; private set; }
+        /// <summary>
+        /// Nie robić żadnych innych referencji do tego pola
+        /// </summary>
         public RenderTarget2D RenderTarget { get; set; }
-        public bool NeedsRedrawing { get; set; }
+
+        private bool needsRedrawing;
+        /// <summary>
+        /// Zawsze zwraca true gdy RenderTarget jest pusty
+        /// </summary>
+        public bool NeedsRedrawing
+        {
+            get 
+            { 
+                return RenderTarget == null ? true : needsRedrawing; 
+            }
+            set 
+            { 
+                needsRedrawing = value; 
+            }
+        }
 
         public byte this[ushort x, ushort y]
         {
