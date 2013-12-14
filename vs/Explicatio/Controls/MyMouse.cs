@@ -39,8 +39,8 @@ namespace Explicatio.Controls
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + 264 + 0.5f;
-                float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - 264 - 0.5f;
+                float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + (world.ChunksInRow*Chunk.CHUNK_SIZE/2) + 8.5f;
+                float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) - 8.5f;
                 int mx = (int)cx % Chunk.CHUNK_SIZE;
                 int my = (int)cy % Chunk.CHUNK_SIZE;
                 int gx = (int)Math.Floor((double)(cx / Chunk.CHUNK_SIZE));
