@@ -51,7 +51,7 @@ namespace Explicatio.Rendering
             float startscreenX = -Camera.Transform.Translation.X * (1 / Camera.Zoom);
             float startscreenY = -Camera.Transform.Translation.Y * (1 / Camera.Zoom);
             //TODO: Wykonywać pętlę tylko dla widocznych chunków (obliczać) Potem wykonać jeszcze jedną pętlę dla wartości z ostatniego przebiegu (usunięcie chunków)
-            //int startX = (int)(((startscreenY / o2) - (startscreenX / o1) + world.ChunksInRow) / 2);
+            int startX = (int)(((startscreenY / o2) - (startscreenX / o1) + world.ChunksInRow) / 2);
             float startscreenXUnzoomed = -Camera.CreateVirtualTransofrmation(0.2f).Translation.X * (1 / 0.2f);
             float startscreenYUnzoomed = -Camera.CreateVirtualTransofrmation(0.2f).Translation.Y * (1 / 0.2f);
             // Pozycja ostatniego widocznego pixela

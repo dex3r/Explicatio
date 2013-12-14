@@ -133,7 +133,7 @@ namespace Explicatio.Worlds
 
         public void MarkToRedraw()
         {
-            //NeedsRedrawing = true;
+            NeedsRedrawing = true;
         }
     }
 }
