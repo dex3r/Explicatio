@@ -29,8 +29,8 @@ namespace Explicatio.Worlds
 
         public World()
         {
-            //size = 256 + 64 + 16;
-            size = 2048;
+            size = 512;
+            //size = 2048;
             //size = 1024;
             ChunkNumbers = (int)Math.Pow(size / Chunk.CHUNK_SIZE, 2);
             ChunksInRow = size / Chunk.CHUNK_SIZE;
