@@ -71,7 +71,7 @@ namespace Explicatio.Rendering
                         if(mx + ChunkRenderer.CHUNK_SURFACE_WIDTH < startscreenXUnzoomed || my + ChunkRenderer.CHUNK_SURFACE_HEIGHT < startscreenYUnzoomed || mx > endscreenXUnzoomed || my > endscreenYUnzoomed)
                         {
                             // "world.GetChunk(x, y)" zamiact "c" ze względu na wydajność
-                            if (c.NeedsRedrawing != null)
+                            if (c.RenderTarget != null)
                             {
                                 c.RenderTarget = null;
                             }

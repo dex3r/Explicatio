@@ -4,6 +4,7 @@ using Explicatio.Worlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Explicatio.Main
 {
@@ -106,6 +107,7 @@ namespace Explicatio.Main
                 lastFps = currentFps;
                 currentFps = 0;
                 lastSec = (long)gameTime.TotalGameTime.TotalSeconds;
+                GC.Collect();
             }
             currentFps++;
 
@@ -132,7 +134,7 @@ namespace Explicatio.Main
                            "Drawed chunks: " + LastDrawedChunksCount + "\n" +
                            Text.Log
                 ;
-                Text.Draw(Text.Log, new Vector2(0, 0), Color.Black, 0.5f);
+                Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
                 Text.Log = "";
             }
             SpriteBatch.End();
