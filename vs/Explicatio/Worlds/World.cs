@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Explicatio.Entities;
+using Explicatio.Rendering;
 
 namespace Explicatio.Worlds
 {
@@ -28,7 +29,8 @@ namespace Explicatio.Worlds
 
         public World()
         {
-            size = 256 + 64 + 16;
+            //size = 256 + 64 + 16;
+            size = 2048;
             //size = 1024;
             ChunkNumbers = (int)Math.Pow(size / Chunk.CHUNK_SIZE, 2);
             ChunksInRow = size / Chunk.CHUNK_SIZE;
@@ -40,6 +42,7 @@ namespace Explicatio.Worlds
                     chunks[ChunksInRow * y + x] = new Chunk(this, x, y);
                 }
             }
+            
         }
 
         public Chunk GetChunk(int x, int y)

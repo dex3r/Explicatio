@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Explicatio.Entities;
 using Explicatio.Main;
+using Explicatio.Rendering;
 
 namespace Explicatio.Worlds
 {
@@ -69,7 +70,7 @@ namespace Explicatio.Worlds
         {
             get 
             { 
-                return RenderTarget == null ? true : needsRedrawing; 
+                return needsRedrawing; 
             }
             set 
             { 
@@ -96,13 +97,9 @@ namespace Explicatio.Worlds
                 properties[i] = new List<Property>();
             }
            
-            // inizjalizacja pól w konstruktorze - dobra praktyka, ciężej pominąć cx w przypadku 
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
-
-            RenderTarget = new RenderTarget2D(GameMain.SpriteBatch.GraphicsDevice, Chunk.CHUNK_SIZE * 64 + 64, Chunk.CHUNK_SIZE * 32 + 16, false, SurfaceFormat.Bgra5551, DepthFormat.None);
-            NeedsRedrawing = true;
         }
 
         /// <summary>
@@ -111,7 +108,6 @@ namespace Explicatio.Worlds
         /// <param name="id">Id pola</param>
         public void ResetChunkData(byte id)
         {
-            //! for jest szybsze dla typów nieiteracyjnych :)
             for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++ )
             {
                 chunkGround[i] = id;
@@ -137,7 +133,7 @@ namespace Explicatio.Worlds
 
         public void MarkToRedraw()
         {
-            NeedsRedrawing = true;
+            //NeedsRedrawing = true;
         }
     }
 }

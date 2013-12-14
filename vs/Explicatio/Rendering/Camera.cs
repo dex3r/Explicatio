@@ -9,16 +9,17 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
 using Explicatio.Controls;
+using Explicatio.Main;
 
 namespace Explicatio.Rendering
 {
     public static class Camera
     {
-#if DEBUG
-        private static readonly float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
-#else
+//#if DEBUG
+        //private static readonly float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
+//#else
         private static readonly float[] zoomSteps = {0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
-#endif
+//#endif
         public static float[] ZoomSteps
         {
             get { return Camera.zoomSteps; }
@@ -91,6 +92,14 @@ namespace Explicatio.Rendering
                        Matrix.CreateScale(zoom) *
                        Matrix.CreateTranslation(graphicDevice.Viewport.Width / 2, graphicDevice.Viewport.Height / 2, 0);
         }
+
+        public static Matrix CreateVirtualTransofrmation(float virtualZoom)
+        {
+            return Matrix.CreateTranslation(-(GameMain.SpriteBatch.GraphicsDevice.Viewport.Width / 2 + X), -(GameMain.SpriteBatch.GraphicsDevice.Viewport.Height / 2 + Y), 0) *
+                       Matrix.CreateScale(virtualZoom) *
+                       Matrix.CreateTranslation(GameMain.SpriteBatch.GraphicsDevice.Viewport.Width / 2, GameMain.SpriteBatch.GraphicsDevice.Viewport.Height / 2, 0);
+        }
+
         /// <summary>
         /// Przesuwanie kamery na wszystkei sposoby
         /// </summary>
