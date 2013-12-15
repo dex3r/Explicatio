@@ -30,7 +30,7 @@ namespace Explicatio.Worlds
         public World()
         {
             //size = 16;
-            size = 512;
+            size = 32;
             //size = 2048;
             //size = 1024;
             ChunkNumbers = (int)Math.Pow(size / Chunk.CHUNK_SIZE, 2);
