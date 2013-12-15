@@ -70,6 +70,9 @@ namespace Explicatio.Main
             currentWorld = new World();
             //Ustawienie pozycji okna
             Window.SetPosition(new Point(400, 100));
+            //Początkowa pozycja kamery na środku rysowanego pola 
+            Camera.X = currentWorld.ChunksInRow * Chunk.CHUNK_SIZE * 32;
+            Camera.Y = currentWorld.ChunksInRow * Chunk.CHUNK_SIZE * 16;
         }
 
         protected override void LoadContent()
