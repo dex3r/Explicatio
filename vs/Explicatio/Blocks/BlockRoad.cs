@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Explicatio.Worlds;
 using Explicatio.Rendering;
 using Explicatio.Textures;
+using Explicatio.Main;
 
 namespace Explicatio.Blocks
 {
@@ -22,9 +23,14 @@ namespace Explicatio.Blocks
             return TexturesRoads.GetTexture((0xF & c.GetMeta(chunkX, chunkY)), ((0xF0 & c.GetMeta(chunkX, chunkY)) >> 4));
         }
 
-        public void SetMeta(int roadState, int roadType, World world, int x, int y)
+        public void SetMeta(int roadState, int roadType, int x, int y)
         {
-            world.SetMeta((UInt16)(roadType | (roadState << 4)) , x, y);
+            GameMain.CurrentWorld.SetMeta((UInt16)(roadType | (roadState << 4)) , x, y);
+        }
+
+        public void SetMeta(int roadState, int roadType, Chunk chunk, ushort x, ushort y)
+        {
+            chunk.SetMeta((UInt16)(roadType | (roadState << 4)), x, y);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Explicatio.Blocks
 
         public static Block Grass = new Block(1, "Grass", Textures.Textures.Grass);
         public static Block Snow = new Block(2, "Snow", Textures.Textures.Snow);
-        public static Block Road = new BlockRoad(3, "Road");
+        public static BlockRoad Road = new BlockRoad(3, "Road");
 
         static Block()
         {

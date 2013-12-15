@@ -12,6 +12,9 @@ namespace Explicatio.Controls
 {
     public static class MyMouse
     {
+        //!? TEMP
+        private static Random random = new Random();
+
         private static bool middleButtonStatus = false;
         public static int MouseHoldPositionX { get; private set; }
         public static int MouseHoldPositionY { get; private set; }
@@ -77,13 +80,13 @@ namespace Explicatio.Controls
                         }
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
-                            c[(ushort)(mx), (ushort)(my)] = 2;
-                            c.MarkToRedraw();
+                            c[(ushort)(mx), (ushort)(my)] = Blocks.Block.Road.Id;
+                            ushort us = (ushort)random.Next(0, 15);
+                            Blocks.Block.Road.SetMeta(us, 0, c, (ushort)(mx), (ushort)(my));
                         }
                         if (Mouse.GetState().RightButton == ButtonState.Pressed)
                         {
                             c[(ushort)(mx), (ushort)(my)] = 1;
-                            c.MarkToRedraw();
                         }
                     }
                 }
