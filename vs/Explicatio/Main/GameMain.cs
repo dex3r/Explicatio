@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Explicatio.Controls;
 using Explicatio.Rendering;
 using Explicatio.Worlds;
@@ -19,6 +20,8 @@ namespace Explicatio.Main
         private static int lastFps;
         private static long lastSec;
         private static int updateTime;
+        //! Wyodrębnienie poza Draw dla wydajności
+        private static StringBuilder sb = new StringBuilder();
 
         //!? Public:
         private static World currentWorld;
@@ -48,7 +51,10 @@ namespace Explicatio.Main
         /// <param name="transformation"></param>
         public static void BeginDrawingAndApplyTransformation(Matrix transformation)
         {
-            SpriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, transformation * Camera.Transform);
+            SamplerState.PointWrap.MaxAnisotropy = 0;
+            SamplerState.PointWrap.MaxMipLevel = 0;
+            SamplerState.PointWrap.MipMapLevelOfDetailBias = 0;
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, null, null, null, transformation * Camera.Transform);
         }
         #endregion
 
@@ -111,13 +117,9 @@ namespace Explicatio.Main
                 lastFps = currentFps;
                 currentFps = 0;
                 lastSec = (long)gameTime.TotalGameTime.TotalSeconds;
-                GC.Collect();
             }
             currentFps++;
 
-            SpriteBatch.Begin();
-            GraphicsDevice.Clear(Color.Red);
-            SpriteBatch.End();
             //Wyświetlanie po transformacji
             BeginNormalDrawing();
             // Rysowanie świata i obiektów
@@ -126,25 +128,45 @@ namespace Explicatio.Main
 
             //Wyświetlanie bez transformacji
             SpriteBatch.Begin();
+#if DEBUG
             if (!Keyboard.GetState().IsKeyDown(Keys.F2))
+#else
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+#endif
             {
-                Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
-                           "Fps: " + lastFps + "\n" +
-                           "Resolution: " + GraphicsDevice.Viewport.Width + " " + GraphicsDevice.Viewport.Height + "\n" +
-                           "Camera: " + Camera.X + " " + Camera.Y + " Zoom: " + Camera.Zoom + "\n" +
-                           Camera.Transform.Translation + "\n" +
-                           Window.GetForm().Bounds + "\n" +
-                           "Drawed chunks: " + LastDrawedChunksCount + "\n" +
-                           "Loop time: " + gameTime.ElapsedGameTime.Milliseconds + "\n" +
-                           Text.Log
-                ;
+                createDebugInfo();
                 Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
                 Text.Log = "";
-                //gameTime.ElapsedGameTime
             }
             SpriteBatch.End();
             MyMouse.Interaction(currentWorld);
             base.Draw(gameTime);
+        }
+
+        private void createDebugInfo()
+        {
+            sb.Clear();
+            sb.Append("Mouse: ");
+            sb.Append(Mouse.GetState().X);
+            sb.Append(" ");
+            sb.Append(Mouse.GetState().Y);
+            sb.Append("\nFps: ");
+            sb.Append(lastFps);
+            sb.Append("\nRes:");
+            sb.Append(GraphicsDevice.Viewport.Width);
+            sb.Append("x");
+            sb.Append(GraphicsDevice.Viewport.Height);
+            sb.Append("\nCamera: ");
+            sb.Append(Camera.X);
+            sb.Append(" ");
+            sb.Append(Camera.Y);
+            sb.Append(" Zoom: ");
+            sb.Append(Camera.Zoom);
+            sb.Append("\nDrawed chunks: ");
+            sb.Append(LastDrawedChunksCount);
+            sb.Append("\n");
+            sb.Append(Text.Log);
+            Text.Log = sb.ToString();
         }
     }
 

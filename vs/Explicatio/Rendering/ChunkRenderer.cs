@@ -19,7 +19,6 @@ namespace Explicatio.Rendering
         /// Renderuje chunk do pamięci
         /// Nie zapomnij o batch.End() przed tą funkcją (wydajność) oraz batch.Begin() za
         /// </summary>
-        /// <param name="batch"></param>
         /// <param name="chunk"></param>
         public static void RenderChunk(Chunk chunk)
         {
@@ -28,7 +27,7 @@ namespace Explicatio.Rendering
                 chunk.RenderTarget = new RenderTarget2D(GameMain.SpriteBatch.GraphicsDevice, ChunkRenderer.CHUNK_SURFACE_WIDTH, ChunkRenderer.CHUNK_SURFACE_HEIGHT, false, SurfaceFormat.Bgra5551, DepthFormat.None);
             }
             GameMain.SpriteBatch.GraphicsDevice.SetRenderTarget(chunk.RenderTarget);
-            GameMain.SpriteBatch.Begin();
+            GameMain.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
             GameMain.SpriteBatch.GraphicsDevice.Clear(Color.Transparent);
             for (ushort cx = 0; cx < Chunk.CHUNK_SIZE; cx++)
             {
@@ -36,14 +35,7 @@ namespace Explicatio.Rendering
                 {
                     // Wszystkie bloki są obracane w prawo o 45* aby stworzyć wrażenie izometrii
                     // batch.Draw(Block.Blocks[chunk[cx, cy]].Texture, new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32 + ((chunk.WorldObj.ChunksInRow - chunk.Y + chunk.X) * Chunk.CHUNK_SIZE * 32), (cx + cy) * 16 + ((chunk.X + chunk.Y) * 16 * Chunk.CHUNK_SIZE)), Color.White);                
-                    if (chunk.MouseMeta[Chunk.CHUNK_SIZE * cy + cx] == false)
-                    {
-                        GameMain.SpriteBatch.Draw(Block.Blocks[chunk[cx, cy]].GetTexture(chunk, cx, cy), new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16), Color.White);
-                    }
-                    else
-                    {
-                        GameMain.SpriteBatch.Draw(Block.Blocks[chunk[cx, cy]].GetTexture(chunk, cx, cy), new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16), Color.Gainsboro);
-                    }
+                    GameMain.SpriteBatch.Draw(Block.Blocks[chunk[cx, cy]].GetTexture(chunk, cx, cy), new Vector2((Chunk.CHUNK_SIZE - cy + cx) * 32, (cx + cy) * 16), Color.White);
                 }
             }
             GameMain.SpriteBatch.End();

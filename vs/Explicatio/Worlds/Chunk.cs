@@ -12,16 +12,6 @@ namespace Explicatio.Worlds
 {
     public class Chunk
     {
-        private bool[] mouseMeta;
-        /// <summary>
-        /// Czy chunk jest zaznaczony
-        /// </summary>
-        public bool[] MouseMeta
-        {
-            get { return mouseMeta; }
-            set { mouseMeta = value; }
-        }
-
         /// <summary>
         /// Rozmiar chunku, "const" dla wydajności
         /// </summary>
@@ -36,8 +26,7 @@ namespace Explicatio.Worlds
         /// <summary>
         ///  Metadane obiektów
         /// </summary>
-public UInt16[] ChunkGroundMeta
-
+        public UInt16[] ChunkGroundMeta
         {
             get { return chunkGroundMeta; }
         }
@@ -79,21 +68,21 @@ public UInt16[] ChunkGroundMeta
         /// </summary>
         public bool NeedsRedrawing
         {
-            get 
-            { 
-                return needsRedrawing; 
+            get
+            {
+                return needsRedrawing;
             }
-            set 
-            { 
-                needsRedrawing = value; 
+            set
+            {
+                needsRedrawing = value;
             }
         }
 
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }
-            set 
-            { 
+            set
+            {
                 chunkGround[CHUNK_SIZE * y + x] = value;
                 MarkToRedraw();
             }
@@ -117,15 +106,14 @@ public UInt16[] ChunkGroundMeta
             this.Y = y;
             vehicles = new List<Vehicle>[CHUNK_SIZE];
             properties = new List<Property>[CHUNK_SIZE];
-            for(int i = 0; i < CHUNK_SIZE; i++)
+            for (int i = 0; i < CHUNK_SIZE; i++)
             {
                 vehicles[i] = new List<Vehicle>();
                 properties[i] = new List<Property>();
             }
-           
+
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new UInt16[CHUNK_SIZE * CHUNK_SIZE];
-            mouseMeta = new bool[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
         }
 
@@ -135,7 +123,7 @@ public UInt16[] ChunkGroundMeta
         /// <param name="id">Id pola</param>
         public void ResetChunkData(byte id)
         {
-            for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++ )
+            for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++)
             {
                 chunkGround[i] = id;
                 chunkGroundMeta[i] = 0;
@@ -144,13 +132,13 @@ public UInt16[] ChunkGroundMeta
             //vehicles.Clear();
             //properties.Clear();
         }
-        
+
         public Vehicle GetVehicleAt(float x, float y)
         {
             int iX = (int)x;
-            for(int i = 0; i < vehicles[iX].Count; i++)
+            for (int i = 0; i < vehicles[iX].Count; i++)
             {
-                if(vehicles[iX][i].Intersect(x, y))
+                if (vehicles[iX][i].Intersect(x, y))
                 {
                     return vehicles[iX][i];
                 }

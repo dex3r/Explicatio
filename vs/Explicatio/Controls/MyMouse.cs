@@ -72,12 +72,7 @@ namespace Explicatio.Controls
 
                     if (mx >= 0 && my >= 0 && mx < Chunk.CHUNK_SIZE && my < Chunk.CHUNK_SIZE)
                     {
-
-                        if (c.MouseMeta[Chunk.CHUNK_SIZE * my + mx] == false)
-                        {
-                            deleteLastSelection(world);
-                            createNewSelection(c, gx, gy, mx, my);
-                        }
+                        createNewSelection(c, gx, gy, mx, my);
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
                             c[(ushort)(mx), (ushort)(my)] = Blocks.Block.Road.Id;
@@ -102,31 +97,29 @@ namespace Explicatio.Controls
         /// Poprzednio podświetlane pole
         /// </summary>
         private static Point lastChunk;
-        private static Point lastBlock;
-
-        /// <summary>
-        /// Usuwanie poprzednio zaznaczonego bloku
-        /// </summary>
-        private static void deleteLastSelection(World world)
+        public static Point LastChunk
         {
-            if (lastChunk.X != -4)
-            {
-                Chunk chunk = world.GetChunk(lastChunk.X, lastChunk.Y);
-                chunk.MouseMeta[Chunk.CHUNK_SIZE * lastBlock.Y + lastBlock.X] = false;
-                chunk.MarkToRedraw();
-                lastChunk = new Point(-4, -4);
-                lastBlock = new Point(-4, -4);
-            }
+            get { return MyMouse.lastChunk; }
         }
+        private static ushort lastMouseOverBlockX;
+        public static ushort LastMouseOverBlockX
+        {
+            get { return MyMouse.lastMouseOverBlockX; }
+        }
+        private static ushort lastMouseOverBlockY;
+        public static ushort LastMouseOverBlockY
+        {
+            get { return MyMouse.lastMouseOverBlockY; }
+        }
+
         /// <summary>
         /// Tworzenie zaznaczenia 
         /// </summary>
         private static void createNewSelection(Chunk chunk, int chunkX, int chunkY, int blockX, int blockY)
         {
+            lastMouseOverBlockX = (ushort)blockX;
+            lastMouseOverBlockY = (ushort)blockY;
             lastChunk = new Point(chunkX, chunkY);
-            lastBlock = new Point(blockX, blockY);
-            chunk.MouseMeta[Chunk.CHUNK_SIZE * blockY + blockX] = true;
-            chunk.MarkToRedraw();
         }
 
         #endregion
