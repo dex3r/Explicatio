@@ -15,11 +15,11 @@ namespace Explicatio.Rendering
 {
     public static class Camera
     {
-//#if DEBUG
-        //private static readonly float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
-//#else
+#if DEBUG
+        private static readonly float[] zoomSteps = {0.02f, 0.05f, 0.1f, 0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f, 3.6f, 4.0f, 5.0f, 6.0f };
+#else
         private static readonly float[] zoomSteps = {0.2f, 0.4f, 0.6f, 0.8f, 1f, 1.2f, 1.4f, 1.8f, 2.2f, 2.8f, 3.2f };
-//#endif
+#endif
         public static float[] ZoomSteps
         {
             get { return Camera.zoomSteps; }

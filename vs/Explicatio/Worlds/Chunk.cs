@@ -12,6 +12,16 @@ namespace Explicatio.Worlds
 {
     public class Chunk
     {
+        private bool[] mouseMeta;
+        /// <summary>
+        /// Czy chunk jest zaznaczony
+        /// </summary>
+        public bool[] MouseMeta
+        {
+            get { return mouseMeta; }
+            set { mouseMeta = value; }
+        }
+
         /// <summary>
         /// Rozmiar chunku, "const" dla wydajności
         /// </summary>
@@ -26,7 +36,8 @@ namespace Explicatio.Worlds
         /// <summary>
         ///  Metadane obiektów
         /// </summary>
-        public UInt16[] ChunkGroundMeta
+public UInt16[] ChunkGroundMeta
+
         {
             get { return chunkGroundMeta; }
         }
@@ -114,6 +125,7 @@ namespace Explicatio.Worlds
            
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
             chunkGroundMeta = new UInt16[CHUNK_SIZE * CHUNK_SIZE];
+            mouseMeta = new bool[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
         }
 
