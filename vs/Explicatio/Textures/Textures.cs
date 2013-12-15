@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Explicatio.Rendering
+namespace Explicatio.Textures
 {
     public static class Textures
     {
@@ -14,8 +14,10 @@ namespace Explicatio.Rendering
 
         public static void Load(ContentManager cm)
         {
-            Grass = cm.Load<Texture2D>(@"gfx\terrain\1");
-            Snow = cm.Load<Texture2D>(@"gfx\terrain\2");
+            Grass = cm.Load<Texture2D>(@"gfx\terrain\grass");
+            Snow = cm.Load<Texture2D>(@"gfx\terrain\snow");
+
+            TexturesRoads.Load(cm);
         }
     }
 }

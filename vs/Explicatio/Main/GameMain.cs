@@ -79,7 +79,7 @@ namespace Explicatio.Main
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Textures.Load(this.Content);
+            Textures.Textures.Load(this.Content);
             Text.Load(SpriteBatch, this.Content);
             Text.LoadDefaultFont();
         }

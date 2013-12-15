@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\WindowsGL\Release\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -40,12 +40,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Blocks\Block.cs" />
-    <Compile Include="Blocks\IMetaTexture.cs" />
+    <Compile Include="Blocks\BlockRoad.cs" />
+    <Compile Include="Blocks\EnumRoadState.cs" />
+    <Compile Include="Blocks\EnumRoadType.cs" />
     <Compile Include="Main\Options.cs" />
     <Compile Include="Entities\Updatable.cs" />
     <Compile Include="Main\GameWindowControl.cs" />
     <Compile Include="Main\GameMain.cs" />
     <Compile Include="Main\Program.cs" />
+    <Compile Include="Textures\TexturesRoads.cs" />
     <Compile Include="Utils\Primitives2D.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Controls\MyMouse.cs" />
@@ -57,7 +60,7 @@
     <Compile Include="Entities\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
-    <Compile Include="Rendering\Textures.cs" />
+    <Compile Include="Textures\Textures.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,11 +82,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\gfx\terrain\1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Content\gfx\roads\on_grass\corner_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\gfx\terrain\2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Content\gfx\roads\on_grass\corner_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\corner_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\corner_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\end_left_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\end_left_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\end_right_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\end_right_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\intersection.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\straight_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\straight_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\T_left_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\T_left_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\T_right_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\roads\on_grass\T_right_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\terrain\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\gfx\terrain\snow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>

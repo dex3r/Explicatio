@@ -50,6 +50,11 @@ namespace Explicatio.Worlds
             return chunks[ChunksInRow * y + x];
         }
 
+        public void SetMeta(UInt16 value, int x, int y)
+        {
+            GetChunk(x / Chunk.CHUNK_SIZE, y / Chunk.CHUNK_SIZE).SetMeta(value, (ushort)(x % 16), (ushort)(y % 16));
+        }
+
         /// <summary>
         /// Przemieszcza pojazd w nowe miejsce
         /// UWAGA!

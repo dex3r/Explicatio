@@ -21,8 +21,9 @@ namespace Explicatio.Blocks
         static Block()
         {
             blocks[0] = null;
-            blocks[1] = new Block(1, "Grass", Textures.Grass);
-            blocks[2] = new Block(2, "Snow", Textures.Snow);
+            blocks[1] = new Block(1, "Grass", Textures.Textures.Grass);
+            blocks[2] = new Block(2, "Snow", Textures.Textures.Snow);
+            blocks[3] = new BlockRoad(3, "Road on grass");
         }
 
         #endregion
@@ -40,14 +41,10 @@ namespace Explicatio.Blocks
             get { return name; }
         }
 
-        private Texture2D texture;
         /// <summary>
         /// Podstawowa tekstura dla tego bloku
         /// </summary>
-        public Texture2D Texture
-        {
-            get { return texture; }
-        }
+        private Texture2D texture;
 
         public Block(byte id, String name)
         {
@@ -58,6 +55,17 @@ namespace Explicatio.Blocks
         public Block(byte id, String name, Texture2D texture) : this(id, name)
         {
             this.texture = texture;
+        }
+
+
+        public virtual Texture2D GetTexture(Chunk c, ushort chunkX, ushort chunkY)
+        {
+            return texture;
+        }
+
+        public virtual void SetMeta(UInt16 value, World world, int x, int y)
+        {
+            world.SetMeta(value, x, y);
         }
         #endregion
     }

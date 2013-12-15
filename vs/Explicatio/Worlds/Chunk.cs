@@ -22,11 +22,11 @@ namespace Explicatio.Worlds
         /// </summary>
         private byte[] chunkGround;
 
-        private byte[] chunkGroundMeta;
+        private UInt16[] chunkGroundMeta;
         /// <summary>
         ///  Metadane obiektów
         /// </summary>
-        public byte[] ChunkGroundMeta
+        public UInt16[] ChunkGroundMeta
         {
             get { return chunkGroundMeta; }
         }
@@ -81,7 +81,22 @@ namespace Explicatio.Worlds
         public byte this[ushort x, ushort y]
         {
             get { return chunkGround[CHUNK_SIZE * y + x]; }
-            set { chunkGround[CHUNK_SIZE * y + x] = value; }
+            set 
+            { 
+                chunkGround[CHUNK_SIZE * y + x] = value;
+                MarkToRedraw();
+            }
+        }
+
+        public UInt16 GetMeta(ushort x, ushort y)
+        {
+            return chunkGroundMeta[CHUNK_SIZE * y + x];
+        }
+
+        public void SetMeta(UInt16 value, ushort x, ushort y)
+        {
+            chunkGroundMeta[CHUNK_SIZE * y + x] = value;
+            MarkToRedraw();
         }
 
         public Chunk(World world, int x, int y)
@@ -98,7 +113,7 @@ namespace Explicatio.Worlds
             }
            
             chunkGround = new byte[CHUNK_SIZE * CHUNK_SIZE];
-            chunkGroundMeta = new byte[CHUNK_SIZE * CHUNK_SIZE];
+            chunkGroundMeta = new UInt16[CHUNK_SIZE * CHUNK_SIZE];
             ResetChunkData(1);
         }
 
