@@ -54,8 +54,8 @@ namespace Explicatio.Controls
             //if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 //relatywna pozycja myszy względem rysowanych chunków
-                float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) + 8.25f; //Bloki podczas rysowania przesunięte są o 0.25 w dół i 0.75 w lewo (sprite)
-                float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) - 8.75f;
+                float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) + 8.49f; //Bloki podczas rysowania przesunięte są o 0.25 w dół i 0.75 w lewo (sprite)
+                float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) - 8.51f;
                 //relatywna pozycja myszy względem pola w chunku
                 int mx = (int)cx % Chunk.CHUNK_SIZE;
                 int my = (int)cy % Chunk.CHUNK_SIZE;
