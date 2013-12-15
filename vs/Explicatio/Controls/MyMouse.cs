@@ -77,7 +77,7 @@ namespace Explicatio.Controls
                         {
                             c[(ushort)(mx), (ushort)(my)] = Blocks.Block.Road.Id;
                             ushort us = (ushort)random.Next(0, 15);
-                            Blocks.Block.Road.SetMeta(us, 0, c, (ushort)(mx), (ushort)(my));
+                            Blocks.Block.Road.SetMetaAuto(world, c, (ushort)(mx), (ushort)(my));
                         }
                         if (Mouse.GetState().RightButton == ButtonState.Pressed)
                         {
