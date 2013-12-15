@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Explicatio.Worlds;
 using Explicatio.Rendering;
+using Explicatio.Main;
 
 namespace Explicatio.Blocks
 {
@@ -18,12 +19,13 @@ namespace Explicatio.Blocks
             get { return Block.blocks; }
         }
 
+        public static Block Grass = new Block(1, "Grass", Textures.Textures.Grass);
+        public static Block Snow = new Block(2, "Snow", Textures.Textures.Snow);
+        public static Block Road = new BlockRoad(3, "Road");
+
         static Block()
         {
-            blocks[0] = null;
-            blocks[1] = new Block(1, "Grass", Textures.Textures.Grass);
-            blocks[2] = new Block(2, "Snow", Textures.Textures.Snow);
-            blocks[3] = new BlockRoad(3, "Road on grass");
+           
         }
 
         #endregion
@@ -50,6 +52,7 @@ namespace Explicatio.Blocks
         {
             this.id = id;
             this.name = name;
+            Block.blocks[id] = this;
         }
 
         public Block(byte id, String name, Texture2D texture) : this(id, name)
@@ -63,9 +66,9 @@ namespace Explicatio.Blocks
             return texture;
         }
 
-        public virtual void SetMeta(UInt16 value, World world, int x, int y)
+        public virtual void SetMeta(UInt16 value, int x, int y)
         {
-            world.SetMeta(value, x, y);
+            GameMain.CurrentWorld.SetMeta(value, x, y);
         }
         #endregion
     }
