@@ -29,7 +29,9 @@ namespace Explicatio.Controls
             get { return MyMouse.positionRelative; }
             set { MyMouse.positionRelative = value; }
         }
-
+        /// <summary>
+        /// Update relatywnej pozycji myszy i kółka //!TEMP Tworzy śnieg po wciśnięciu LPM
+        /// </summary>
         public static void Update(World world)
         {
             ScrollWheelDelta = OverallScrollWheelValue - Mouse.GetState().ScrollWheelValue;
@@ -39,23 +41,37 @@ namespace Explicatio.Controls
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + (world.ChunksInRow*Chunk.CHUNK_SIZE/2) + 8.5f;
-                float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) - 8.5f;
-                int mx = (int)cx % Chunk.CHUNK_SIZE;
-                int my = (int)cy % Chunk.CHUNK_SIZE;
-                int gx = (int)Math.Floor((double)(cx / Chunk.CHUNK_SIZE));
-                int gy = (int)Math.Floor((double)(cy / Chunk.CHUNK_SIZE));
-                if (gx >= 0 && gy >= 0 && gx < world.ChunksInRow && gy < world.ChunksInRow)
-                {
-                    Chunk c = world.GetChunk((int)Math.Floor((double)(cx / Chunk.CHUNK_SIZE)), (int)Math.Floor((double)(cy / Chunk.CHUNK_SIZE)));
+                Interaction(world);
+            }
+        }
 
-                    if (mx >= 0 && my >= 0 && mx < Chunk.CHUNK_SIZE && my < Chunk.CHUNK_SIZE)
-                    {
-                        c[(ushort)(mx), (ushort)(my)] = 2;
-                        c.MarkToRedraw();
-                    }
+        /// <summary>
+        /// Oblicza pozycje myszy względem świata i chunka i //!TEMP Zamienia pole na śnieg
+        /// //TODO Dodanie podświetlania pola
+        /// </summary>
+        public static void Interaction(this World world)
+        {
+            //relatywna pozycja myszy względem rysowanych chunków
+            float cy = (((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) + (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) + 8.5f; //Podczas zmiany sprawdzić dlaczego 8.5 jest potrzebne do dokładności
+            float cx = ((MyMouse.PositionRelative.X / 32) + ((MyMouse.PositionRelative.Y / 16) - (MyMouse.PositionRelative.X / 32)) / 2) - (world.ChunksInRow * Chunk.CHUNK_SIZE / 2) - 8.5f;
+            //relatywna pozycja myszy względem pola w chunku
+            int mx = (int)cx % Chunk.CHUNK_SIZE;
+            int my = (int)cy % Chunk.CHUNK_SIZE;
+            //relatywna pozycja myszy względem chunka na świecie
+            int gx = (int)Math.Floor((double)(cx / Chunk.CHUNK_SIZE));
+            int gy = (int)Math.Floor((double)(cy / Chunk.CHUNK_SIZE));
+            if (gx >= 0 && gy >= 0 && gx < world.ChunksInRow && gy < world.ChunksInRow)
+            {
+                Chunk c = world.GetChunk((int)Math.Floor((double)(cx / Chunk.CHUNK_SIZE)), (int)Math.Floor((double)(cy / Chunk.CHUNK_SIZE)));
+
+                if (mx >= 0 && my >= 0 && mx < Chunk.CHUNK_SIZE && my < Chunk.CHUNK_SIZE)
+                {
+                    //TODO Dodanie odpowieniej metody tworzącej
+                    c[(ushort)(mx), (ushort)(my)] = 2;
+                    c.MarkToRedraw();
                 }
             }
+
         }
 
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
