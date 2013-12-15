@@ -74,13 +74,17 @@ namespace Explicatio.Controls
                         {
                             deleteLastSelection(world);
                             createNewSelection(c, gx, gy, mx, my);
-                            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                            {
-                                c[(ushort)(mx), (ushort)(my)] = 2;
-                                c.MarkToRedraw();
-                            }
                         }
-
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                        {
+                            c[(ushort)(mx), (ushort)(my)] = 2;
+                            c.MarkToRedraw();
+                        }
+                        if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                        {
+                            c[(ushort)(mx), (ushort)(my)] = 1;
+                            c.MarkToRedraw();
+                        }
                     }
                 }
             }
