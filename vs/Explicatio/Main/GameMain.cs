@@ -126,7 +126,7 @@ namespace Explicatio.Main
 
             //Wyświetlanie bez transformacji
             SpriteBatch.Begin();
-            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+            if (!Keyboard.GetState().IsKeyDown(Keys.F2))
             {
                 Text.Log = "Mouse: " + Mouse.GetState().X + " " + Mouse.GetState().Y + "\n" +
                            "Fps: " + lastFps + "\n" +
