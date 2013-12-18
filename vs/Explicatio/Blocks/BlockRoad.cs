@@ -33,12 +33,11 @@ namespace Explicatio.Blocks
         {
             chunk.SetMeta((UInt16)(roadType | (roadState << 4)), chunkX, chunkY);
         }
-        //TODO Dodać pobieranie i ustawianie typu
-        public void SetMetaAuto(World world, Chunk chunk, ushort x, ushort y, bool step = false)
+        //TODO Dodać pobieranie i ustawianie typu 
+        public void SetMetaAuto(World world, Chunk chunk, int x, int y, bool step = false)
         {
             int roadState = 0;
             bool[] neighbor = new bool[4];
-            Chunk neighborChunk;
             #region Middle
             if (x != 0 && x != Chunk.CHUNK_SIZE - 1 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
             {
@@ -47,20 +46,117 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, x, y, chunk);
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Left
+            if (x != 0 && x != Chunk.CHUNK_SIZE - 1 && y == 0)
+            {
+                setTopAuto(chunk, world, neighbor, x, y, step);
+                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                setBottomAuto(chunk, world, neighbor, x, y, step);
+                setRightAuto(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Right
+            if (x != 0 && x != Chunk.CHUNK_SIZE - 1 && y == Chunk.CHUNK_SIZE - 1)
+            {
+                setTopAuto(chunk, world, neighbor, x, y, step);
+                setLeftAuto(chunk, world, neighbor, x, y, step);
+                setBottomAuto(chunk, world, neighbor, x, y, step);
+                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Top
+            if (x == 0  && y != 0 && y != Chunk.CHUNK_SIZE - 1)
+            {
+                setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                setLeftAuto(chunk, world, neighbor, x, y, step);
+                setBottomAuto(chunk, world, neighbor, x, y, step);
+                setRightAuto(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Bottom
+            if ( x == Chunk.CHUNK_SIZE - 1 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
+            {
+                setTopAuto(chunk, world, neighbor, x, y, step);
+                setLeftAuto(chunk, world, neighbor, x, y, step);
+                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                setRightAuto(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
             }
             #endregion
 
+            #region Top Left
+            if (x == 0  && y == 0)
+            {
+                setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                setBottomAuto(chunk, world, neighbor, x, y, step);
+                setRightAuto(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Top Right
+            if (x == 0 && y == Chunk.CHUNK_SIZE - 1)
+            {
+                setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                setLeftAuto(chunk, world, neighbor, x, y, step);
+                setBottomAuto(chunk, world, neighbor, x, y, step);
+                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Bottom Right
+            if (x == Chunk.CHUNK_SIZE - 1 && y == Chunk.CHUNK_SIZE - 1)
+            {
+                setTopAuto(chunk, world, neighbor, x, y, step);
+                setLeftAuto(chunk, world, neighbor, x, y, step);
+                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
+            #region Bottom Left
+            if ( x == Chunk.CHUNK_SIZE - 1 && y == 0)
+            {
+                setTopAuto(chunk, world, neighbor, x, y, step);
+                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                setRightAuto(chunk, world, neighbor, x, y, step);
+
+                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+            }
+            #endregion
         }
 
-        private void setTopAuto(Chunk chunk, World world, bool[] neighbor, ushort x, ushort y, bool step)
+        // Wyjaśnienie która storna jest która
+        //
+        //      Top /\  Left
+        //         /  \
+        //         \  /
+        //    Right \/ Bottom
+        //
+        // Dodatkowo np: Top Left to górny róg
+        #region Set auto side
+        private void setTopAuto(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
             if (chunk[(ushort)(x - 1), (ushort)(y)] == Block.Road.Id)
             {
                 neighbor[0] = true;
                 if (step == false)
                 {
-                    SetMetaAuto(world, chunk, (ushort)(x - 1), (ushort)(y), true);
+                    SetMetaAuto(world, chunk, x - 1, y, true);
                 }
             }
             else
@@ -68,7 +164,7 @@ namespace Explicatio.Blocks
                 neighbor[0] = false;
             }
         }
-        private void setLeftAuto(Chunk chunk, World world, bool[] neighbor, ushort x, ushort y, bool step)
+        private void setLeftAuto(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
 
             if (chunk[(ushort)(x), (ushort)(y - 1)] == Block.Road.Id)
@@ -84,7 +180,7 @@ namespace Explicatio.Blocks
                 neighbor[1] = false;
             }
         }
-        private void setBottomAuto(Chunk chunk, World world, bool[] neighbor, ushort x, ushort y, bool step)
+        private void setBottomAuto(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
             if (chunk[(ushort)(x + 1), (ushort)(y)] == Block.Road.Id)
             {
@@ -99,7 +195,7 @@ namespace Explicatio.Blocks
                 neighbor[2] = false;
             }
         }
-        private void setRightAuto(Chunk chunk, World world, bool[] neighbor, ushort x, ushort y, bool step)
+        private void setRightAuto(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
             if (chunk[(ushort)(x), (ushort)(y + 1)] == Block.Road.Id)
             {
@@ -114,8 +210,76 @@ namespace Explicatio.Blocks
                 neighbor[3] = false;
             }
         }
+        #endregion
 
+        #region Set auto chunk side
+        private void setTopAutoChunk(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
+        {
+            chunk = world.GetChunk(chunk.X - 1,chunk.Y);
+            if (chunk[(ushort)(Chunk.CHUNK_SIZE - 1), (ushort)(y)] == Block.Road.Id)
+            {
+                neighbor[0] = true;
+                if (step == false)
+                {
+                    SetMetaAuto(world, chunk, Chunk.CHUNK_SIZE - 1, y, true);
+                }
+            }
+            else
+            {
+                neighbor[0] = false;
+            }
+        }
+        private void setLeftAutoChunk(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
+        {
+            chunk = world.GetChunk(chunk.X, chunk.Y - 1);
+            if (chunk[(ushort)(x), (ushort)(Chunk.CHUNK_SIZE - 1)] == Block.Road.Id)
+            {
+                neighbor[1] = true;
+                if (step == false)
+                {
+                    SetMetaAuto(world, chunk, x, Chunk.CHUNK_SIZE - 1, true);
+                }
+            }
+            else
+            {
+                neighbor[1] = false;
+            }
+        }
+        private void setBottomAutoChunk(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
+        {
+            chunk = world.GetChunk(chunk.X + 1, chunk.Y);
+            if (chunk[(ushort)(0), (ushort)(y)] == Block.Road.Id)
+            {
+                neighbor[2] = true;
+                if (step == false)
+                {
+                    SetMetaAuto(world, chunk, 0, y, true);
+                }
+            }
+            else
+            {
+                neighbor[2] = false;
+            }
+        }
+        private void setRightAutoChunk(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
+        {
+            chunk = world.GetChunk(chunk.X, chunk.Y + 1);
+            if (chunk[(ushort)(x), (ushort)(0)] == Block.Road.Id)
+            {
+                neighbor[3] = true;
+                if (step == false)
+                {
+                    SetMetaAuto(world, chunk, x, 0, true);
+                }
+            }
+            else
+            {
+                neighbor[3] = false;
+            }
+        }
+        #endregion
 
+        #region Set type
         private void setType(bool[] n, int state, ushort x, ushort y, Chunk chunk)
         {
             //Empty road
@@ -189,6 +353,7 @@ namespace Explicatio.Blocks
                 SetMeta((int)EnumRoadState.intersection, state, chunk, x, y);
             }
         }
+        #endregion
     }
 
 }
