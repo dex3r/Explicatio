@@ -34,6 +34,13 @@ namespace Explicatio.Blocks
             chunk.SetMeta((UInt16)(roadType | (roadState << 4)), chunkX, chunkY);
         }
         //TODO Dodać pobieranie i ustawianie typu 
+        /// <summary>
+        /// Ustawianie drogi
+        /// </summary>
+        /// <param name="chunk">Chunk w którym ma się stworzyć droga</param>
+        /// <param name="x"> X pola w chunku</param>
+        /// <param name="y"> Y pola w chunku</param>
+        /// <param name="step"> Czy zrobić update pobliskich dróg. True = nie, False = tak</param>
         public void SetMetaAuto(World world, Chunk chunk, int x, int y, bool step = false)
         {
             int roadState = 0;
@@ -72,7 +79,7 @@ namespace Explicatio.Blocks
             }
             #endregion
             #region Top
-            if (x == 0  && y != 0 && y != Chunk.CHUNK_SIZE - 1)
+            if (x == 0 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
             {
                 setTopAutoChunk(chunk, world, neighbor, x, y, step);
                 setLeftAuto(chunk, world, neighbor, x, y, step);
@@ -83,7 +90,7 @@ namespace Explicatio.Blocks
             }
             #endregion
             #region Bottom
-            if ( x == Chunk.CHUNK_SIZE - 1 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
+            if (x == Chunk.CHUNK_SIZE - 1 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
                 setLeftAuto(chunk, world, neighbor, x, y, step);
@@ -95,7 +102,7 @@ namespace Explicatio.Blocks
             #endregion
 
             #region Top Left
-            if (x == 0  && y == 0)
+            if (x == 0 && y == 0)
             {
                 setTopAutoChunk(chunk, world, neighbor, x, y, step);
                 setLeftAutoChunk(chunk, world, neighbor, x, y, step);
@@ -128,7 +135,7 @@ namespace Explicatio.Blocks
             }
             #endregion
             #region Bottom Left
-            if ( x == Chunk.CHUNK_SIZE - 1 && y == 0)
+            if (x == Chunk.CHUNK_SIZE - 1 && y == 0)
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
                 setLeftAutoChunk(chunk, world, neighbor, x, y, step);
@@ -149,6 +156,14 @@ namespace Explicatio.Blocks
         //
         // Dodatkowo np: Top Left to górny róg
         #region Set auto side
+        /// <summary>
+        /// Szukanie pobliskiego pola i sprawdzanie czy znajduje sie tam droga
+        /// </summary>
+        /// <param name="chunk">Chunk w którym znajduje się tworzona droga</param>
+        /// <param name="neighbor">Tablica do której zwraca czy w pobliskim polu znajduje się doroga</param>
+        /// <param name="x">X pola w chunku</param>
+        /// <param name="y">Y pola w chunku</param>
+        /// <param name="step">Czy zrobić update pobliskich dróg. True = nie, False = tak</param>
         private void setTopAuto(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
             if (chunk[(ushort)(x - 1), (ushort)(y)] == Block.Road.Id)
@@ -213,9 +228,12 @@ namespace Explicatio.Blocks
         #endregion
 
         #region Set auto chunk side
+        /// <summary>
+        /// Patrz: SetTopAuto
+        /// </summary>
         private void setTopAutoChunk(Chunk chunk, World world, bool[] neighbor, int x, int y, bool step)
         {
-            chunk = world.GetChunk(chunk.X - 1,chunk.Y);
+            chunk = world.GetChunk(chunk.X - 1, chunk.Y);
             if (chunk[(ushort)(Chunk.CHUNK_SIZE - 1), (ushort)(y)] == Block.Road.Id)
             {
                 neighbor[0] = true;
@@ -280,14 +298,23 @@ namespace Explicatio.Blocks
         #endregion
 
         #region Set type
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n">Tablica która zawiera informacje o tym czy w pobliskim polu znajduje się droga</param>
+        /// <param name="state">Trawa?</param>
+        /// <param name="x">X pola w chunku </param>
+        /// <param name="y">Y pola w chunku</param>
+        /// <param name="chunk">Chunk w którym ma zostać z updatowane pole</param>
         private void setType(bool[] n, int state, ushort x, ushort y, Chunk chunk)
         {
-            //Empty road
+            #region Empty road
             if (n[0] == false && n[1] == false && n[2] == false && n[3] == false)
             {
                 SetMeta((int)EnumRoadState.intersection, state, chunk, x, y);
             }
-            //One end
+            #endregion
+            #region One end
             else if (n[0] == true && n[1] == false && n[2] == false && n[3] == false)
             {
                 SetMeta((int)EnumRoadState.end_right_bottom, state, chunk, x, y);
@@ -304,7 +331,8 @@ namespace Explicatio.Blocks
             {
                 SetMeta((int)EnumRoadState.end_right_top, state, chunk, x, y);
             }
-            //Corners
+            #endregion
+            #region Corners
             else if (n[0] == true && n[1] == true && n[2] == false && n[3] == false)
             {
                 SetMeta((int)EnumRoadState.corner_top, state, chunk, x, y);
@@ -321,7 +349,8 @@ namespace Explicatio.Blocks
             {
                 SetMeta((int)EnumRoadState.corner_bottom, state, chunk, x, y);
             }
-            //Straight
+            #endregion
+            #region Straight
             else if (n[0] == true && n[1] == false && n[2] == true && n[3] == false)
             {
                 SetMeta((int)EnumRoadState.straight_left, state, chunk, x, y);
@@ -330,7 +359,8 @@ namespace Explicatio.Blocks
             {
                 SetMeta((int)EnumRoadState.straight_right, state, chunk, x, y);
             }
-            //Crossroads
+            #endregion
+            #region Crossroads
             else if (n[0] == true && n[1] == true && n[2] == true && n[3] == false)
             {
                 SetMeta((int)EnumRoadState.T_right_top, state, chunk, x, y);
@@ -347,11 +377,13 @@ namespace Explicatio.Blocks
             {
                 SetMeta((int)EnumRoadState.T_right_bottom, state, chunk, x, y);
             }
-            //Intersection
+            #endregion
+            #region Intersection
             else if (n[0] == true && n[1] == true && n[2] == true && n[3] == true)
             {
                 SetMeta((int)EnumRoadState.intersection, state, chunk, x, y);
             }
+            #endregion
         }
         #endregion
     }
