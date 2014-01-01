@@ -36,8 +36,7 @@ namespace Explicatio.Rendering
             GameMain.SpriteBatch.GraphicsDevice.Clear(Color.CornflowerBlue);
             DrawWorld(Main.GameMain.CurrentWorld);
 
-            c = GameMain.CurrentWorld.GetChunk(MyMouse.LastChunk.X, MyMouse.LastChunk.Y);
-            GameMain.SpriteBatch.Draw(Block.Blocks[c[MyMouse.LastMouseOverBlockX, MyMouse.LastMouseOverBlockY]].GetTexture(c, MyMouse.LastMouseOverBlockX, MyMouse.LastMouseOverBlockY), new Vector2(((Chunk.CHUNK_SIZE - MyMouse.LastMouseOverBlockY + MyMouse.LastMouseOverBlockX) * 32) + ((world.ChunksInRow - MyMouse.LastChunk.Y + MyMouse.LastChunk.X) * (Chunk.CHUNK_SIZE * 32)), ((MyMouse.LastMouseOverBlockX + MyMouse.LastMouseOverBlockY) * 16) + ((MyMouse.LastChunk.X + MyMouse.LastChunk.Y) * (Chunk.CHUNK_SIZE * 16))), Color.Gainsboro);
+            MouseWorldControl.DrawSelected(world);
         }
 
         //! Zmienne globalne dla zwiększenia wydajności

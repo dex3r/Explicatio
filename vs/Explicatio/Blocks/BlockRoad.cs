@@ -13,6 +13,9 @@ namespace Explicatio.Blocks
 {
     public class BlockRoad : Block
     {
+
+        //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!! ROAD UPDATE!!!!!!!!!!!!!!!!!!!!!!
+
         public BlockRoad(byte id, String name)
             : base(id, name)
         {
@@ -41,7 +44,8 @@ namespace Explicatio.Blocks
         /// <param name="x"> X pola w chunku</param>
         /// <param name="y"> Y pola w chunku</param>
         /// <param name="step"> Czy zrobić update pobliskich dróg. True = nie, False = tak</param>
-        public void SetMetaAuto(World world, Chunk chunk, int x, int y, bool step = false)
+        /// <param name="updateOnly"> Czy zrobić tylko update bez zamiany bloku</param>
+        public void SetMetaAuto(World world, Chunk chunk, int x, int y, bool step = false, bool updateOnly = false)
         {
             int roadState = 0;
             bool[] neighbor = new bool[4];
@@ -53,7 +57,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Left
@@ -64,7 +68,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Right
@@ -75,7 +79,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAutoChunk(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Top
@@ -86,7 +90,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Bottom
@@ -97,7 +101,7 @@ namespace Explicatio.Blocks
                 setBottomAutoChunk(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
 
@@ -109,7 +113,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Top Right
@@ -120,7 +124,7 @@ namespace Explicatio.Blocks
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAutoChunk(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Bottom Right
@@ -131,7 +135,7 @@ namespace Explicatio.Blocks
                 setBottomAutoChunk(chunk, world, neighbor, x, y, step);
                 setRightAutoChunk(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
             #region Bottom Left
@@ -142,7 +146,7 @@ namespace Explicatio.Blocks
                 setBottomAutoChunk(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
-                setType(neighbor, roadState, (ushort)x, (ushort)y, chunk);
+                if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
             #endregion
         }

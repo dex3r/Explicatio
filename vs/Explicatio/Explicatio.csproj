@@ -43,6 +43,7 @@
     <Compile Include="Blocks\BlockRoad.cs" />
     <Compile Include="Blocks\EnumRoadState.cs" />
     <Compile Include="Blocks\EnumRoadType.cs" />
+    <Compile Include="Controls\MouseWorldControl.cs" />
     <Compile Include="Main\Options.cs" />
     <Compile Include="Entities\Updatable.cs" />
     <Compile Include="Main\GameWindowControl.cs" />

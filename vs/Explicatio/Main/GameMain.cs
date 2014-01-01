@@ -139,7 +139,7 @@ namespace Explicatio.Main
                 Text.Log = "";
             }
             SpriteBatch.End();
-            MyMouse.Interaction(currentWorld);
+            MouseWorldControl.Interaction(currentWorld);
             base.Draw(gameTime);
         }
 
