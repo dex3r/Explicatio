@@ -32,11 +32,13 @@ namespace Explicatio.Rendering
                     }
                 }
             }
+
             GameMain.BeginNormalDrawing();
             GameMain.SpriteBatch.GraphicsDevice.Clear(Color.CornflowerBlue);
             DrawWorld(Main.GameMain.CurrentWorld);
 
             MouseWorldControl.DrawSelected(world);
+           
         }
 
         //! Zmienne globalne dla zwiększenia wydajności
@@ -119,6 +121,11 @@ namespace Explicatio.Rendering
                     GameMain.LastDrawedChunksCount++;
                 }
             }
+        }
+
+        public static void DrawConsole()
+        {
+            GameMain.SpriteBatch.FillRectangle(0, 0, 150, 150, Color.FromNonPremultiplied(0,0,0, 80));
         }
     }
 }

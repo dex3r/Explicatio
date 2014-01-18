@@ -106,6 +106,7 @@ namespace Explicatio.Main
 
             Camera.Interaction(graphicsDeviceManager, GraphicsDevice);
             MyMouse.Update(currentWorld);
+            MyKeyboard.Update();
             Camera.Update(GraphicsDevice);
             base.Update(gameTime);
         }
@@ -124,19 +125,29 @@ namespace Explicatio.Main
             BeginNormalDrawing();
             // Rysowanie świata i obiektów
             GlobalRenderer.Draw(gameTime);
+
             SpriteBatch.End();
 
             //Wyświetlanie bez transformacji
             SpriteBatch.Begin();
-#if DEBUG
-            if (!Keyboard.GetState().IsKeyDown(Keys.F2))
-#else
-            if (Keyboard.GetState().IsKeyDown(Keys.F2))
-#endif
+
+            if (Console.isVisible)
             {
-                createDebugInfo();
-                Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
-                Text.Log = "";
+                GlobalRenderer.DrawConsole();
+            }
+            else
+            {
+#if DEBUG
+                if (!Keyboard.GetState().IsKeyDown(Keys.F2))
+#else
+                if (Keyboard.GetState().IsKeyDown(Keys.F2))
+#endif
+                {
+
+                    createDebugInfo();
+                    Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
+                    Text.Log = "";
+                }
             }
             SpriteBatch.End();
             MouseWorldControl.Interaction(currentWorld);
