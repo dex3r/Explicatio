@@ -16,14 +16,12 @@ namespace Explicatio.Rendering
     /// </summary>
     public static class Text
     {
-        private static SpriteBatch spriteBatch;
         private static ContentManager contentManager;
         private static SpriteFont loadedFont;
         /// <summary>Zmiana string do loga. Możliwość implementacji w każdej metodzie i klasie </summary>
         public static string Log;
-        public static void Load(SpriteBatch batch, ContentManager cm)
+        public static void Load(ContentManager cm)
         {
-            spriteBatch = batch;
             contentManager = cm;
             Log = "";
             LoadDefaultFont();
@@ -41,28 +39,42 @@ namespace Explicatio.Rendering
             loadedFont = SetFont("Courier New");
         }
         /// <summary>
-        /// Wyświetlanie tekstu na różne możliwości żeby wywołać wystarczy wpisać Text.Draw(string,newVector2...); w jakiejkolwiek metodzei draw
+        /// Wyświetlanie tekstu
         /// </summary>
-        public static void Draw(string textString, Vector2 position)
+        public static void DrawText(this SpriteBatch spriteBatch, string textString, Vector2 position)
         {
             spriteBatch.DrawString(loadedFont, textString, position, Color.Black, 0, new Vector2(0,0), 1.0f, SpriteEffects.None, 0.5f);
         }
-        public static void Draw(string textString, Vector2 position, Color textColor)
+        public static void DrawText(this SpriteBatch spriteBatch, string textString, Vector2 position, Color textColor)
         {
             spriteBatch.DrawString(loadedFont, textString, position, textColor, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0.5f);
         }
-        public static void Draw(string textString, Vector2 position, Color textColor, float textSize)
+        public static void DrawText(this SpriteBatch spriteBatch, string textString, Vector2 position, float textSize)
+        {
+            spriteBatch.DrawString(loadedFont, textString, position, Color.Black, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
+        }
+        public static void DrawText(this SpriteBatch spriteBatch, string textString, Vector2 position, Color textColor, float textSize)
         {
             spriteBatch.DrawString(loadedFont, textString, position, textColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
         }
 
-        public static void DrawTextWithShaddow(string textString, Vector2 position)
+        public static void DrawTextWithShaddow(this SpriteBatch spriteBatch, string textString, Vector2 position)
         {
             spriteBatch.DrawString(loadedFont, textString, new Vector2(position.X + 1, position.Y + 1), Color.Gray, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0.5f);
             spriteBatch.DrawString(loadedFont, textString, position, Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0.5f);
         }
+        public static void DrawTextWithShaddow(this SpriteBatch spriteBatch, string textString, Vector2 position, float textSize)
+        {
+            spriteBatch.DrawString(loadedFont, textString, new Vector2(position.X + 1, position.Y + 1), Color.Gray, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(loadedFont, textString, position, Color.White, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
+        }
+        public static void DrawTextWithShaddow(this SpriteBatch spriteBatch, string textString, Vector2 position, Color textColor, Color shadowColor, float textSize)
+        {
+            spriteBatch.DrawString(loadedFont, textString, new Vector2(position.X + 1, position.Y + 1), shadowColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(loadedFont, textString, position, textColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
+        }
 
-        public static void Draw(string textString, Vector2 position, Color textColor, float textSize, string fontName)
+        public static void DrawText(this SpriteBatch spriteBatch, string textString, Vector2 position, Color textColor, float textSize, string fontName)
         {
             spriteBatch.DrawString(SetFont(fontName), textString, position, textColor, 0, new Vector2(0, 0), textSize, SpriteEffects.None, 0.5f);
         }

@@ -86,7 +86,7 @@ namespace Explicatio.Main
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Textures.Textures.Load(this.Content);
-            Text.Load(SpriteBatch, this.Content);
+            Text.Load(this.Content);
             Text.LoadDefaultFont();
         }
 
@@ -145,7 +145,7 @@ namespace Explicatio.Main
                 {
 
                     createDebugInfo();
-                    Text.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
+                    SpriteBatch.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
                     Text.Log = "";
                 }
             }
