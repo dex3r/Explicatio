@@ -40,9 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Blocks\Block.cs" />
-    <Compile Include="Blocks\BlockRoad.cs" />
-    <Compile Include="Blocks\EnumRoadState.cs" />
-    <Compile Include="Blocks\EnumRoadType.cs" />
+    <Compile Include="Blocks\Buildings\BuildingEnum.cs" />
+    <Compile Include="Blocks\Road\BlockRoad.cs" />
+    <Compile Include="Blocks\Buildings\Building.cs" />
+    <Compile Include="Blocks\Buildings\BuildingContainer.cs" />
+    <Compile Include="Blocks\Road\EnumRoadState.cs" />
+    <Compile Include="Blocks\Road\EnumRoadType.cs" />
     <Compile Include="Controls\MyKey.cs" />
     <Compile Include="Controls\MyKeyboard.cs" />
     <Compile Include="Controls\MouseWorldControl.cs" />
