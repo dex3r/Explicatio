@@ -14,8 +14,6 @@ namespace Explicatio.Blocks
     public class BlockRoad : Block
     {
 
-        //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!! ROAD UPDATE!!!!!!!!!!!!!!!!!!!!!!
-
         public BlockRoad(byte id, String name)
             : base(id, name)
         {
@@ -64,7 +62,10 @@ namespace Explicatio.Blocks
             if (x != 0 && x != Chunk.CHUNK_SIZE - 1 && y == 0)
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
-                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.Y != 0)
+                {
+                    setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
@@ -77,7 +78,10 @@ namespace Explicatio.Blocks
                 setTopAuto(chunk, world, neighbor, x, y, step);
                 setLeftAuto(chunk, world, neighbor, x, y, step);
                 setBottomAuto(chunk, world, neighbor, x, y, step);
-                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.Y != world.ChunksInRow - 1)
+                {
+                    setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                }
 
                 if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
@@ -85,7 +89,10 @@ namespace Explicatio.Blocks
             #region Top
             if (x == 0 && y != 0 && y != Chunk.CHUNK_SIZE - 1)
             {
-                setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.X != 0)
+                {
+                    setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setLeftAuto(chunk, world, neighbor, x, y, step);
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
@@ -98,7 +105,10 @@ namespace Explicatio.Blocks
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
                 setLeftAuto(chunk, world, neighbor, x, y, step);
-                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.X != world.ChunksInRow - 1)
+                {
+                    setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
                 if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
@@ -108,8 +118,14 @@ namespace Explicatio.Blocks
             #region Top Left
             if (x == 0 && y == 0)
             {
-                setTopAutoChunk(chunk, world, neighbor, x, y, step);
-                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.X != 0)
+                {
+                    setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                } 
+                if(chunk.Y != 0)
+                {
+                    setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setBottomAuto(chunk, world, neighbor, x, y, step);
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
@@ -119,10 +135,16 @@ namespace Explicatio.Blocks
             #region Top Right
             if (x == 0 && y == Chunk.CHUNK_SIZE - 1)
             {
-                setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.X != 0)
+                {
+                    setTopAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setLeftAuto(chunk, world, neighbor, x, y, step);
                 setBottomAuto(chunk, world, neighbor, x, y, step);
-                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.Y != world.ChunksInRow - 1)
+                {
+                    setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                }
 
                 if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
@@ -132,8 +154,14 @@ namespace Explicatio.Blocks
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
                 setLeftAuto(chunk, world, neighbor, x, y, step);
-                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
-                setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.X != world.ChunksInRow - 1 )
+                {
+                    setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                }
+                if (chunk.Y != world.ChunksInRow - 1)
+                {
+                    setRightAutoChunk(chunk, world, neighbor, x, y, step);
+                }
 
                 if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
             }
@@ -142,8 +170,14 @@ namespace Explicatio.Blocks
             if (x == Chunk.CHUNK_SIZE - 1 && y == 0)
             {
                 setTopAuto(chunk, world, neighbor, x, y, step);
-                setLeftAutoChunk(chunk, world, neighbor, x, y, step);
-                setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                if (chunk.Y != 0)
+                {
+                    setLeftAutoChunk(chunk, world, neighbor, x, y, step);
+                }
+                if (chunk.X != world.ChunksInRow - 1)
+                {
+                    setBottomAutoChunk(chunk, world, neighbor, x, y, step);
+                }
                 setRightAuto(chunk, world, neighbor, x, y, step);
 
                 if (updateOnly == false) { setType(neighbor, roadState, (ushort)x, (ushort)y, chunk); }
@@ -158,7 +192,7 @@ namespace Explicatio.Blocks
         //         \  /
         //    Right \/ Bottom
         //
-        // Dodatkowo np: Top Left to górny róg
+        // Dodatkowo np: Top Left to czubek
         #region Set auto side
         /// <summary>
         /// Szukanie pobliskiego pola i sprawdzanie czy znajduje sie tam droga
