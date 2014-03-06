@@ -71,7 +71,10 @@ namespace Explicatio.Main
 
         //!? Properties region
         #region PROPERTIES
-
+        public static int ShaderProgramHandle
+        {
+            get { return GameMain.shaderProgramHandle; }
+        }
         #endregion
         //!? END of properties region
 
@@ -98,32 +101,8 @@ namespace Explicatio.Main
 
         private static void CreateShaders()
         {
-            string vertexString = null;
-            string fragmentString = null;
-
-            using (StreamReader sw = new StreamReader(@"./Shaders/SimpleVertexShader.glsl"))
-            {
-                vertexString = sw.ReadToEnd();
-            }
-
-            using (StreamReader sw = new StreamReader(@"./Shaders/SimpleFragmentShader.glsl"))
-            {
-                fragmentString = sw.ReadToEnd();
-            }
-
-            vertexShaderHandle = GL.CreateShader(ShaderType.VertexShader);
-            fragmentShaderHandle = GL.CreateShader(ShaderType.FragmentShader);
-
-            GL.ShaderSource(vertexShaderHandle, vertexString);
-            GL.ShaderSource(fragmentShaderHandle, fragmentString);
-
-            GL.CompileShader(vertexShaderHandle);
-            GL.CompileShader(fragmentShaderHandle);
-
-            Util.PrintGLError("CreateShaders compileShaders");
-
-            Console.WriteLine("CreateShaders vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
-            Console.WriteLine("CreateShaders fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
+            Shader.Create("./Shaders/SimpleVertexShader.glsl", ShaderType.VertexShader, ref vertexShaderHandle);
+            Shader.Create("./Shaders/SimpleFragmentShader.glsl", ShaderType.FragmentShader, ref fragmentShaderHandle);
 
             // Create program
             shaderProgramHandle = GL.CreateProgram();
@@ -154,7 +133,7 @@ namespace Explicatio.Main
             //Matrix4.CreateOrthographic(5, 5, 0.1f, 10000, out projectionMatrix);
             //Matrix4.CreateOrthographicOffCenter(-10, 10, -10, 10, 0.1f, 1000, out projectionMatrix);
             //projectionMatrix = Matrix4.Mult(Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0)), projectionMatrix);
-            modelviewMatrix = Matrix4.LookAt(new Vector3(-2, -1, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            modelviewMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             //modelviewMatrix = Matrix4.Identity;
             //modelviewMatrix = Matrix4.CreateTranslation(0, 0, -50);
 
