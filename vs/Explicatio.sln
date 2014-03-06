@@ -1,22 +1,263 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explicatio", "Explicatio\Explicatio.csproj", "{BE378D89-535D-4466-AEB5-645765053955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "..\opentk\Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB} = {C426C9D1-8857-4E52-BAC7-4C05EE6070AB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "..\opentk\Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Examples", "..\opentk\Source\Examples\OpenTK.Examples.csproj", "{868E37B3-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLControl", "..\opentk\Source\GLControl\OpenTK.GLControl.csproj", "{A625BE88-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Nsis", "..\opentk\Installers\Nsis\Build.Installer.Nsis.csproj", "{ADC34399-7613-44D2-90B2-19250F06FE7A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A37A7E14-0000-0000-0000-000000000000} = {A37A7E14-0000-0000-0000-000000000000}
+		{62C0DB35-0000-0000-0000-000000000000} = {62C0DB35-0000-0000-0000-000000000000}
+		{650C6F3D-33B5-4216-9536-956AB42C0624} = {650C6F3D-33B5-4216-9536-956AB42C0624}
+		{A625BE88-0000-0000-0000-000000000000} = {A625BE88-0000-0000-0000-000000000000}
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+		{868E37B3-0000-0000-0000-000000000000} = {868E37B3-0000-0000-0000-000000000000}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Docs", "..\opentk\Documentation\Build.Docs.csproj", "{650C6F3D-33B5-4216-9536-956AB42C0624}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "..\opentk\Source\Bind\Generator.Bind.csproj", "{31D19132-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "..\opentk\Source\Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.UpdateVersion", "..\opentk\Source\Build.UpdateVersion\Build.UpdateVersion.csproj", "{75DC22B1-113F-4A66-96B9-2FF8208C10E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Zip", "..\opentk\Installers\Zip\Build.Installer.Zip.csproj", "{ADC34399-7613-44D2-90B2-19250F06FE7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A37A7E14-0000-0000-0000-000000000000} = {A37A7E14-0000-0000-0000-000000000000}
+		{62C0DB35-0000-0000-0000-000000000000} = {62C0DB35-0000-0000-0000-000000000000}
+		{650C6F3D-33B5-4216-9536-956AB42C0624} = {650C6F3D-33B5-4216-9536-956AB42C0624}
+		{A625BE88-0000-0000-0000-000000000000} = {A625BE88-0000-0000-0000-000000000000}
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+		{868E37B3-0000-0000-0000-000000000000} = {868E37B3-0000-0000-0000-000000000000}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Nuget", "..\opentk\Installers\Nuget\Build.Installer.Nuget.csproj", "{ADC34399-7613-44D2-90B2-19250F12FE7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A37A7E14-0000-0000-0000-000000000000} = {A37A7E14-0000-0000-0000-000000000000}
+		{62C0DB35-0000-0000-0000-000000000000} = {62C0DB35-0000-0000-0000-000000000000}
+		{650C6F3D-33B5-4216-9536-956AB42C0624} = {650C6F3D-33B5-4216-9536-956AB42C0624}
+		{A625BE88-0000-0000-0000-000000000000} = {A625BE88-0000-0000-0000-000000000000}
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "..\opentk\Source\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug OpenTK|Any CPU = Debug OpenTK|Any CPU
+		Debug OpenTK|Mixed Platforms = Debug OpenTK|Mixed Platforms
+		Debug OpenTK|x86 = Debug OpenTK|x86
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug OpenTK|Mixed Platforms.Build.0 = Debug OpenTK|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug OpenTK|x86.Build.0 = Debug OpenTK|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{BE378D89-535D-4466-AEB5-645765053955}.Debug|x86.ActiveCfg = Debug|x86
 		{BE378D89-535D-4466-AEB5-645765053955}.Debug|x86.Build.0 = Debug|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Release|Any CPU.ActiveCfg = Release|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BE378D89-535D-4466-AEB5-645765053955}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BE378D89-535D-4466-AEB5-645765053955}.Release|x86.ActiveCfg = Release|x86
 		{BE378D89-535D-4466-AEB5-645765053955}.Release|x86.Build.0 = Release|x86
+		{A37A7E14-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.Build.0 = Debug OpenTK|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|x86.ActiveCfg = Release|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|x86.ActiveCfg = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug OpenTK|Any CPU.ActiveCfg = Debug OpenTK|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug OpenTK|Any CPU.Build.0 = Debug OpenTK|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug OpenTK|Mixed Platforms.ActiveCfg = Debug OpenTK|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug OpenTK|x86.ActiveCfg = Debug OpenTK|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Source\Examples\OpenTK.Examples.csproj
 	EndGlobalSection
 EndGlobal

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 
-using Microsoft.Xna.Framework;
-
-namespace Explicatio.Entities
+namespace Explicatio.Graphics
 {
-    public interface Updatable
+    public class Primitive
     {
-        void Update(GameTime gameTime);
+        
     }
 }

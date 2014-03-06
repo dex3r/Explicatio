@@ -1,184 +1,219 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using Explicatio.Controls;
-using Explicatio.Rendering;
-using Explicatio.Worlds;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.IO;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics;
+using OpenTK;
+using Explicatio.Graphics;
+using Explicatio.Utils;
 
 namespace Explicatio.Main
 {
-    public class GameMain : Game
+    public static class GameMain
     {
-        #region static
-        //!? Private:
-        private static GraphicsDeviceManager graphicsDeviceManager;
+        private static bool wasUpdated;
 
-        // Zmienne do prostego pomiaru FPS
-        private static int currentFps;
-        private static int lastFps;
-        private static long lastSec;
-        private static int updateTime;
-        //! Wyodrębnienie poza Draw dla wydajności
-        private static StringBuilder sb = new StringBuilder();
+        private static readonly Vector3[] VBODataCommon = new Vector3[] {
+            // Przód:
+            new Vector3( 0.0f, 0.0f,-1.0f), // 0 środek
+            new Vector3( 0.0f, 1.0f,-1.0f), // 1 góra
+            new Vector3( 1.0f, 1.0f,-1.0f), // 2 góra prawo
+            new Vector3( 1.0f, 0.0f,-1.0f), // 3 prawo
+            new Vector3( 1.0f,-1.0f,-1.0f), // 4 dół prawo
+            new Vector3( 0.0f,-1.0f,-1.0f), // 5 dół
+            new Vector3(-1.0f,-1.0f,-1.0f), // 6 dół lewo
+            new Vector3(-1.0f, 0.0f,-1.0f), // 7 lewo
+            new Vector3(-1.0f, 1.0f,-1.0f), // 8 góra lewo
+            // Sródek:
+            new Vector3( 0.0f, 0.0f, 0.0f), // 9 środek
+            new Vector3( 0.0f, 1.0f, 0.0f), // 10 góra
+            new Vector3( 1.0f, 1.0f, 0.0f), // 11 góra prawo
+            new Vector3( 1.0f, 0.0f, 0.0f), // 12 prawo
+            new Vector3( 1.0f,-1.0f, 0.0f), // 13 dół prawo
+            new Vector3( 0.0f,-1.0f, 0.0f), // 14 dół
+            new Vector3(-1.0f,-1.0f, 0.0f), // 15 dół lewo
+            new Vector3(-1.0f, 0.0f, 0.0f), // 16 lewo
+            new Vector3(-1.0f, 1.0f, 0.0f), // 17 góra lewo
+            // Tył:
+            new Vector3( 0.0f, 0.0f, 1.0f), // 18 środek
+            new Vector3( 0.0f, 1.0f, 1.0f), // 19 góra
+            new Vector3( 1.0f, 1.0f, 1.0f), // 20 góra prawo
+            new Vector3( 1.0f, 0.0f, 1.0f), // 21 prawo
+            new Vector3( 1.0f,-1.0f, 1.0f), // 22 dół prawo
+            new Vector3( 0.0f,-1.0f, 1.0f), // 23 dół
+            new Vector3(-1.0f,-1.0f, 1.0f), // 24 dół lewo
+            new Vector3(-1.0f, 0.0f, 1.0f), // 25 lewo
+            new Vector3(-1.0f, 1.0f, 1.0f), // 26 góra lewo
 
-        //!? Public:
-        private static World currentWorld;
-        /// <summary>
-        /// Świat który jest aktualnie wyświetlany (null jeżeli w menu etc)
-        /// </summary>
-        public static World CurrentWorld
-        {
-            get { return currentWorld; }
-            set { currentWorld = value; }
-        }
+        };
+        private static readonly byte[] pyramidIndices = new byte[] {
+            3, 25, 7, 10, 3, 21, 25, 10
+        };
 
-        public static SpriteBatch SpriteBatch { get; private set; }
-        public static int LastDrawedChunksCount { get; set; }
+        private static int commonVertexArrayHandle;
+        private static int commonVertexBufferHandle;
 
-        /// <summary>
-        /// Wróć do pozycji kamery
-        /// </summary>
-        public static void BeginNormalDrawing()
-        {
-            BeginDrawingAndApplyTransformation(Matrix.Identity);
-        }
+        private static int pyramidIndiecesBufferHandle;
 
-        /// <summary>
-        /// Zastosuj transofrmację (trans * Camera)
-        /// </summary>
-        /// <param name="transformation"></param>
-        public static void BeginDrawingAndApplyTransformation(Matrix transformation)
-        {
-            SamplerState.PointWrap.MaxAnisotropy = 0;
-            SamplerState.PointWrap.MaxMipLevel = 0;
-            SamplerState.PointWrap.MipMapLevelOfDetailBias = 0;
-            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, null, null, null, transformation * Camera.Transform);
-        }
+        private static int shaderProgramHandle;
+        private static int vertexShaderHandle;
+        private static int fragmentShaderHandle;
+
+        private static Matrix4 projectionMatrix;
+        private static Matrix4 modelviewMatrix;
+        private static int modelviewMatrixLocation;
+        private static int projectionMatrixLocation;
+        private static int colorVec3Location;
+
+        //!? Properties region
+        #region PROPERTIES
+
         #endregion
+        //!? END of properties region
 
-        public GameMain()
-            : base()
+        private static void GenerateVBOs()
         {
-            graphicsDeviceManager = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            // Ustawianie fullscreena początkowego i rozdziałki jest teraz w obiekcjie options
-            // Nie przenosić do Initialize!
-            Options.Init(graphicsDeviceManager);
-            // Vsync i fixedTimeStep:
-            this.IsFixedTimeStep = false;
+            // Common:
+            commonVertexArrayHandle = GL.GenVertexArray();
+            GL.BindVertexArray(commonVertexArrayHandle);
+            GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(1);
+            commonVertexBufferHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, commonVertexBufferHandle);
+            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, new IntPtr(VBODataCommon.Length * Vector3.SizeInBytes), VBODataCommon, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
+
+            // Pyramid indices:
+            pyramidIndiecesBufferHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
+            GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(pyramidIndices.Length * sizeof(byte)), pyramidIndices, BufferUsageHint.StreamDraw);
+
+            GL.BindVertexArray(0);
         }
 
-        protected override void Initialize()
+        private static void CreateShaders()
         {
-            base.Initialize();
-            currentWorld = new World();
-            //Ustawienie pozycji okna
-            Window.SetPosition(new Point(400, 100));
-            //Początkowa pozycja kamery na środku rysowanego pola 
-            Camera.X = currentWorld.ChunksInRow * Chunk.CHUNK_SIZE * 32;
-            Camera.Y = currentWorld.ChunksInRow * Chunk.CHUNK_SIZE * 16;
-        }
+            string vertexString = null;
+            string fragmentString = null;
 
-        protected override void LoadContent()
-        {
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            Textures.Textures.Load(this.Content);
-            Text.Load(this.Content);
-            Text.LoadDefaultFont();
-        }
-
-        protected override void UnloadContent()
-        {
-
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            using (StreamReader sw = new StreamReader(@"./Shaders/SimpleVertexShader.glsl"))
             {
-                Exit();
+                vertexString = sw.ReadToEnd();
             }
 
-            Options.KeyPressed(graphicsDeviceManager);
+            using (StreamReader sw = new StreamReader(@"./Shaders/SimpleFragmentShader.glsl"))
+            {
+                fragmentString = sw.ReadToEnd();
+            }
 
-            Camera.Interaction(graphicsDeviceManager, GraphicsDevice);
-            MyMouse.Update(currentWorld);
-            MyKeyboard.Update();
-            Camera.Update(GraphicsDevice);
-            base.Update(gameTime);
+            vertexShaderHandle = GL.CreateShader(ShaderType.VertexShader);
+            fragmentShaderHandle = GL.CreateShader(ShaderType.FragmentShader);
+
+            GL.ShaderSource(vertexShaderHandle, vertexString);
+            GL.ShaderSource(fragmentShaderHandle, fragmentString);
+
+            GL.CompileShader(vertexShaderHandle);
+            GL.CompileShader(fragmentShaderHandle);
+
+            Util.PrintGLError("CreateShaders compileShaders");
+
+            Console.WriteLine("CreateShaders vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
+            Console.WriteLine("CreateShaders fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
+
+            // Create program
+            shaderProgramHandle = GL.CreateProgram();
+
+            Util.PrintGLError("CreateShaders createprogram");
+
+            GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
+            GL.AttachShader(shaderProgramHandle, fragmentShaderHandle);
+
+            //GL.BindAttribLocation(shaderProgramHandle, 1, "inPosition");
+            //GL.BindAttribLocation(shaderProgramHandle, 0, "inColor");
+
+            Util.PrintGLError("CreateShaders attachshader");
+
+            GL.LinkProgram(shaderProgramHandle);
+            Util.PrintGLError("CreateShaders link program");
+            Console.WriteLine("CreateShaders shader program info: " + GL.GetProgramInfoLog(shaderProgramHandle));
+            GL.UseProgram(shaderProgramHandle);
+            Util.PrintGLError("CreateShaders useprogram");
+
+            projectionMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "projectionMatrix");
+            modelviewMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "modelViewMatrix");
+            colorVec3Location = GL.GetUniformLocation(shaderProgramHandle, "inColor");
+
+            float aspectRatio = Display.Instance.ClientSize.Width / (float)(Display.Instance.ClientSize.Height);
+            //float aspectRatio = 1920.0f / 1080.0f;
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 100, out projectionMatrix);
+            //Matrix4.CreateOrthographic(5, 5, 0.1f, 10000, out projectionMatrix);
+            //Matrix4.CreateOrthographicOffCenter(-10, 10, -10, 10, 0.1f, 1000, out projectionMatrix);
+            //projectionMatrix = Matrix4.Mult(Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0)), projectionMatrix);
+            modelviewMatrix = Matrix4.LookAt(new Vector3(-2, -1, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            //modelviewMatrix = Matrix4.Identity;
+            //modelviewMatrix = Matrix4.CreateTranslation(0, 0, -50);
+
+            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
+            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public static void Load(object sender, EventArgs e)
         {
-            if (lastSec != (long)gameTime.TotalGameTime.TotalSeconds)
-            {
-                lastFps = currentFps;
-                currentFps = 0;
-                lastSec = (long)gameTime.TotalGameTime.TotalSeconds;
-            }
-            currentFps++;
-
-            //Wyświetlanie po transformacji
-            BeginNormalDrawing();
-            // Rysowanie świata i obiektów
-            GlobalRenderer.Draw(gameTime);
-
-            SpriteBatch.End();
-
-            //Wyświetlanie bez transformacji
-            SpriteBatch.Begin();
-
-            if (Console.isVisible)
-            {
-                GlobalRenderer.DrawConsole();
-            }
-            else
-            {
-#if DEBUG
-                if (!Keyboard.GetState().IsKeyDown(Keys.F2))
-#else
-                if (Keyboard.GetState().IsKeyDown(Keys.F2))
-#endif
-                {
-
-                    createDebugInfo();
-                    SpriteBatch.DrawTextWithShaddow(Text.Log, new Vector2(0, 0));
-                    Text.Log = "";
-                }
-            }
-            SpriteBatch.End();
-            MouseWorldControl.Interaction(currentWorld);
-            base.Draw(gameTime);
+           
+            Util.PrintGLError("OnLoad");
+            GenerateVBOs();
+            Util.PrintGLError("GenerateVBOs");
+            CreateShaders();
+            Util.PrintGLError("CreateShaders");
+            GL.Enable(EnableCap.DepthTest);
+            GL.FrontFace(FrontFaceDirection.Cw);
         }
 
-        private void createDebugInfo()
+
+
+        public static void Update(object sender, FrameEventArgs e)
         {
-            sb.Clear();
-            sb.Append("Mouse: ");
-            sb.Append(Mouse.GetState().X);
-            sb.Append(" ");
-            sb.Append(Mouse.GetState().Y);
-            sb.Append("\nFps: ");
-            sb.Append(lastFps);
-            sb.Append("\nRes:");
-            sb.Append(GraphicsDevice.Viewport.Width);
-            sb.Append("x");
-            sb.Append(GraphicsDevice.Viewport.Height);
-            sb.Append("\nCamera: ");
-            sb.Append(Camera.X);
-            sb.Append(" ");
-            sb.Append(Camera.Y);
-            sb.Append(" Zoom: ");
-            sb.Append(Camera.Zoom);
-            sb.Append("\nDrawed chunks: ");
-            sb.Append(LastDrawedChunksCount);
-            sb.Append("\n");
-            sb.Append(Text.Log);
-            Text.Log = sb.ToString();
+            wasUpdated = true;
+        }
+
+        public static void DrawPyramid()
+        {
+            GL.BindVertexArray(commonVertexArrayHandle);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
+            GL.DrawElements(PrimitiveType.TriangleStrip, 8, DrawElementsType.UnsignedByte, 0);
+        }
+
+
+        public static void Draw(object sender, FrameEventArgs e)
+        {
+            if (!wasUpdated)
+            {
+                return;
+            }
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            DrawPyramid();
+
+            Util.PrintGLError("Render");
+
+            Display.Instance.SwapBuffers();
+            wasUpdated = false;
+        }
+
+
+
+        public static void Main(String[] args)
+        {
+            wasUpdated = false;
+            using (Display display = new Display())
+            {
+                display.Run();
+            }
         }
     }
-
 }
