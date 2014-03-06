@@ -1,6 +1,6 @@
 ﻿#version 330 
 
-layout (location = 0) in vec2 varying_uv;
+layout (location = 0) varying in vec2 varying_uv;
 
 uniform sampler2D base_texture;
 

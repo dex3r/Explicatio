@@ -79,18 +79,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shaders\SimpleVertexShader - Copy.glsl">
+    <Content Include="Shaders\SimpleTextureVS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Shaders\SimpleFragmentShader - Copy.glsl">
+    <Content Include="Shaders\SimpleTextureFS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Shaders\TextureShader.glsl" />
     <None Include="app.config" />
-    <Content Include="Shaders\SimpleFragmentShader.glsl">
+    <Content Include="Shaders\SimpleColorFS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Shaders\SimpleVertexShader.glsl">
+    <Content Include="Shaders\SimpleColorVS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

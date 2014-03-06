@@ -101,8 +101,8 @@ namespace Explicatio.Main
 
         private static void CreateShaders()
         {
-            Shader.Create("./Shaders/SimpleVertexShader.glsl", ShaderType.VertexShader, ref vertexShaderHandle);
-            Shader.Create("./Shaders/SimpleFragmentShader.glsl", ShaderType.FragmentShader, ref fragmentShaderHandle);
+            Shader.Create("./Shaders/SimpleColorVS.glsl", ShaderType.VertexShader, ref vertexShaderHandle);
+            Shader.Create("./Shaders/SimpleColorFS.glsl", ShaderType.FragmentShader, ref fragmentShaderHandle);
 
             // Create program
             shaderProgramHandle = GL.CreateProgram();
@@ -130,7 +130,7 @@ namespace Explicatio.Main
             float aspectRatio = Display.Instance.ClientSize.Width / (float)(Display.Instance.ClientSize.Height);
             //float aspectRatio = 1920.0f / 1080.0f;
             Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 100, out projectionMatrix);
-            //Matrix4.CreateOrthographic(5, 5, 0.1f, 10000, out projectionMatrix);
+            Matrix4.CreateOrthographic(5, 5, 0.1f, 10000, out projectionMatrix);
             //Matrix4.CreateOrthographicOffCenter(-10, 10, -10, 10, 0.1f, 1000, out projectionMatrix);
             //projectionMatrix = Matrix4.Mult(Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0)), projectionMatrix);
             modelviewMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
