@@ -74,7 +74,8 @@
     <Compile Include="Graphics\Shaders\Shader.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleColor.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleTexture.cs" />
-    <Compile Include="Graphics\Textures.cs" />
+    <Compile Include="Graphics\Textures\Textures.cs" />
+    <Compile Include="Graphics\Textures\MyTexture.cs" />
     <Compile Include="Main\Worlds\Block.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
     <Compile Include="Main\ChunkRender.cs" />

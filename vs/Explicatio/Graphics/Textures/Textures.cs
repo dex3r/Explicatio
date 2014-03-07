@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Graphics
+namespace Explicatio.Graphics.Textures
 {
     public class Textures
     {
