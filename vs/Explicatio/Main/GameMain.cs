@@ -23,6 +23,9 @@ namespace Explicatio.Main
 
         private static int pyramidIndiecesBufferHandle;
 
+        private static readonly byte[] pyramidIndices = new byte[] {
+            3, 25, 7, 10, 3, 21, 25, 10
+        };
 
 
         //!? Properties region
@@ -45,9 +48,9 @@ namespace Explicatio.Main
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
 
             // Pyramid indices:
-            //pyramidIndiecesBufferHandle = GL.GenBuffer();
-            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
-            //GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(pyramidIndices.Length * sizeof(byte)), pyramidIndices, BufferUsageHint.StreamDraw);
+            pyramidIndiecesBufferHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
+            GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(pyramidIndices.Length * sizeof(byte)), pyramidIndices, BufferUsageHint.StreamDraw);
 
             GL.BindVertexArray(0);
         }

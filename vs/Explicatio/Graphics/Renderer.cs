@@ -63,15 +63,16 @@ namespace Explicatio.Graphics
         {
             //? TODO: dodać pobieranie rączek z shaderów prze pomocy UBO
 
-            //float aspectRatio = Display.Instance.ClientSize.Width / (float)(Display.Instance.ClientSize.Height);
+            float aspectRatio = Display.Instance.ClientSize.Width / (float)(Display.Instance.ClientSize.Height);
             //float aspectRatio = 1920.0f / 1080.0f;
-            //Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 100, out projectionMatrix);
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 100, out projectionMatrix);
             //Matrix4.CreateOrthographic(5, 5, 0.1f, 10000, out projectionMatrix);
             //projectionMatrix = Matrix4.Mult(Matrix4.LookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0)), projectionMatrix);
-            //modelviewMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            Matrix4.CreateOrthographicOffCenter(-10, 10, -10, 10, 0.1f, 1000, out projectionMatrix);
-            modelMatrix = Matrix4.Identity;
-            viewMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            modelMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            modelMatrix = Matrix4.Mult(Matrix4.CreateRotationZ(MathHelper.PiOver4), modelMatrix);
+            //Matrix4.CreateOrthographicOffCenter(-10, 10, -10, 10, 0.1f, 1000, out projectionMatrix);
+            //modelMatrix = Matrix4.Identity;
+            //viewMatrix = Matrix4.LookAt(new Vector3(3, 2, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             //modelviewMatrix = Matrix4.Identity;
             //modelviewMatrix = Matrix4.CreateTranslation(0, 0, -50);
 
