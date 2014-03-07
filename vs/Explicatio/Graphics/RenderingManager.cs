@@ -11,7 +11,7 @@ using Explicatio.Graphics.Shaders;
 
 namespace Explicatio.Graphics
 {
-    public static class Renderer
+    public static class RenderingManager
     {
         private static Matrix4 projectionMatrix;
         private static Matrix4 modelMatrix;
@@ -22,25 +22,25 @@ namespace Explicatio.Graphics
         #region PROPERTIES
         public static Matrix4 ProjectionMatrix
         {
-            get { return Renderer.projectionMatrix; }
+            get { return RenderingManager.projectionMatrix; }
             set 
             { 
-                Renderer.projectionMatrix = value;
+                RenderingManager.projectionMatrix = value;
                 currentShader.ProjectionMatrix = value;
             }
         }
         public static Matrix4 ModelMatrix
         {
-            get { return Renderer.modelMatrix; }
+            get { return RenderingManager.modelMatrix; }
             set 
             { 
-                Renderer.modelMatrix = value;
+                RenderingManager.modelMatrix = value;
                 currentShader.ModelMatrix = value;
             }
         }
         public static Shader CurrentShader
         {
-            get { return Renderer.currentShader; }
+            get { return RenderingManager.currentShader; }
         }
         #endregion
         //!? END of properties region

@@ -57,7 +57,7 @@ namespace Explicatio.Graphics.Shaders
                 if (this.projectionMatrix != value)
                 {
                     this.projectionMatrix = value;
-                    if(Renderer.CurrentShader != this)
+                    if(RenderingManager.CurrentShader != this)
                     {
                         shouldUpdateAllUniformsAtUse = true;
                     }
@@ -76,7 +76,7 @@ namespace Explicatio.Graphics.Shaders
                 if (this.modelMatrix != value)
                 {
                     this.modelMatrix = value;
-                    if (Renderer.CurrentShader != this)
+                    if (RenderingManager.CurrentShader != this)
                     {
                         shouldUpdateAllUniformsAtUse = true;
                     }
@@ -144,7 +144,7 @@ namespace Explicatio.Graphics.Shaders
         }
 
         /// <summary>
-        /// Czy na pewno nie chcesz użyć <see cref="Renderer.ChangeCurrentShader"/>?
+        /// Czy na pewno nie chcesz użyć <see cref="RenderingManager.ChangeCurrentShader"/>?
         /// Użyj tego shadera (UseProgram)
         /// </summary>
         public void Use()

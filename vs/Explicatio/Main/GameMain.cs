@@ -30,7 +30,7 @@ namespace Explicatio.Main
         {
             Shader.Init();
             Util.PrintGLError("Shaders init");
-            Renderer.Init();
+            RenderingManager.Init();
             Util.PrintGLError("Renderer init");
             Primitive.InitPrimitives();
             Util.PrintGLError("Primitives init");
@@ -80,16 +80,16 @@ namespace Explicatio.Main
             }
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Renderer.ModelMatrix = Matrix4.Identity;
+            RenderingManager.ModelMatrix = Matrix4.Identity;
 
             Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0.0f, 0.0f);
             Primitive.singleColorTriangle.Draw();
 
-            Renderer.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
+            RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
             Primitive.singleColorTriangle.Draw();
 
             Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
-            Renderer.ModelMatrix = Matrix4.CreateScale(4f, 4f, 1f) * Matrix4.CreateTranslation(-3f, 0f, 0f);
+            RenderingManager.ModelMatrix = Matrix4.CreateScale(4f, 4f, 1f) * Matrix4.CreateTranslation(-3f, 0f, 0f);
             Primitive.singleColorQuad.Draw();
 
             Util.PrintGLError("Render");

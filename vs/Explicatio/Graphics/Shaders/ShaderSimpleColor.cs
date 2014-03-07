@@ -23,7 +23,7 @@ namespace Explicatio.Graphics.Shaders
                 if (this.color != value)
                 {
                     this.color = value;
-                    if (Renderer.CurrentShader != this)
+                    if (RenderingManager.CurrentShader != this)
                     {
                         ShouldUpdateAllUniformsAtUse = true;
                     }

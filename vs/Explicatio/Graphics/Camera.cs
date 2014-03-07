@@ -37,9 +37,9 @@ namespace Explicatio.Graphics
         {
             float width = (((float)Display.Instance.ClientSize.Width / 20f) / zoom) / 2;
             float height = (((float)Display.Instance.ClientSize.Height / 20f) / zoom) / 2;
-            Renderer.ProjectionMatrix =  Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
-            Renderer.ProjectionMatrix = Matrix4.Mult(Renderer.ProjectionMatrix, Matrix4.CreateTranslation(0f, 0f, 1f));
-            Renderer.UpdateMatrices();
+            RenderingManager.ProjectionMatrix =  Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
+            RenderingManager.ProjectionMatrix = Matrix4.Mult(RenderingManager.ProjectionMatrix, Matrix4.CreateTranslation(0f, 0f, 1f));
+            RenderingManager.UpdateMatrices();
         }
     }
 }

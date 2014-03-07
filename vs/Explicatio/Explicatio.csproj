@@ -67,9 +67,10 @@
     <Compile Include="Controls\Key.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Display.cs" />
+    <Compile Include="Graphics\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\RenderingManager.cs" />
     <Compile Include="Graphics\Shaders\Shader.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleColor.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleTexture.cs" />

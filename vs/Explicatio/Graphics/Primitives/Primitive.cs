@@ -102,7 +102,7 @@ namespace Explicatio.Graphics.Primitives
 
         public virtual void Draw()
         {
-            Renderer.ChangeCurrentShader(DefaultShader, true);
+            RenderingManager.ChangeCurrentShader(DefaultShader, true);
         }
     }
 }
