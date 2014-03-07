@@ -15,6 +15,9 @@ namespace Explicatio.Utils
             if (ec != ErrorCode.NoError)
             {
                 Console.WriteLine("On " + errorPlace + " GL error: " + ec.ToString());
+#if DEBUG
+                throw new Exception("GL error");
+#endif
             }
         }
     }
