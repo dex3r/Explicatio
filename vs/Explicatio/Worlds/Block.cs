@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Main
+namespace Explicatio.Worlds
 {
     public class Block
     {

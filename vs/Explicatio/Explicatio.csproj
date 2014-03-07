@@ -67,7 +67,7 @@
     <Compile Include="Controls\Key.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Display.cs" />
-    <Compile Include="Graphics\GlobalRenderer.cs" />
+    <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
     <Compile Include="Graphics\RenderingManager.cs" />
@@ -75,12 +75,11 @@
     <Compile Include="Graphics\Shaders\ShaderSimpleColor.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleTexture.cs" />
     <Compile Include="Graphics\Textures\Textures.cs" />
-    <Compile Include="Graphics\Textures\MyTexture.cs" />
-    <Compile Include="Main\Worlds\Block.cs" />
-    <Compile Include="Main\Worlds\Chunk.cs" />
-    <Compile Include="Main\ChunkRender.cs" />
+    <Compile Include="Textures\MyTexture.cs" />
+    <Compile Include="Worlds\Block.cs" />
+    <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Main\GameMain.cs" />
-    <Compile Include="Main\Worlds\World.cs" />
+    <Compile Include="Worlds\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>

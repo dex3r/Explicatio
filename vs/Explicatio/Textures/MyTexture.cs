@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Graphics
+namespace Explicatio.Textures
 {
-    public static class GlobalRenderer
+    public class MyTexture
     {
     }
 }

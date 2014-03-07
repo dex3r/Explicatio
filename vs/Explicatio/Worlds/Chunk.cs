@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Main.Worlds
+namespace Explicatio.Worlds
 {
     public class Chunk
     {
