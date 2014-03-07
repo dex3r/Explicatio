@@ -8,9 +8,11 @@ using System.IO;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK;
+using OpenTK.Input;
 using Explicatio.Graphics;
 using Explicatio.Utils;
 using Explicatio.Graphics.Shaders;
+using Explicatio.Graphics.Primitives;
 
 namespace Explicatio.Main
 {
@@ -18,69 +20,63 @@ namespace Explicatio.Main
     {
         private static bool wasUpdated;
 
-        private static int commonVertexArrayHandle;
-        private static int commonVertexBufferHandle;
-
-        private static int pyramidIndiecesBufferHandle;
-
-        private static readonly byte[] pyramidIndices = new byte[] {
-            3, 25, 7, 10, 3, 21, 25, 10
-        };
-
-
         //!? Properties region
         #region PROPERTIES
 
         #endregion
         //!? END of properties region
 
-        private static void GenerateVBOs()
-        {
-            // Common:
-            commonVertexArrayHandle = GL.GenVertexArray();
-            GL.BindVertexArray(commonVertexArrayHandle);
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
-            commonVertexBufferHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, commonVertexBufferHandle);
-            GL.BufferData<Vector2>(BufferTarget.ArrayBuffer, new IntPtr(Primitive.VBODataCommon.Length * Vector2.SizeInBytes), Primitive.VBODataCommon, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
-
-            // Pyramid indices:
-            pyramidIndiecesBufferHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
-            GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(pyramidIndices.Length * sizeof(byte)), pyramidIndices, BufferUsageHint.StreamDraw);
-
-            GL.BindVertexArray(0);
-        }
-
         public static void Load(object sender, EventArgs e)
         {
-           
-            Util.PrintGLError("OnLoad");
-            GenerateVBOs();
-            Util.PrintGLError("GenerateVBOs");
             Shader.Init();
             Util.PrintGLError("Shaders init");
             Renderer.Init();
             Util.PrintGLError("Renderer init");
+            Primitive.InitPrimitives();
+            Util.PrintGLError("Primitives init");
             GL.Enable(EnableCap.DepthTest);
             GL.FrontFace(FrontFaceDirection.Cw);
         }
 
+        static float modelX = 0, modelY = 0, modelZ = -30;
         public static void Update(object sender, FrameEventArgs e)
         {
+            KeyboardState ks = Keyboard.GetState();
+            if (ks[OpenTK.Input.Key.Left])
+            {
+                modelX++;
+            }
+            if (ks[OpenTK.Input.Key.Down])
+            {
+                modelY++;
+                //modelZ -= 1 / 3f;
+            }
+            if (ks[OpenTK.Input.Key.Right])
+            {
+                modelX--;
+            }
+            if (ks[OpenTK.Input.Key.Up])
+            {
+                modelY--;
+                //modelZ += 1 / 3f;
+            }
+            if (ks[OpenTK.Input.Key.Z])
+            {
+                modelZ++;
+            }
+            if (ks[OpenTK.Input.Key.X])
+            {
+                modelZ--;
+            }
+            //modelZ--;
+            Renderer.ViewMatrix = Matrix4.CreateTranslation(modelX / 10f, modelY / 10f, modelZ / 10f);
+            //Renderer.ModelMatrix = Matrix4.Identity;
+            Renderer.CurrentShader.UpdateAllUniforms();
+            //Matrix4 m = Matrix4.CreateTranslation(modelX, modelY, modelZ);
+            //Renderer.ViewMatrix = Matrix4.Mult(Renderer.ViewMatrix, m);
+            //Matrix4 m = Matrix4.Mult(Matrix4.CreateTranslation(modelX / 2f, modelY / 2f, modelZ / 2f), projectionMatrix);
             wasUpdated = true;
         }
-
-        public static void DrawPyramid()
-        {
-            GL.BindVertexArray(commonVertexArrayHandle);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, pyramidIndiecesBufferHandle);
-            GL.DrawElements(PrimitiveType.TriangleStrip, 8, DrawElementsType.UnsignedByte, 0);
-        }
-
 
         public static void Draw(object sender, FrameEventArgs e)
         {
@@ -90,7 +86,17 @@ namespace Explicatio.Main
             }
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            DrawPyramid();
+            Renderer.ModelMatrix = Matrix4.Identity;
+
+            Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0.0f, 0.0f);
+            Primitive.singleColorTriangle.Draw();
+
+            Renderer.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
+            Primitive.singleColorTriangle.Draw();
+
+            Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
+            Renderer.ModelMatrix = Matrix4.CreateTranslation(-3f, 0, 0);
+            Primitive.singleColorQuad.Draw();
 
             Util.PrintGLError("Render");
 

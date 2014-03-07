@@ -3,9 +3,9 @@
 uniform mat4 projectionMatrix; 
 uniform mat4 modelMatrix; 
 uniform mat4 viewMatrix;
+uniform vec3 inColor;
 
-layout (location = 0) in vec2 inPosition; 
-layout (location = 1) in vec3 inColor; 
+layout (location = 0) in vec2 inPosition;  
 
 smooth out vec3 theColor; 
 

@@ -7,7 +7,7 @@ uniform mat4 viewMatrix;
 layout (location = 0) in vec2 inPosition; 
 layout (location = 1) in vec2 uv;
 
-varying out vec2 varying_uv;
+varying vec2 varying_uv;
 
 void main() 
 { 

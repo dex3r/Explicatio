@@ -66,11 +66,12 @@
     <Compile Include="Controls\Mouse.cs" />
     <Compile Include="Controls\Key.cs" />
     <Compile Include="Graphics\Display.cs" />
-    <Compile Include="Graphics\Primitive.cs" />
+    <Compile Include="Graphics\Primitives\Primitive.cs" />
+    <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
     <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Graphics\Shaders\Shader.cs" />
-    <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimpleColor.cs" />
+    <Compile Include="Graphics\Shaders\ShaderSimpleTexture.cs" />
     <Compile Include="Graphics\Textures.cs" />
     <Compile Include="Main\GameMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,7 +89,6 @@
     <Content Include="Shaders\SimpleTextureFS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Shaders\TextureShader.glsl" />
     <None Include="app.config" />
     <Content Include="Shaders\SimpleColorFS.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
