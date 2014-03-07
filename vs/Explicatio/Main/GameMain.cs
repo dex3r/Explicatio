@@ -38,43 +38,37 @@ namespace Explicatio.Main
             GL.FrontFace(FrontFaceDirection.Cw);
         }
 
-        static float modelX = 0, modelY = 0, modelZ = -30;
+        
         public static void Update(object sender, FrameEventArgs e)
         {
+            //? TEMP CODE
             KeyboardState ks = Keyboard.GetState();
             if (ks[OpenTK.Input.Key.Left])
             {
-                modelX++;
+                Camera.PosX++;
             }
             if (ks[OpenTK.Input.Key.Down])
             {
-                modelY++;
-                //modelZ -= 1 / 3f;
+                Camera.PosY++;
             }
             if (ks[OpenTK.Input.Key.Right])
             {
-                modelX--;
+                Camera.PosX--;
             }
             if (ks[OpenTK.Input.Key.Up])
             {
-                modelY--;
-                //modelZ += 1 / 3f;
+                Camera.PosY--;
             }
             if (ks[OpenTK.Input.Key.Z])
             {
-                modelZ++;
+                Camera.Zoom += 0.05f;
             }
             if (ks[OpenTK.Input.Key.X])
             {
-                modelZ--;
+                Camera.Zoom -= 0.05f;
             }
-            //modelZ--;
-            Renderer.ViewMatrix = Matrix4.CreateTranslation(modelX / 10f, modelY / 10f, modelZ / 10f);
-            //Renderer.ModelMatrix = Matrix4.Identity;
-            Renderer.CurrentShader.UpdateAllUniforms();
-            //Matrix4 m = Matrix4.CreateTranslation(modelX, modelY, modelZ);
-            //Renderer.ViewMatrix = Matrix4.Mult(Renderer.ViewMatrix, m);
-            //Matrix4 m = Matrix4.Mult(Matrix4.CreateTranslation(modelX / 2f, modelY / 2f, modelZ / 2f), projectionMatrix);
+
+            Camera.Update();
             wasUpdated = true;
         }
 
@@ -95,17 +89,13 @@ namespace Explicatio.Main
             Primitive.singleColorTriangle.Draw();
 
             Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
-            Renderer.ModelMatrix = Matrix4.CreateTranslation(-3f, 0, 0);
+            Renderer.ModelMatrix = Matrix4.CreateScale(4f, 4f, 1f) * Matrix4.CreateTranslation(-3f, 0f, 0f);
             Primitive.singleColorQuad.Draw();
 
             Util.PrintGLError("Render");
 
             Display.Instance.SwapBuffers();
             wasUpdated = false;
-
-            //Quad.SetVertexArray();
-            //Quad.Draw();
-            //Quad.Draw();
         }
 
 

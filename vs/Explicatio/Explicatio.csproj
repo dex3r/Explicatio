@@ -65,6 +65,7 @@
     <Compile Include="Controls\Keyboard.cs" />
     <Compile Include="Controls\Mouse.cs" />
     <Compile Include="Controls\Key.cs" />
+    <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Display.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />

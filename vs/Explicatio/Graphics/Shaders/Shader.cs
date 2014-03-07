@@ -39,10 +39,8 @@ namespace Explicatio.Graphics.Shaders
         private string name;
         private Matrix4 projectionMatrix;
         private Matrix4 modelMatrix;
-        private Matrix4 viewMatrix;
         private int projectionMatrixHandle;
         private int modelMatrixHandle;
-        private int viewMatrixHandle;
         private bool shouldUpdateAllUniformsAtUse;
 
          //!? Properties region
@@ -89,25 +87,6 @@ namespace Explicatio.Graphics.Shaders
                 }
             }
         }
-        public Matrix4 ViewMatrix
-        {
-            get { return this.viewMatrix; }
-            set
-            {
-                if (this.viewMatrix != value)
-                {
-                    this.viewMatrix = value;
-                    if (Renderer.CurrentShader != this)
-                    {
-                        shouldUpdateAllUniformsAtUse = true;
-                    }
-                    else
-                    {
-                        GL.UniformMatrix4(viewMatrixHandle, false, ref this.viewMatrix);
-                    }
-                }
-            }
-        }
         public bool ShouldUpdateAllUniformsAtUse
         {
             get { return shouldUpdateAllUniformsAtUse; }
@@ -123,7 +102,6 @@ namespace Explicatio.Graphics.Shaders
 
             projectionMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "projectionMatrix");
             modelMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "modelMatrix");
-            viewMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "viewMatrix");
         }
 
         private void Create()
@@ -150,8 +128,8 @@ namespace Explicatio.Graphics.Shaders
             GL.CompileShader(fragmentShaderHandle);
             Util.PrintGLError("Shader " + name + " fragmet: CreateShader");
 
-            Console.WriteLine("CreateShaders " + name + " vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
-            Console.WriteLine("CreateShaders " + name + " fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
+            Console.Write("CreateShaders " + name + " vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
+            Console.Write("CreateShaders " + name + " fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
 
             shaderProgramHandle = GL.CreateProgram();
 
@@ -160,7 +138,7 @@ namespace Explicatio.Graphics.Shaders
 
             GL.LinkProgram(shaderProgramHandle);
             Util.PrintGLError("Shader " + name + " fragmet: LinkProgram");
-            Console.WriteLine("CreateShaders " + name + " program info: " + GL.GetProgramInfoLog(shaderProgramHandle));
+            Console.Write("CreateShaders " + name + " program info: " + GL.GetProgramInfoLog(shaderProgramHandle));
             GL.UseProgram(shaderProgramHandle);
             Util.PrintGLError("Shader " + name + " fragmet: UseProgram");
         }
@@ -182,17 +160,14 @@ namespace Explicatio.Graphics.Shaders
         {
             GL.UniformMatrix4(projectionMatrixHandle, false, ref projectionMatrix);
             GL.UniformMatrix4(modelMatrixHandle, false, ref modelMatrix);
-            GL.UniformMatrix4(viewMatrixHandle, false, ref viewMatrix);
         }
 
-        public void SetPMVAndUpdate(Matrix4 projectionMatrix, Matrix4 modelMatrix, Matrix4 viewMatrix)
+        public void SetPMAndUpdate(Matrix4 projectionMatrix, Matrix4 modelMatrix)
         {
             this.projectionMatrix = projectionMatrix;
             this.modelMatrix = modelMatrix;
-            this.viewMatrix = viewMatrix;
             GL.UniformMatrix4(projectionMatrixHandle, false, ref projectionMatrix);
             GL.UniformMatrix4(modelMatrixHandle, false, ref modelMatrix);
-            GL.UniformMatrix4(viewMatrixHandle, false, ref viewMatrix);
         }
     }
 }

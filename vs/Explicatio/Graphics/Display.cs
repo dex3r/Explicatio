@@ -40,6 +40,7 @@ namespace Explicatio.Graphics
 
         protected override void OnLoad(EventArgs e)
         {
+            this.Size = new System.Drawing.Size(800, 600);
             GL.ClearColor(Color.CornflowerBlue);
             GL.Viewport(0, 0, Width, Height);
             VSync = VSyncMode.On;
