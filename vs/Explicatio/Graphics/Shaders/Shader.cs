@@ -13,22 +13,33 @@ namespace Explicatio.Graphics.Shaders
     public class Shader
     {
         #region STATIC
-        private static ShaderSimpleColor simpleColor;
-        private static ShaderSimpleTexture simpleTexture;
+        private static ShaderSimpleColor simpleColorShader;
+        private static ShaderSimpleTexture simpleTextureShader;
+        private static ShaderChunk chunkShader;
 
         //!? Static properties region
         #region PROPERTIES
-        public static ShaderSimpleColor SimpleColor
+        public static ShaderSimpleColor SimpleColorShader
         {
-            get { return Shader.simpleColor; }
+            get { return Shader.simpleColorShader; }
         }
+        public static ShaderSimpleTexture SimpleTextureShader
+        {
+            get { return Shader.simpleTextureShader; }
+        }
+        public static ShaderChunk ChunkShader
+        {
+            get { return Shader.chunkShader; }
+        }
+
         #endregion
         //!? END of static properties region
 
         public static void Init()
         {
-            simpleColor = new ShaderSimpleColor("SimpleColor");
-            simpleTexture = new ShaderSimpleTexture("SimpleTexture");
+            simpleColorShader = new ShaderSimpleColor("SimpleColor");
+            simpleTextureShader = new ShaderSimpleTexture("SimpleTexture");
+            chunkShader = new ShaderChunk("Chunk", true);
         }
 
         #endregion
@@ -36,6 +47,7 @@ namespace Explicatio.Graphics.Shaders
         private int shaderProgramHandle;
         private int vertexShaderHandle;
         private int fragmentShaderHandle;
+        private int geometryShaderHandle;
         private string name;
         private Matrix4 projectionMatrix;
         private Matrix4 modelMatrix;
@@ -43,7 +55,7 @@ namespace Explicatio.Graphics.Shaders
         private int modelMatrixHandle;
         private bool shouldUpdateAllUniformsAtUse;
 
-         //!? Properties region
+        //!? Properties region
         #region PROPERTIES
         public int ShaderProgramHandle
         {
@@ -57,7 +69,7 @@ namespace Explicatio.Graphics.Shaders
                 if (this.projectionMatrix != value)
                 {
                     this.projectionMatrix = value;
-                    if(RenderingManager.CurrentShader != this)
+                    if (RenderingManager.CurrentShader != this)
                     {
                         shouldUpdateAllUniformsAtUse = true;
                     }
@@ -94,20 +106,21 @@ namespace Explicatio.Graphics.Shaders
         }
         #endregion
         //!? END of properties region
-        
-        protected Shader(string name)
+
+        protected Shader(string name, bool includeGeometryShader = false)
         {
             this.name = name;
-            Create();
+            Create(includeGeometryShader);
 
             projectionMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "projectionMatrix");
             modelMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "modelMatrix");
         }
 
-        private void Create()
+        private void Create(bool includeGeometryShader)
         {
             string sourceVS;
             string sourceFS;
+            string sourceGS = "";
             using (StreamReader sw = new StreamReader(@"Shaders/" + name + "VS.glsl"))
             {
                 sourceVS = sw.ReadToEnd();
@@ -128,19 +141,33 @@ namespace Explicatio.Graphics.Shaders
             GL.CompileShader(fragmentShaderHandle);
             Util.PrintGLError("Shader " + name + " fragmet: CreateShader");
 
-            Console.Write("CreateShaders " + name + " vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
-            Console.Write("CreateShaders " + name + " fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
+            Console.WriteLine("CreateShaders " + name + " vertex shader info: " + GL.GetShaderInfoLog(vertexShaderHandle));
+            Console.WriteLine("CreateShaders " + name + " fragment shader info: " + GL.GetShaderInfoLog(fragmentShaderHandle));
 
             shaderProgramHandle = GL.CreateProgram();
 
             GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
             GL.AttachShader(shaderProgramHandle, fragmentShaderHandle);
 
+            if (includeGeometryShader)
+            {
+                using (StreamReader sw = new StreamReader(@"Shaders/" + name + "GS.glsl"))
+                {
+                    sourceGS = sw.ReadToEnd();
+                }
+                geometryShaderHandle = GL.CreateShader(ShaderType.GeometryShader);
+                GL.ShaderSource(geometryShaderHandle, sourceGS);
+                GL.CompileShader(geometryShaderHandle);
+                Util.PrintGLError("Shader " + name + " geometry: CreateShader");
+                Console.WriteLine("CreateShaders " + name + " geometry shader info: " + GL.GetShaderInfoLog(geometryShaderHandle));
+                GL.AttachShader(shaderProgramHandle, geometryShaderHandle);
+            }
+
             GL.LinkProgram(shaderProgramHandle);
-            Util.PrintGLError("Shader " + name + " fragmet: LinkProgram");
-            Console.Write("CreateShaders " + name + " program info: " + GL.GetProgramInfoLog(shaderProgramHandle));
+            Util.PrintGLError("Shader " + name + ": LinkProgram");
+            Console.WriteLine("CreateShaders " + name + " program info: " + GL.GetProgramInfoLog(shaderProgramHandle));
             GL.UseProgram(shaderProgramHandle);
-            Util.PrintGLError("Shader " + name + " fragmet: UseProgram");
+            Util.PrintGLError("Shader " + name + ": UseProgram");
         }
 
         /// <summary>
@@ -150,7 +177,7 @@ namespace Explicatio.Graphics.Shaders
         public void Use()
         {
             GL.UseProgram(shaderProgramHandle);
-            if(shouldUpdateAllUniformsAtUse)
+            if (shouldUpdateAllUniformsAtUse)
             {
                 UpdateAllUniforms();
             }

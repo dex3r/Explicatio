@@ -26,13 +26,13 @@ namespace Explicatio.Graphics.Primitives
         public PrimitiveSingleColor(PrimitiveType primitiveType)
             : base(primitiveType)
         {
-            defaultShader = Shader.SimpleColor;
+            defaultShader = Shader.SimpleColorShader;
         }
 
         public PrimitiveSingleColor(PrimitiveType primitiveType, byte[] indices)
             : base(primitiveType)
         {
-            defaultShader = Shader.SimpleColor;
+            defaultShader = Shader.SimpleColorShader;
             this.indices = indices;
         }
 

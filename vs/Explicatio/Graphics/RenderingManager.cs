@@ -49,7 +49,7 @@ namespace Explicatio.Graphics
         {
             modelMatrix = Matrix4.Identity;
 
-            ChangeCurrentShader(Shader.SimpleColor, true);
+            ChangeCurrentShader(Shader.SimpleColorShader, true);
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace Explicatio.Graphics
             if(currentShader != newShader)
             {
                 currentShader = newShader;
+                currentShader.Use();
                 if (changePMVToCurrent)
                 {
                     newShader.SetPMAndUpdate(projectionMatrix, modelMatrix);
                 }
-                currentShader.Use();
             }
         }
 

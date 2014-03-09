@@ -14,7 +14,7 @@ namespace Explicatio.Graphics.Primitives
         #region STATIC
         private static List<Primitive> allPrimitives = new List<Primitive>(10);
 
-        public static readonly PrimitiveSingleColor singleColorTriangle = new PrimitiveSingleColor(PrimitiveType.Triangles, new byte[] { 4, 1, 6 });
+        public static readonly PrimitiveSingleColor singleColorTriangle = new PrimitiveSingleColor(PrimitiveType.Triangles, new byte[] { 4, 6, 1 });
         public static readonly PrimitiveSingleColor singleColorQuad = new PrimitiveSingleColor(PrimitiveType.TriangleStrip, new byte[] { 2, 4, 8, 6});
 
         public static readonly Vector2[] VBODataCommon = new Vector2[] {
@@ -67,7 +67,8 @@ namespace Explicatio.Graphics.Primitives
 
         protected Shader defaultShader;
         protected byte[] indices;
-        protected int indiecesBufferHandle;
+        private Vector2[] customVertices;
+        public int indiecesBufferHandle;
         protected PrimitiveType primitiveType;
 
          //!? Properties region
@@ -84,12 +85,17 @@ namespace Explicatio.Graphics.Primitives
         {
             get { return indiecesBufferHandle; }
         }
+        protected Vector2[] CustomVertices
+        {
+            get { return customVertices; }
+        }
         #endregion
         //!? END of properties region
 
-        public Primitive(PrimitiveType primitiveType)
+        public Primitive(PrimitiveType primitiveType, Vector2[] vertices = null)
         {
             this.primitiveType = primitiveType;
+            this.customVertices = vertices;
             allPrimitives.Add(this);
         }
 

@@ -6,7 +6,7 @@ uniform mat4 modelMatrix;
 layout (location = 0) in vec2 inPosition; 
 layout (location = 1) in vec2 uv;
 
-varying vec2 varying_uv;
+out vec2 varying_uv;
 
 void main() 
 { 

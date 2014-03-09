@@ -44,7 +44,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\WindowsGL\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -67,6 +67,8 @@
     <Compile Include="Controls\Key.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Display.cs" />
+    <Compile Include="Graphics\Primitives\PrimitiveSingleTexture.cs" />
+    <Compile Include="Graphics\Shaders\ShaderChunk.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
@@ -89,18 +91,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shaders\SimpleTextureVS.glsl">
+    <Content Include="Content\gfx\terrain.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Shaders\SimpleTextureVS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Shaders\SimpleTextureFS.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />
     <Content Include="Shaders\SimpleColorFS.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Shaders\SimpleColorVS.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Shaders\ChunkGS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Shaders\ChunkFS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Shaders\ChunkVS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
