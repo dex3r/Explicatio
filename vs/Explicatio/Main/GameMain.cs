@@ -13,6 +13,7 @@ using Explicatio.Graphics;
 using Explicatio.Utils;
 using Explicatio.Graphics.Shaders;
 using Explicatio.Graphics.Primitives;
+using Explicatio.Rendering;
 
 namespace Explicatio.Main
 {
@@ -30,12 +31,22 @@ namespace Explicatio.Main
         {
             Shader.Init();
             Util.PrintGLError("Shaders init");
+            GL.UseProgram(0);
             RenderingManager.Init();
             Util.PrintGLError("Renderer init");
             Primitive.InitPrimitives();
             Util.PrintGLError("Primitives init");
-            GL.Enable(EnableCap.DepthTest);
+
+            GlobalRenderer.InitTemp();
+            Util.PrintGLError("InitTemp");
+
             GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.CullFace);
+            GL.Disable(EnableCap.DepthTest);
+
+            GL.Enable(EnableCap.Blend);
+            //GL.BlendColor(1.0f, 0.0f, 1.0f, 1.0f);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
         }
 
         
@@ -45,19 +56,19 @@ namespace Explicatio.Main
             KeyboardState ks = Keyboard.GetState();
             if (ks[OpenTK.Input.Key.Left])
             {
-                Camera.PosX++;
+                Camera.PosX += 0.3f;
             }
             if (ks[OpenTK.Input.Key.Down])
             {
-                Camera.PosY++;
+                Camera.PosY += 0.3f;
             }
             if (ks[OpenTK.Input.Key.Right])
             {
-                Camera.PosX--;
+                Camera.PosX -= 0.3f;
             }
             if (ks[OpenTK.Input.Key.Up])
             {
-                Camera.PosY--;
+                Camera.PosY -= 0.3f;
             }
             if (ks[OpenTK.Input.Key.Z])
             {
@@ -69,6 +80,7 @@ namespace Explicatio.Main
             }
 
             Camera.Update();
+            Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
         }
 
@@ -78,19 +90,24 @@ namespace Explicatio.Main
             {
                 return;
             }
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
 
             RenderingManager.ModelMatrix = Matrix4.Identity;
 
-            Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0.0f, 0.0f);
-            Primitive.singleColorTriangle.Draw();
+            //Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
+            //RenderingManager.ModelMatrix = Matrix4.CreateScale(4f, 4f, 1f) * Matrix4.CreateTranslation(-3f, 0f, 0f);
+            //Primitive.singleColorQuad.Draw();
 
+            //RenderingManager.ModelMatrix = Matrix4.Identity;
+            //Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0.0f, 0.0f);
+            //Primitive.singleColorTriangle.Draw();
+
+            Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0, 0);
             RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
             Primitive.singleColorTriangle.Draw();
 
-            Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
-            RenderingManager.ModelMatrix = Matrix4.CreateScale(4f, 4f, 1f) * Matrix4.CreateTranslation(-3f, 0f, 0f);
-            Primitive.singleColorQuad.Draw();
+            GlobalRenderer.RenderChunk(null);
+            //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
 
             Util.PrintGLError("Render");
 

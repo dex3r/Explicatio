@@ -1,6 +1,6 @@
 ﻿#version 330 
 
-varying vec2 varying_uv;
+in vec2 varying_uv;
 
 uniform sampler2D base_texture;
 

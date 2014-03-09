@@ -25,6 +25,7 @@ namespace Explicatio.Graphics
         //!? END of properties region
 
         public Display()
+            : base(800, 600, GraphicsMode.Default, "Explicatio INDEV", GameWindowFlags.Default, DisplayDevice.Default, 1, 0, GraphicsContextFlags.Debug, null)
         {
             instance = this;
             base.Load += GameMain.Load;
