@@ -14,6 +14,7 @@ using Explicatio.Utils;
 using Explicatio.Graphics.Shaders;
 using Explicatio.Graphics.Primitives;
 using Explicatio.Rendering;
+using Explicatio.Controls;
 
 namespace Explicatio.Main
 {
@@ -52,36 +53,19 @@ namespace Explicatio.Main
         
         public static void Update(object sender, FrameEventArgs e)
         {
-            //? TEMP CODE
-            KeyboardState ks = Keyboard.GetState();
-            if (ks[OpenTK.Input.Key.Left])
-            {
-                Camera.PosX += 0.3f;
-            }
-            if (ks[OpenTK.Input.Key.Down])
-            {
-                Camera.PosY += 0.3f;
-            }
-            if (ks[OpenTK.Input.Key.Right])
-            {
-                Camera.PosX -= 0.3f;
-            }
-            if (ks[OpenTK.Input.Key.Up])
-            {
-                Camera.PosY -= 0.3f;
-            }
-            if (ks[OpenTK.Input.Key.Z])
-            {
-                Camera.Zoom += 0.05f;
-            }
-            if (ks[OpenTK.Input.Key.X])
-            {
-                Camera.Zoom -= 0.05f;
-            }
-
+            MyKeyboard.Update();
             Camera.Update();
-            Console.WriteLine(Display.Instance.RenderFrequency);
+            Console.WriteLine(MyMouse.WheelDelta);
             wasUpdated = true;
+            if (MyKeyboard.KeyExitGame.IsPressed)
+            {
+                Display.Instance.Exit();
+            }
+            if (MyKeyboard.KeyFullscreen.IsToggled)
+            {
+                Display.FullScreenSwitch();
+            }
+            MyMouse.EndStep();
         }
 
         public static void Draw(object sender, FrameEventArgs e)

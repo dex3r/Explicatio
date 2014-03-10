@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Explicatio.Controls;
+using Explicatio.Main;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using Explicatio.Main;
+using OpenTK.Input;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Explicatio.Graphics
 {
@@ -31,21 +33,49 @@ namespace Explicatio.Graphics
             base.Load += GameMain.Load;
             base.UpdateFrame += GameMain.Update;
             base.RenderFrame += GameMain.Draw;
+            this.Mouse.Move += MyMouse.Mouse_Move;
+            this.Mouse.WheelChanged += MyMouse.Mouse_WheelChanged;
+            //this.Mouse.ButtonDown += MyMouse.Mouse_ButtonDown;
+            //this.Mouse.ButtonUp += MyMouse.Mouse_ButtonUp;
         }
 
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
             base.OnResize(e);
+            GL.Viewport(this.ClientRectangle);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, Width, Height, 0, -1, 0);
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            this.Size = new System.Drawing.Size(800, 600);
+            WindowInit();
             GL.ClearColor(Color.CornflowerBlue);
             GL.Viewport(0, 0, Width, Height);
             VSync = VSyncMode.On;
             base.OnLoad(e);
+        }
+       
+
+        public void WindowInit()
+        {
+            this.Size = new System.Drawing.Size(800, 600);
+            WindowBorder = WindowBorder.Fixed;
+        }
+
+        public static void FullScreenSwitch()
+        {
+            if (Display.Instance.WindowState != WindowState.Fullscreen)
+            {
+                Display.Instance.WindowBorder = WindowBorder.Hidden;
+                Display.Instance.WindowState = WindowState.Fullscreen;
+            }
+            else
+            {
+                Display.Instance.WindowBorder = WindowBorder.Fixed;
+                Display.Instance.WindowState = WindowState.Normal;
+            }
         }
     }
 }
