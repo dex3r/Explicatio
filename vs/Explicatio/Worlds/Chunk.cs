@@ -8,10 +8,10 @@ namespace Explicatio.Worlds
 {
     public class Chunk
     {
-        public static readonly short CHUNK_SIZE = 32;
+        public static readonly short CHUNK_SIZE = 6;
 
         //Array with Blocks
-        private Block[] blocks = new Block[CHUNK_SIZE*CHUNK_SIZE];
+        private int[] blocks = new int[CHUNK_SIZE*CHUNK_SIZE];
         //Chunk Coordinates
         private int x;
         private int y;
@@ -40,7 +40,7 @@ namespace Explicatio.Worlds
                 {
                     for (int yi = 0; yi < CHUNK_SIZE; yi++)
                     {
-                        this[xi, yi] = new Block(1, 1);
+                        this[xi, yi] = Block.Grass.Id;
                     }
                 }
             }
@@ -51,7 +51,7 @@ namespace Explicatio.Worlds
         /// </summary>
         /// <param name="x">Pozycja w tablicy</param>
         /// <param name="y">Pozycja w tablicy</param>
-        public Block this[int x,int y]
+        public int this[int x,int y]
         {
             get { return blocks[y * CHUNK_SIZE + x]; }
             set

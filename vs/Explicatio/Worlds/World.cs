@@ -47,7 +47,7 @@ namespace Explicatio.Worlds
             //map.y = (screen.y / TILE_HEIGHT_HALF -(screen.x / TILE_WIDTH_HALF)) /2;
             return this[(int)(((inputX / chunkSizeWidth) + (inputY / chunkSizeHeight))), (int)(((inputY / chunkSizeHeight) - (inputX / chunkSizeWidth)))];
         }
-        public Block RelativeGetBlock(float inputX, float inputY)
+        public int RelativeGetBlock(float inputX, float inputY)
         {
             Chunk c = RelativeGetChunk(inputX, inputY);
             float inputChunkRelativeX = inputX - c.X*chunkSizeWidth;

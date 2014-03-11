@@ -79,6 +79,7 @@
     <Compile Include="Graphics\Textures\Textures.cs" />
     <Compile Include="Textures\MyTexture.cs" />
     <Compile Include="Worlds\Block.cs" />
+    <Compile Include="Worlds\BlocksEnum.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Main\GameMain.cs" />
     <Compile Include="Worlds\World.cs" />

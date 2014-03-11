@@ -8,23 +8,32 @@ namespace Explicatio.Worlds
 {
     public class Block
     {
+        #region const
         public const int BLOCK_WIDTH = 128;
         public const int BLOCK_HEIGHT = 64;
+        #endregion
 
-        private byte id;
-        private byte blockMetaData;
+        #region static
+
+        private static Block[] blocks = new Block[256];
+        public static Block[] Blocks
+        {
+            get { return Block.blocks; }
+        }
+
+        public static Block Grass = new Block(1,0, "Grass");
+
+        #endregion
+
+        #region nonstatic
+        private int id;
         private string name;
         //!? Properties region
         #region PROPERTIES
-        public byte Id
+        public int Id
         {
             get { return id; }
             set { id = value; }
-        }
-        public byte BlockMetaData
-        {
-            get { return blockMetaData; }
-            set { blockMetaData = value; }
         }
         public string Name
         {
@@ -33,12 +42,21 @@ namespace Explicatio.Worlds
         #endregion
         //!? END of properties region
 
-        public Block(byte id, byte meta)
+        /// <summary>
+        /// Ostrożnie z tym, ID zaczyna sie od 16 miejsca
+        /// </summary>
+        /// <param name="flagID"></param>
+        /// <param name="name"></param>
+        public Block(int flagID, string name)
         {
-            this.id = id;
-            this.blockMetaData = meta;
-            //this.name = name;
+            this.id = flagID;
+            this.name = name;
         }
-
+        public Block(short id, byte meta, string name)
+        {
+            this.id = (id << 16) | (meta << 8);
+            this.name = name;
+        }
+        #endregion
     }
 }

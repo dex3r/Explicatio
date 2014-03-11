@@ -8,6 +8,7 @@ using OpenTK;
 using OpenTK.Input;
 using Explicatio.Graphics;
 using System.Drawing;
+using Explicatio.Worlds;
 
 namespace Explicatio.Controls
 {
@@ -21,6 +22,8 @@ namespace Explicatio.Controls
         private static float wheelDelta;
         private static int mouseDragPositionX;
         private static int mouseDragPositionY;
+        private static float xRelative;
+        private static float yRelative;
 
         #region Buttons
         private static MyKey buttonMiddle = new MyKey("Middle button??", MouseButton.Middle);
@@ -74,6 +77,16 @@ namespace Explicatio.Controls
             get { return MyMouse.mouseDragPositionY; }
             set { MyMouse.mouseDragPositionY = value; }
         }
+        public static float XRelative
+        {
+            get { return MyMouse.xRelative; }
+            set { MyMouse.xRelative = value; }
+        }
+        public static float YRelative
+        {
+            get { return MyMouse.yRelative; }
+            set { MyMouse.yRelative = value; }
+        }
         #endregion
         //!? END of properties region
 
@@ -101,6 +114,12 @@ namespace Explicatio.Controls
 
         public static void EndStep()
         {
+            //positionRelative.X = Rendering.Camera.Transform.Translation.X * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().X * (float)Math.Pow(Rendering.Camera.Zoom, -1);
+            //positionRelative.Y = Rendering.Camera.Transform.Translation.Y * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().Y * (float)Math.Pow(Rendering.Camera.Zoom, -1);
+            float xScreen = Camera.PosX * -1 * (float)Math.Pow(Camera.Zoom, -1) + X * (float)Math.Pow(Camera.Zoom, -1);
+            float yScreen = Camera.PosY * -1 * (float)Math.Pow(Camera.Zoom, -1) + Y * (float)Math.Pow(Camera.Zoom, -1);
+            xRelative = xScreen;
+            yRelative = yScreen;
             //Reset mouse wheel delta
             wheelDelta = 0;
             //Reset mouse pos delta
