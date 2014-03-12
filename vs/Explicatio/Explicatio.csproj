@@ -47,8 +47,9 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>
@@ -69,6 +70,7 @@
     <Compile Include="Graphics\Display.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleTexture.cs" />
     <Compile Include="Graphics\Shaders\ShaderChunk.cs" />
+    <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
@@ -117,6 +119,12 @@
     <Content Include="Shaders\ChunkVS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Shaders\Chunk2FS.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\Chunk2VS.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

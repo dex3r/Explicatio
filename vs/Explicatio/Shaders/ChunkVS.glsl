@@ -1,8 +1,12 @@
 ﻿#version 330 
 
-//layout (location = 0) in vec2 inPosition;
+const int CHUNK_SIZE = 6;
+
+layout (location = 0) in int[CHUNK_SIZE * CHUNK_SIZE] inChunkBlocks;
+
+out int[CHUNK_SIZE * CHUNK_SIZE] chunkBlocks;
 
 void main() 
 {
-  // gl_Position = vec4(inPosition, 0.0, 1.0); 
+   chunkBlocks = inChunkBlocks;
 }

@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Explicatio.Graphics.Shaders
 {
-    public class ShaderChunk : Shader
+    public class ShaderChunk : ShaderSimple
     {
         private int chunkBlocksHandle;
 

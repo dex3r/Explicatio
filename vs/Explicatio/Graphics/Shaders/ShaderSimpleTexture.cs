@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Explicatio.Graphics.Shaders
 {
-    public class ShaderSimpleTexture : Shader
+    public class ShaderSimpleTexture : ShaderSimple
     {
         public ShaderSimpleTexture(string name)
             : base(name)
