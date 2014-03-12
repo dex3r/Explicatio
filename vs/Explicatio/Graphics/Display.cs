@@ -61,7 +61,7 @@ namespace Explicatio.Graphics
         public void WindowInit()
         {
             this.Size = new System.Drawing.Size(800, 600);
-            WindowBorder = WindowBorder.Fixed;
+            WindowBorder = WindowBorder.Resizable;
         }
 
         public static void FullScreenSwitch()

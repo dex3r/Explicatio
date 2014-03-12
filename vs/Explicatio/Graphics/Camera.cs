@@ -13,9 +13,9 @@ namespace Explicatio.Graphics
     {
         private static float zoom = 1.0f;
         private static float posX = 0;
-        private static float posY = 0;
+        private static float posY = -1.877697f;
         private static int BORDERSIZE = 50;
-        private static float STEPSPEED = 0.5f;
+        private static float STEPSPEED = 1f;
 
         //!? Properties region
         #region PROPERTIES
@@ -36,20 +36,21 @@ namespace Explicatio.Graphics
         }
         #endregion
         //!? END of properties region
-
+        public static float width;
+        public static float height;
         public static void Update()
         {
             cameraMove();
-            float width = (((float)Display.Instance.ClientSize.Width / 20f) / zoom) / 2;
-            float height = (((float)Display.Instance.ClientSize.Height / 20f) / zoom) / 2;
+            width = (((float)Display.Instance.ClientSize.Width / 40f)/zoom);
+            height = (((float)Display.Instance.ClientSize.Height / 40f)/zoom);
             RenderingManager.ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
-            RenderingManager.ProjectionMatrix = Matrix4.Mult(RenderingManager.ProjectionMatrix, Matrix4.CreateTranslation(0f, 0f, 1f));
+            RenderingManager.ProjectionMatrix = Matrix4.Mult(RenderingManager.ProjectionMatrix, Matrix4.CreateTranslation(0, 0, 1));
             RenderingManager.UpdateMatrices();
         }
 
         private static void cameraMove()
         {
-            if(MyMouse.ButtonMiddle.IsToggled)
+            if (MyMouse.ButtonMiddle.IsToggled)
             {
                 MyMouse.MouseDragPositionX = MyMouse.X;
                 MyMouse.MouseDragPositionY = MyMouse.Y;
@@ -75,11 +76,13 @@ namespace Explicatio.Graphics
                 }
                 if (MyKeyboard.KeyZoomDown.IsPressed)
                 {
-                    Camera.Zoom += 0.05f * Camera.Zoom;
+                    //Camera.Zoom += 0.05f * Camera.Zoom;
+                    Camera.Zoom = 2f;
                 }
                 if (MyKeyboard.KeyZoomUp.IsPressed)
                 {
-                    Camera.Zoom -= 0.05f * Camera.Zoom;
+                    //Camera.Zoom -= 0.05f * Camera.Zoom;
+                        Camera.Zoom = 1f;
                 }
 
 

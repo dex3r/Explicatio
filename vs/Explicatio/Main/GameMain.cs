@@ -55,7 +55,12 @@ namespace Explicatio.Main
         {
             MyKeyboard.Update();
             Camera.Update();
-            Console.WriteLine(MyMouse.WheelDelta);
+            Console.Clear();
+            Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
+            Console.WriteLine(Camera.PosX + " " + Camera.PosY);
+            Console.WriteLine(Camera.width + " " + Camera.height);
+            Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
+            Console.WriteLine(Camera.Zoom);
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {
