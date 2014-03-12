@@ -1,12 +1,14 @@
 ﻿#version 330 
 
+const int CHUNK_SIZE = 6;
+
 layout(triangles) in;
 layout(triangle_strip, max_vertices = 144) out;
 
 uniform mat4 projectionMatrix; 
 uniform mat4 modelMatrix; 
 
-uniform int[6 * 6] chunkBlocks;
+uniform int[CHUNK_SIZE * CHUNK_SIZE] chunkBlocks;
 
 out vec2 varying_uv;
 
@@ -19,9 +21,11 @@ void main()
 	vec2 v4 = vec2(1, 0.5);
 	float x;
 	float y;
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < CHUNK_SIZE; i++)
 	{
-		for(int j = 0; j < 6; j++)
+		for(int j = 0; j < CHUNK_SIZE; j++)
+		{
+		if(chunkBlocks[i * CHUNK_SIZE + j] == 0)
 		{
 			x = (j - i) * 1.939;
 		    y = (j + i) * 0.969;
@@ -41,6 +45,7 @@ void main()
 			varying_uv = v4;
 			EmitVertex();
 			EndPrimitive();
+			}
 		}
 	}
 }

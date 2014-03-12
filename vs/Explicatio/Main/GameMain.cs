@@ -37,19 +37,22 @@ namespace Explicatio.Main
             Primitive.InitPrimitives();
             Util.PrintGLError("Primitives init");
 
-            GlobalRenderer.InitTemp();
-            Util.PrintGLError("InitTemp");
+
 
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
 
-            GL.Enable(EnableCap.Blend);
+            //GL.Enable(EnableCap.Blend);
             //GL.BlendColor(1.0f, 0.0f, 1.0f, 1.0f);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBufferBindings));
+            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBlockSize));
         }
 
-        
+
+        static bool wasGRIT = false;
+
         public static void Update(object sender, FrameEventArgs e)
         {
             //? TEMP CODE
@@ -80,7 +83,15 @@ namespace Explicatio.Main
             }
 
             Camera.Update();
-            Console.WriteLine(Display.Instance.RenderFrequency);
+
+            if (!wasGRIT)
+            {
+                GlobalRenderer.InitTemp();
+                Util.PrintGLError("InitTemp");
+                wasGRIT = true;
+            }
+
+            //Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
         }
 
@@ -106,7 +117,11 @@ namespace Explicatio.Main
             RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
             Primitive.singleColorTriangle.Draw();
 
-            GlobalRenderer.RenderChunk(null);
+            if (wasGRIT)
+            {
+                GlobalRenderer.InitTemp();
+                GlobalRenderer.RenderChunk(null);
+            }
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
 
             Util.PrintGLError("Render");
@@ -119,6 +134,7 @@ namespace Explicatio.Main
 
         public static void Main(String[] args)
         {
+            //Console.ReadKey();
             wasUpdated = false;
             using (Display display = new Display())
             {
