@@ -46,7 +46,11 @@ namespace Explicatio.Worlds
             }
             else throw new NotImplementedException("Here should be chunk loading");
         }
-
+        /// <summary>
+        /// Zwraca blok w chunku x,y to pozycja w tablicy chunka.
+        /// </summary>
+        /// <param name="x">Pozycja w tablicy</param>
+        /// <param name="y">Pozycja w tablicy</param>
         public Block this[int x,int y]
         {
             get { return blocks[y * CHUNK_SIZE + x]; }

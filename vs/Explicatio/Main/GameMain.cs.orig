@@ -68,7 +68,9 @@ namespace Explicatio.Main
             {
                 Display.FullScreenSwitch();
             }
-            MyMouse.EndStep();
+<<<<<<< HEAD
+
+            Camera.Update();
 
             if (!wasGRIT)
             {
@@ -79,6 +81,9 @@ namespace Explicatio.Main
 
             //Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
+=======
+            MyMouse.EndStep();
+>>>>>>> 1b271861a4f1f9c2a64fd6c1a1a3dbd14910ed53
         }
 
         public static void Draw(object sender, FrameEventArgs e)

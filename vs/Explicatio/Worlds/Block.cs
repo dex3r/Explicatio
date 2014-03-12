@@ -8,9 +8,11 @@ namespace Explicatio.Worlds
 {
     public class Block
     {
-        private byte id; 
+        public const int BLOCK_WIDTH = 128;
+        public const int BLOCK_HEIGHT = 64;
+
+        private byte id;
         private byte blockMetaData;
-        private short height;
         private string name;
         //!? Properties region
         #region PROPERTIES
@@ -24,14 +26,9 @@ namespace Explicatio.Worlds
             get { return blockMetaData; }
             set { blockMetaData = value; }
         }
-        public short Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
         public string Name
         {
-          get { return name; }
+            get { return name; }
         }
         #endregion
         //!? END of properties region
