@@ -3,48 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explicatio.Rendering;
 
 namespace Explicatio.Worlds
 {
     public class Chunk
     {
-        public static readonly short CHUNK_SIZE = 6;
+        public const int CHUNK_SIZE = 64;
 
-        //Array with Blocks
-        private int[] blocks = new int[CHUNK_SIZE*CHUNK_SIZE];
+        private ChunkRenderer chunkRenderer;
+        private short[] blocks;
         //Chunk Coordinates
         private int x;
         private int y;
-
 
         //!? Properties region
         #region PROPERTIES
         public int X
         {
             get { return x; }
-            set { x = value; }
         }
         public int Y
         {
             get { return y; }
-            set { y = value; }
+        }
+        public ChunkRenderer ChunkRenderer
+        {
+            get { return chunkRenderer; }
         }
         #endregion
         //!? END of properties region
 
-        public Chunk(bool defaultdata)
+        public Chunk(int x, int y)
         {
-            if (defaultdata)
+            this.x = x;
+            this.y = y;
+            blocks = new short[CHUNK_SIZE * CHUNK_SIZE];
+            for (int xi = 0; xi < CHUNK_SIZE; xi++)
             {
-                for (int xi = 0; xi < CHUNK_SIZE; xi++)
+                for (int yi = 0; yi < CHUNK_SIZE; yi++)
                 {
-                    for (int yi = 0; yi < CHUNK_SIZE; yi++)
-                    {
-                        this[xi, yi] = Block.Grass.Id;
-                    }
+                    this[xi, yi] = Block.Grass.Id;
                 }
             }
-            else throw new NotImplementedException("Here should be chunk loading");
+            chunkRenderer = new ChunkRenderer();
         }
         /// <summary>
         /// Zwraca blok w chunku x,y to pozycja w tablicy chunka.
@@ -56,7 +58,7 @@ namespace Explicatio.Worlds
             get { return blocks[y * CHUNK_SIZE + x]; }
             set
             {
-                blocks[y * CHUNK_SIZE + x] = value;
+                blocks[y * CHUNK_SIZE + x] = (short)value;
             }
         }
 

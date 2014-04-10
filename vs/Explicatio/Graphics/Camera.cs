@@ -42,7 +42,7 @@ namespace Explicatio.Graphics
         {
             cameraMove();
             width = (((float)Display.Instance.ClientSize.Width / 40f)/zoom);
-            height = (((float)Display.Instance.ClientSize.Height / 40f)/zoom);
+            height = (((float)Display.Instance.ClientSize.Height / 40f) / zoom);
             RenderingManager.ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
             RenderingManager.ProjectionMatrix = Matrix4.Mult(RenderingManager.ProjectionMatrix, Matrix4.CreateTranslation(0, 0, 1));
             RenderingManager.UpdateMatrices();

@@ -15,21 +15,34 @@ using Explicatio.Graphics.Shaders;
 using Explicatio.Graphics.Primitives;
 using Explicatio.Rendering;
 using Explicatio.Controls;
+using Explicatio.Worlds;
 
 namespace Explicatio.Main
 {
     public static class GameMain
     {
+        private static bool isClosing;
         private static bool wasUpdated;
+        private static World currentWorld;
 
         //!? Properties region
         #region PROPERTIES
-
+        public static bool IsClosing
+        {
+            get { return GameMain.isClosing; }
+        }
+        public static World CurrentWorld
+        {
+            get { return GameMain.currentWorld; }
+            set { GameMain.currentWorld = value; }
+        }
         #endregion
         //!? END of properties region
 
         public static void Load(object sender, EventArgs e)
         {
+            currentWorld = new World(2048);
+
             Shader.Init();
             Util.PrintGLError("Shaders init");
             GL.UseProgram(0);
@@ -41,12 +54,12 @@ namespace Explicatio.Main
             Util.PrintGLError("GlobalRenderer InitTemp");
 
             GL.FrontFace(FrontFaceDirection.Cw);
-            //GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
 
             //GL.Enable(EnableCap.Blend);
             //GL.BlendColor(1.0f, 0.0f, 1.0f, 1.0f);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBufferBindings));
             Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBlockSize));
         }
@@ -117,6 +130,7 @@ namespace Explicatio.Main
             using (Display display = new Display())
             {
                 display.Run();
+                isClosing = true;
             }
         }
     }

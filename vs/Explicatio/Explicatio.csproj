@@ -74,6 +74,7 @@
     <Compile Include="Graphics\Shaders\ShaderChunk2.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
     <None Include="Rendering\GlobalRenderer.cs.dev1" />
+    <Compile Include="Rendering\ChunkRenderer.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />
