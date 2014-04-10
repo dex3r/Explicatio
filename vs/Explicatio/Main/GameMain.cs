@@ -37,33 +37,35 @@ namespace Explicatio.Main
             Util.PrintGLError("Renderer init");
             Primitive.InitPrimitives();
             Util.PrintGLError("Primitives init");
+<<<<<<< HEAD
+            GlobalRenderer.InitTemp();
+            Util.PrintGLError("GlobalRenderer InitTemp");
+=======
 
-
+            GlobalRenderer.InitTemp();
+            Util.PrintGLError("InitTemp");
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
 
             GL.FrontFace(FrontFaceDirection.Cw);
-            GL.Enable(EnableCap.CullFace);
+            //GL.Enable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
 
-            //GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Blend);
             //GL.BlendColor(1.0f, 0.0f, 1.0f, 1.0f);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBufferBindings));
-            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBlockSize));
         }
 
-
-        static bool wasGRIT = false;
-
+        
         public static void Update(object sender, FrameEventArgs e)
         {
             MyKeyboard.Update();
             Camera.Update();
-            Console.Clear();
-            Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
-            Console.WriteLine(Camera.PosX + " " + Camera.PosY);
-            Console.WriteLine(Camera.width + " " + Camera.height);
-            Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
-            Console.WriteLine(Camera.Zoom);
+            //Console.Clear();
+            //Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
+            //Console.WriteLine(Camera.PosX + " " + Camera.PosY);
+            //Console.WriteLine(Camera.width + " " + Camera.height);
+            //Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
+            //Console.WriteLine(Camera.Zoom);
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {
@@ -74,16 +76,12 @@ namespace Explicatio.Main
                 Display.FullScreenSwitch();
             }
             MyMouse.EndStep();
+<<<<<<< HEAD
 
-            if (!wasGRIT)
-            {
-                GlobalRenderer.InitTemp();
-                Util.PrintGLError("InitTemp");
-                wasGRIT = true;
-            }
-
-            //Console.WriteLine(Display.Instance.RenderFrequency);
+            Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
+=======
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
         }
 
         public static void Draw(object sender, FrameEventArgs e)
@@ -108,11 +106,11 @@ namespace Explicatio.Main
             RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
             Primitive.singleColorTriangle.Draw();
 
-            if (wasGRIT)
-            {
-                GlobalRenderer.InitTemp();
-                GlobalRenderer.RenderChunk(null);
-            }
+<<<<<<< HEAD
+            GlobalRenderer.RenderAllChunks();
+=======
+            GlobalRenderer.RenderChunk(null);
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
 
             Util.PrintGLError("Render");
@@ -121,11 +119,8 @@ namespace Explicatio.Main
             wasUpdated = false;
         }
 
-
-
         public static void Main(String[] args)
         {
-            //Console.ReadKey();
             wasUpdated = false;
             using (Display display = new Display())
             {

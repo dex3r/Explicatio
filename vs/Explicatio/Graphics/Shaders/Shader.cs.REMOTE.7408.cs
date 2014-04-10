@@ -16,10 +16,6 @@ namespace Explicatio.Graphics.Shaders
         private static ShaderSimpleColor simpleColorShader;
         private static ShaderSimpleTexture simpleTextureShader;
         private static ShaderChunk chunkShader;
-<<<<<<< HEAD
-        private static ShaderChunk2 chunk2Shader;
-=======
->>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
 
         //!? Static properties region
         #region PROPERTIES
@@ -35,14 +31,7 @@ namespace Explicatio.Graphics.Shaders
         {
             get { return Shader.chunkShader; }
         }
-<<<<<<< HEAD
-        public static ShaderChunk2 Chunk2Shader
-        {
-            get { return Shader.chunk2Shader; }
-        }
-=======
 
->>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
         #endregion
         //!? END of static properties region
 
@@ -50,12 +39,7 @@ namespace Explicatio.Graphics.Shaders
         {
             simpleColorShader = new ShaderSimpleColor("SimpleColor");
             simpleTextureShader = new ShaderSimpleTexture("SimpleTexture");
-<<<<<<< HEAD
-            //chunkShader = new ShaderChunk("Chunk", true);
-            chunk2Shader = new ShaderChunk2("Chunk2");
-=======
             chunkShader = new ShaderChunk("Chunk", true);
->>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
         }
 
         #endregion

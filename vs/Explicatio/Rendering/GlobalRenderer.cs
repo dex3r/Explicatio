@@ -11,242 +11,242 @@ using Explicatio.Worlds;
 using Explicatio.Graphics.Shaders;
 using Explicatio.Graphics;
 using Explicatio.Graphics.Primitives;
-using Explicatio.Utils;
 
 namespace Explicatio.Rendering
 {
-	public static class GlobalRenderer
-	{
-		const int CHUNK_SIZE = 16;
-		const int WORLD_SIZE = 16;
-		const int WORLD_DIM = WORLD_SIZE / CHUNK_SIZE;
+    public static class GlobalRenderer
+    {
+<<<<<<< HEAD
+        const int CHUNK_SIZE = 64;
+        const int WORLD_SIZE = 1024;
+        const int WORLD_DIM = WORLD_SIZE / CHUNK_SIZE;
 
-		public static int[] blocksData = new int[CHUNK_SIZE * CHUNK_SIZE];
-		public static int[] blocksData1 = new int[CHUNK_SIZE * CHUNK_SIZE];
-		public static int[] blocksData2 = new int[CHUNK_SIZE * CHUNK_SIZE];
-		public static int[] blocksData3 = new int[CHUNK_SIZE * CHUNK_SIZE];
+        //private static float[] VDataBlock = new float[] {
+        //        -1.0f,  0.0f, // 0
+        //         1.0f,  1.0f, // 2
+        //         1.0f, -1.0f, // 4
+        //         1.0f,  1.0f, // 2
+        //         1.0f, -1.0f, // 4
+        //         3.0f,  0.0f  // 6
+        //    };
 
-		private static int pointVertexArrayHandle;
-		private static int pointVertexBufferHandle;
-		private static Vector2[] pointVector = new Vector2[] { new Vector2(0, 0) };
+        //private static float[] VDataBlock = new float[] {
+        //         0.0f,  0.0f,
+        //         0.0f,  2.0f,
+        //         4.0f,  0.0f,
+        //         0.0f,  2.0f,
+        //         4.0f,  0.0f,
+        //         4.0f,  2.0f 
+        //    };
 
+        private static int[] VDataBlock = new int[] {
+                 0,  0,
+                 0,  2,
+                 4,  0,
+                 0,  2,
+                 4,  0,
+                 4,  2 
+            };
 
-		private static float[] worldVertices = new float[WORLD_DIM * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE * 2 * 4];
-		private static float[] worldUVs = new float[WORLD_DIM * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE * 2 * 4];
-		private static int[] worldBuffers = new int[WORLD_DIM * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE];
+        private class NChunk
+        {
+            public int VertexArrayHandle { get; private set; }
+            private int verticesBufferHandle;
+            private int uvsBufferHandle;
+            int[] vertices = new int[CHUNK_SIZE * CHUNK_SIZE * 12];
+            float[] UVs = new float[CHUNK_SIZE * CHUNK_SIZE * 12];
 
-		public static void InitTemp()
-		{
-			string filename = "Content/gfx/terrain.png";
+            public NChunk()
+            {
+                VertexArrayHandle = GL.GenVertexArray();
+                GL.BindVertexArray(VertexArrayHandle);
+                GL.EnableVertexAttribArray(0);
+                GL.EnableVertexAttribArray(1);
 
-			int id = GL.GenTexture();
-			GL.BindTexture(TextureTarget.Texture2D, id);
+                verticesBufferHandle = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, verticesBufferHandle);
+                uvsBufferHandle = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, uvsBufferHandle);
 
-			Bitmap bmp = new Bitmap(filename);
-			BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                int x, y;
+                int w;
+                for (int k = 0; k < CHUNK_SIZE; k++)
+                {
+                    for (int l = 0; l < CHUNK_SIZE; l++)
+                    {
+                        //x = (l - k) * 1.939f;
+                        //y = (l + k) * 0.969f;
+                        //x = (l - k);
+                        //y = (l + k);
 
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+                        x = (k - l) * 2;
+                        y = (k + l);
 
-			bmp.UnlockBits(bmp_data);
+                        w = (k * 12) + (l * 12 * CHUNK_SIZE);
 
-			// We haven't uploaded mipmaps, so disable mipmapping (otherwise the texture will not appear).
-			// On newer video cards, we can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
-			// mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.NearestMipmapNearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
-			GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+                        vertices[w + 0] = VDataBlock[0] + x;
+                        vertices[w + 1] = VDataBlock[1] + y;
+                        vertices[w + 2] = VDataBlock[2] + x;
+                        vertices[w + 3] = VDataBlock[3] + y;
+                        vertices[w + 4] = VDataBlock[4] + x;
+                        vertices[w + 5] = VDataBlock[5] + y;
+                        vertices[w + 6] = VDataBlock[6] + x;
+                        vertices[w + 7] = VDataBlock[7] + y;
+                        vertices[w + 8] = VDataBlock[8] + x;
+                        vertices[w + 9] = VDataBlock[9] + y;
+                        vertices[w + 10] = VDataBlock[10] + x;
+                        vertices[w + 11] = VDataBlock[11] + y;
 
+                        //UVs[w + 0] = 0.0f;
+                        //UVs[w + 1] = 0.5f;
+                        //UVs[w + 2] = 0.5f;
+                        //UVs[w + 3] = 1.0f;
+                        //UVs[w + 4] = 0.5f;
+                        //UVs[w + 5] = 0.0f;
+                        //UVs[w + 6] = 0.5f;
+                        //UVs[w + 7] = 1.0f;
+                        //UVs[w + 8] = 0.5f;
+                        //UVs[w + 9] = 0.0f;
+                        //UVs[w + 10] = 1.0f;
+                        //UVs[w + 11] = 0.5f;
 
-			Util.PrintGLError();
-			RenderingManager.ChangeCurrentShader(Shader.Chunk2Shader, false);
-			Random r = new Random();
-			
-			float[] VDataBlock = new float[] {
-				-1.0f,  0.0f, // 0
-				 1.0f,  1.0f, // 2
-				 1.0f, -1.0f, // 4
-				 3.0f,  0.0f  // 6
-			};
+                        UVs[w + 0] = 0.0f;
+                        UVs[w + 1] = 0.0f;
 
-			//for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++)
-			//{
-			//    blocksData[i] = r.Next(0, 3);
-			//    blocksData1[i] = r.Next(0, 3);
-			//    blocksData2[i] = r.Next(0, 3);
-			//    blocksData3[i] = r.Next(0, 3);
-			//}
+                        UVs[w + 2] = 0f;
+                        UVs[w + 3] = 1.0f;
+                        UVs[w + 4] = 1f;
+                        UVs[w + 5] = 0.0f;
 
-		   // int t1;
-			//int t2;
-			//int t3;
-			float x;
-			float y;
-			Matrix4 transf = RenderingManager.ProjectionMatrix;
-			Vector4 v4;
-			for (int i = 0; i < WORLD_DIM; i++)
-			{
-				for (int j = 0; j < WORLD_DIM; j++)
-				{
-					//t1 = ((i * WORLD_DIM * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE) + (j * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE));
-					for(int k = 0; k < CHUNK_SIZE; k++)
-					{
-						//t2 = k * 8;
-					   // t2 = t1 + (k * CHUNK_SIZE * CHUNK_SIZE);
-						for(int l = 0; l < CHUNK_SIZE; l++)
-						{
-							x = (l - k) * 1.939f;
-							y = (l + k) * 0.969f;
-							//t3 = t1 + (t2 * CHUNK_SIZE + l);
-							//t3 = t2 + (l * CHUNK_SIZE);
+                        UVs[w + 6] = 0f;
+                        UVs[w + 7] = 1.0f;
+                        UVs[w + 8] = 1f;
+                        UVs[w + 9] = 0.0f;
 
-							int w = l * WORLD_DIM * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE + k * WORLD_DIM * CHUNK_SIZE * CHUNK_SIZE + j * CHUNK_SIZE * CHUNK_SIZE + i * CHUNK_SIZE;
+                        UVs[w + 10] = 1.0f;
+                        UVs[w + 11] = 1f;
+                    }
+                }
 
-							v4 = new Vector4(VDataBlock[0] + x, VDataBlock[1] + y, 0.0f, 1.0f);
-							Vector4.Transform(ref v4, ref transf, out v4);
-							worldVertices[w + 0] = v4.X;
-							worldVertices[w + 1] = v4.Y;
+                GL.BindBuffer(BufferTarget.ArrayBuffer, verticesBufferHandle);
+                GL.BufferData<int>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(int) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
+                GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Int, false, 0, IntPtr.Zero);
 
-							v4 = new Vector4(VDataBlock[2] + x, VDataBlock[3] + y, 0.0f, 1.0f);
-							Vector4.Transform(ref v4, ref transf, out v4);
-							worldVertices[w + 2] = v4.X;
-							worldVertices[w + 3] = v4.Y;
+                Util.PrintGLError();
+            }
 
-							v4 = new Vector4(VDataBlock[4] + x, VDataBlock[5] + y, 0.0f, 1.0f);
-							Vector4.Transform(ref v4, ref transf, out v4);
-							worldVertices[w + 4] = v4.X;
-							worldVertices[w + 5] = v4.Y;
+            public void renderChunk()
+            {
+                GL.BindVertexArray(VertexArrayHandle);
 
-							v4 = new Vector4(VDataBlock[6] + x, VDataBlock[7] + y, 0.0f, 1.0f);
-							Vector4.Transform(ref v4, ref transf, out v4);
-							worldVertices[w + 6] = v4.X;
-							worldVertices[w + 7] = v4.Y;
+                GL.BindBuffer(BufferTarget.ArrayBuffer, uvsBufferHandle);
+                GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * UVs.Length), ref UVs[0], BufferUsageHint.DynamicDraw);
+                GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
+            }
+        }
 
-							worldUVs[w + 0] = 0.0f;
-							worldUVs[w + 1] = 0.5f;
-							worldUVs[w + 2] = 0.5f;
-							worldUVs[w + 3] = 0.1f;
-							worldUVs[w + 4] = 0.5f;
-							worldUVs[w + 5] = 0.0f;
-							worldUVs[w + 6] = 1.0f;
-							worldUVs[w + 7] = 0.5f;
+        private static NChunk[] chunks;
 
-							int wva = GL.GenVertexArray();
-							GL.BindVertexArray(wva);
-							GL.EnableVertexAttribArray(0);
-							GL.EnableVertexAttribArray(1);
+        public static void InitTemp()
+        {
+=======
+        public static int[] blocksData = new int[6 * 6];
+        public static int[] blocksData1 = new int[6 * 6];
+        public static int[] blocksData2 = new int[6 * 6];
+        public static int[] blocksData3 = new int[6 * 6];
 
-							Util.PrintGLError();
-							int wvbh = GL.GenBuffer();
-							GL.BindBuffer(BufferTarget.ArrayBuffer, wvbh);
-							float[] blockVertices = new float[8];
-							Array.Copy(worldVertices, w, blockVertices, 0, 8);
-							GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * 8), blockVertices, BufferUsageHint.StaticDraw);
-							Util.PrintGLError();
-							GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
-							Util.PrintGLError();
+        private static int pointVertexArrayHandle;
+        private static int pointVertexBufferHandle;
+        private static Vector2[] pointVector = new Vector2[] { new Vector2(0, 0) };
 
-							int wuvspb = GL.GenBuffer();
-							GL.BindBuffer(BufferTarget.ArrayBuffer, wuvspb);
-							float[] blockUVs = new float[8];
-							Array.Copy(worldUVs, w, blockUVs, 0, 8);
-							GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * 8), blockUVs, BufferUsageHint.StaticDraw);
-							Util.PrintGLError();
-							GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
-							Util.PrintGLError();
+        public static void InitTemp()
+        {
+            pointVertexArrayHandle = GL.GenVertexArray();
+            GL.BindVertexArray(pointVertexArrayHandle);
+            pointVertexBufferHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, pointVertexBufferHandle);
 
-							worldBuffers[w / 8] = wva;
-						}
-					}
-				}
-			}
-			Util.PrintGLError();
-		}
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
+            string filename = "Content/gfx/terrain.png";
 
-		public static void RenderChunk(Chunk c)
-		{
-			RenderingManager.ChangeCurrentShader(Shader.Chunk2Shader, false);
+            int id = GL.GenTexture();
+            GL.BindTexture(TextureTarget.Texture2D, id);
 
-			int t1;
-			int t2;
-			int t3;
-			for (int i = 0; i < WORLD_DIM; i++)
-			{
-				for (int j = 0; j < WORLD_DIM; j++)
-				{
-					t1 = ((i * WORLD_DIM * WORLD_DIM * WORLD_DIM) + (j * WORLD_DIM * WORLD_DIM));
-					for (int k = 0; k < CHUNK_SIZE; k++)
-					{
-						t2 = k;
-						for (int l = 0; l < CHUNK_SIZE; l++)
-						{
-							t3 = t1 + (t2 * CHUNK_SIZE + l);
-							GL.BindVertexArray(worldBuffers[t3]);
-							GL.DrawArrays(PrimitiveType.Triangles, 0, 4);
-						}
-					}
-				}
-			}
+            Bitmap bmp = new Bitmap(filename);
+            BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-			//RenderingManager.ChangeCurrentShader(Shader.ChunkShader, true);
-			//RenderingManager.ModelMatrix = Matrix4.Identity;
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
 
-			//GL.BindVertexArray(Primitive.CommonVertexArrayHandle);
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, Primitive.singleColorTriangle.indiecesBufferHandle);
-			//Random r = new Random();
-			//for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++)
-			//{
-			//    blocksData[i] = r.Next(0, 3);
-			//    blocksData1[i] = r.Next(0, 3);
-			//    blocksData2[i] = r.Next(0, 3);
-			//    blocksData3[i] = r.Next(0, 3);
-			//}
-			//int x;
-			//for (int i = 0; i < 80; i++)
-			//{
-			//    for (int j = 0; j < 80; j++)
-			//    {
-			//        x = r.Next(0, 4);
-			//        RenderingManager.ModelMatrix = Matrix4.CreateTranslation((j - i) * 11.634f, (j + i) * 5.814f, 0);
-			//        unchecked
-			//        {
-			//            unsafe
-			//            {
-						   
-			//                if (x == 0)
-			//                {
-			//                    fixed (int* bdp = &blocksData[0])
-			//                    {
-			//                        GL.Uniform1(Shader.ChunkShader.ChunkBlocksHandle, CHUNK_SIZE * CHUNK_SIZE, bdp);
-			//                    }
-			//                }
-			//                else if (x == 1)
-			//                {
-			//                    fixed (int* bdp = &blocksData1[0])
-			//                    {
-			//                        GL.Uniform1(Shader.ChunkShader.ChunkBlocksHandle, CHUNK_SIZE * CHUNK_SIZE, bdp);
-			//                    }
-			//                }
-			//                else if (x == 2)
-			//                {
-			//                    fixed (int* bdp = &blocksData2[0])
-			//                    {
-			//                        GL.Uniform1(Shader.ChunkShader.ChunkBlocksHandle, CHUNK_SIZE * CHUNK_SIZE, bdp);
-			//                    }
-			//                }
-			//                else if (x == 3)
-			//                {
-			//                    fixed (int* bdp = &blocksData3[0])
-			//                    {
-			//                        GL.Uniform1(Shader.ChunkShader.ChunkBlocksHandle, CHUNK_SIZE * CHUNK_SIZE, bdp);
-			//                    }
-			//                }
-			//            }
-			//    }
-			//        GL.DrawElements(PrimitiveType.Triangles, Primitive.singleColorTriangle.Indices.Length, DrawElementsType.UnsignedByte, 0);
-			//    }
-			//}
-		}
-	}
+            bmp.UnlockBits(bmp_data);
+
+<<<<<<< HEAD
+            // We haven't uploaded mipmaps, so disable mipmapping (otherwise the texture will not appear).
+            // On newer video cards, we can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
+            // mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
+=======
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
+<<<<<<< HEAD
+            //GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
+            Util.PrintGLError();
+
+            chunks = new NChunk[WORLD_DIM * WORLD_DIM];
+
+            for (int i = 0; i < WORLD_DIM; i++)
+            {
+                for (int j = 0; j < WORLD_DIM; j++)
+                {
+                    chunks[i * WORLD_DIM + j] = new NChunk();
+                    chunks[i * WORLD_DIM + j].renderChunk();
+                }
+            }
+            Util.PrintGLError();
+        }
+
+        public static void RenderAllChunks()
+        {
+            RenderingManager.ChangeCurrentShader(Shader.Chunk2Shader, false);
+            NChunk c;
+            for (int i = 0; i < 1; i++ )
+            {
+               chunks[i].renderChunk();
+            }
+            for (int i = 0; i < WORLD_DIM; i++)
+            {
+                for (int j = 0; j < WORLD_DIM; j++)
+                {
+                    //Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation((j - i) * 30.9f, (j + i) * 15.46f, 0) * RenderingManager.ProjectionMatrix;
+                    Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation((j - i) * (CHUNK_SIZE * 2), (j + i) * CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
+                    c = chunks[i * WORLD_DIM + j];
+                    c.renderChunk();
+                    GL.BindVertexArray(c.VertexArrayHandle);
+                    GL.DrawArrays(PrimitiveType.Triangles, 0, CHUNK_SIZE * CHUNK_SIZE * 6);
+=======
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+        }
+
+        public static void RenderChunk(Chunk c)
+        {
+            RenderingManager.ChangeCurrentShader(Shader.ChunkShader, true);
+            RenderingManager.ModelMatrix = Matrix4.Identity;
+
+            GL.BindVertexArray(Primitive.CommonVertexArrayHandle);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, Primitive.singleColorTriangle.indiecesBufferHandle);
+            for (int i = 0; i < 32; i++)
+            {
+                for (int j = 0; j < 32; j++)
+                {
+                    RenderingManager.ModelMatrix = Matrix4.CreateTranslation((j - i) * 11.634f, (j + i) * 5.814f, 0);
+                    //? TODO: dane z mapy
+                    GL.Uniform1(Shader.ChunkShader.ChunkBlocksHandle, 6 * 6, blocksData);
+                    GL.DrawElements(PrimitiveType.Triangles, Primitive.singleColorTriangle.Indices.Length, DrawElementsType.UnsignedByte, 0);
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
+                }
+            }
+        }
+    }
 }

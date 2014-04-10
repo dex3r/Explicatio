@@ -8,28 +8,28 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Explicatio.Graphics.Shaders
 {
-    public class ShaderSimpleColor : Shader
+    public class ShaderChunk2 : Shader
     {
-        private Vector3 color;
-        private int colorHandle;
+        private Matrix4 projectionModelMatrix;
+        private int projectionModelMatrixHandle;
 
          //!? Properties region
         #region PROPERTIES
-        public Vector3 Color
+        public Matrix4 ProjectionModelMatrix
         {
-            get { return color; }
+            get { return projectionModelMatrix; }
             set 
             {
-                if (this.color != value)
+                if (this.projectionModelMatrix != value)
                 {
-                    this.color = value;
+                    this.projectionModelMatrix = value;
                     if (RenderingManager.CurrentShader != this)
                     {
                         ShouldUpdateAllUniformsAtUse = true;
                     }
                     else
                     {
-                        GL.Uniform3(colorHandle, ref this.color);
+                        GL.UniformMatrix4(projectionModelMatrixHandle, false, ref this.projectionModelMatrix);
                     }
                 }
             }
@@ -37,10 +37,10 @@ namespace Explicatio.Graphics.Shaders
         #endregion
         //!? END of properties region
 
-        public ShaderSimpleColor(string name)
+        public ShaderChunk2(string name)
             : base(name)
         {
-            colorHandle = GL.GetUniformLocation(ShaderProgramHandle, "inColor");
+            projectionModelMatrixHandle = GL.GetUniformLocation(ShaderProgramHandle, "projectionModelMatrix");
         }
     }
 }

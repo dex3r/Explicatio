@@ -70,8 +70,12 @@
     <Compile Include="Graphics\Display.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleTexture.cs" />
     <Compile Include="Graphics\Shaders\ShaderChunk.cs" />
+<<<<<<< HEAD
     <Compile Include="Graphics\Shaders\ShaderChunk2.cs" />
+    <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
     <None Include="Rendering\GlobalRenderer.cs.dev1" />
+=======
+>>>>>>> parent of fa5322c... Merge branch 'OpenTK' of https://github.com/dex3r/Explicatio into OpenTK
     <Compile Include="Rendering\GlobalRenderer.cs" />
     <Compile Include="Graphics\Primitives\Primitive.cs" />
     <Compile Include="Graphics\Primitives\PrimitiveSingleColor.cs" />

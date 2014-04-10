@@ -9,4 +9,8 @@ out vec4 fragment_colour;
 void main(void)
 {
     fragment_colour = texture2D(base_texture, varying_uv);
+    if (fragment_colour.a <= 0.125f)
+    {
+        discard;
+    }
 }

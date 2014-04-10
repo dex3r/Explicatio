@@ -26,11 +26,7 @@ namespace Explicatio.Graphics
             set 
             { 
                 RenderingManager.projectionMatrix = value;
-                ShaderSimple cs = currentShader as ShaderSimple;
-                if (cs != null)
-                {
-                    cs.ProjectionMatrix = value;
-                }
+                currentShader.ProjectionMatrix = value;
             }
         }
         public static Matrix4 ModelMatrix
@@ -39,11 +35,7 @@ namespace Explicatio.Graphics
             set 
             { 
                 RenderingManager.modelMatrix = value;
-                ShaderSimple cs = currentShader as ShaderSimple;
-                if (cs != null)
-                {
-                    cs.ModelMatrix = value;
-                }
+                currentShader.ModelMatrix = value;
             }
         }
         public static Shader CurrentShader
@@ -79,12 +71,8 @@ namespace Explicatio.Graphics
 
         public static void UpdateMatrices()
         {
-            ShaderSimple cs = currentShader as ShaderSimple;
-            if (cs != null)
-            {
-                cs.ProjectionMatrix = projectionMatrix;
-                cs.ModelMatrix = modelMatrix;
-            }
+            currentShader.ProjectionMatrix = projectionMatrix;
+            currentShader.ModelMatrix = modelMatrix;
         }
     }
 }

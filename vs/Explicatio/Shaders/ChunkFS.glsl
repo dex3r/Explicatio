@@ -9,8 +9,8 @@ out vec4 outputColor;
 void main() 
 { 
    outputColor = texture2D(base_texture, varying_uv);
-   if ( outputColor.a <= 0.1f )
-   {
-    discard;
-   }
+   //if ( outputColor.a <= 0.1f )
+   //{
+   // discard;
+   //}
 }
