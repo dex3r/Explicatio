@@ -114,28 +114,14 @@ namespace Explicatio.Controls
 
         public static void EndStep()
         {
-            //positionRelative.X = Rendering.Camera.Transform.Translation.X * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().X * (float)Math.Pow(Rendering.Camera.Zoom, -1);
-            //positionRelative.Y = Rendering.Camera.Transform.Translation.Y * -1 * (float)Math.Pow(Rendering.Camera.Zoom, -1) + Mouse.GetState().Y * (float)Math.Pow(Rendering.Camera.Zoom, -1);
-            //((float)MyMouse.X / width), ((float)MyMouse.Y / height)
-            float width = (float)Display.Instance.ClientSize.Width / 28f;
-            float height = (float)Display.Instance.ClientSize.Height / 27.7f;
-            float xScreen = ((float)MyMouse.X - Display.Instance.ClientSize.Width / 2) / width;
-            float yScreen = ((float)MyMouse.Y - Display.Instance.ClientSize.Height / 2) / height;
-            float xScale = ((float)MyMouse.X) / width;
-            float yScale = ((float)MyMouse.Y) / height;
-            xRelative = Camera.PosX + (xScreen / Camera.Zoom);
-            yRelative =  (yScreen / Camera.Zoom);
-            //Reset mouse wheel delta
+            xRelative = -(Camera.PosX + ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom / 1.251167f));
+            yRelative = -(Camera.PosY + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom / 1.251167f));
             wheelDelta = 0;
             //Reset mouse pos delta
             xDelta = 0;
             yDelta = 0;
+   
         }
-
-        /// <summary>
-        /// Fukncja pomocnicza służy do przesuwania obrazu po przytrzymaniu środkowego przycisku myszy
-        /// </summary>
-        /// <returns>True - ON, False - OFF</returns>
 
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
         {

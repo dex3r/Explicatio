@@ -71,12 +71,12 @@ namespace Explicatio.Main
         {
             MyKeyboard.Update();
             Camera.Update();
-            //Console.Clear();
-            //Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
-            //Console.WriteLine(Camera.PosX + " " + Camera.PosY);
-            //Console.WriteLine(Camera.width + " " + Camera.height);
-            //Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
-            //Console.WriteLine(Camera.Zoom);
+            Console.Clear();
+            Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
+            Console.WriteLine(Camera.PosX + " " + Camera.PosY);
+            Console.WriteLine(Camera.width + " " + Camera.height);
+            Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
+            Console.WriteLine(Camera.Zoom);
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {
@@ -110,9 +110,9 @@ namespace Explicatio.Main
             //Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0.0f, 0.0f);
             //Primitive.singleColorTriangle.Draw();
 
-            Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0, 0);
-            RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
-            Primitive.singleColorTriangle.Draw();
+            //Primitive.singleColorTriangle.Color = new Vector3(1.0f, 0, 0);
+            //RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
+            //Primitive.singleColorTriangle.Draw();
 
             GlobalRenderer.RenderAllChunks();
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
