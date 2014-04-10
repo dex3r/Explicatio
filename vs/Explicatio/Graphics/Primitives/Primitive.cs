@@ -103,7 +103,7 @@ namespace Explicatio.Graphics.Primitives
         {
             indiecesBufferHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, indiecesBufferHandle);
-            GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(indices.Length * sizeof(byte)), indices, BufferUsageHint.StreamDraw);
+            GL.BufferData<byte>(BufferTarget.ElementArrayBuffer, new IntPtr(indices.Length * sizeof(byte)), indices, BufferUsageHint.StaticDraw);
         }
 
         public virtual void Draw()

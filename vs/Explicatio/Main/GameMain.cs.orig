@@ -37,11 +37,11 @@ namespace Explicatio.Main
             Util.PrintGLError("Renderer init");
             Primitive.InitPrimitives();
             Util.PrintGLError("Primitives init");
-            GlobalRenderer.InitTemp();
-            Util.PrintGLError("GlobalRenderer InitTemp");
+
+
 
             GL.FrontFace(FrontFaceDirection.Cw);
-            //GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
 
             //GL.Enable(EnableCap.Blend);
@@ -58,12 +58,7 @@ namespace Explicatio.Main
         {
             MyKeyboard.Update();
             Camera.Update();
-            //Console.Clear();
-            //Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
-            //Console.WriteLine(Camera.PosX + " " + Camera.PosY);
-            //Console.WriteLine(Camera.width + " " + Camera.height);
-            //Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
-            //Console.WriteLine(Camera.Zoom);
+            Console.WriteLine(MyMouse.WheelDelta);
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {
@@ -73,10 +68,22 @@ namespace Explicatio.Main
             {
                 Display.FullScreenSwitch();
             }
-            MyMouse.EndStep();
+<<<<<<< HEAD
 
-            Console.WriteLine(Display.Instance.RenderFrequency);
+            Camera.Update();
+
+            if (!wasGRIT)
+            {
+                GlobalRenderer.InitTemp();
+                Util.PrintGLError("InitTemp");
+                wasGRIT = true;
+            }
+
+            //Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
+=======
+            MyMouse.EndStep();
+>>>>>>> 1b271861a4f1f9c2a64fd6c1a1a3dbd14910ed53
         }
 
         public static void Draw(object sender, FrameEventArgs e)
@@ -101,7 +108,11 @@ namespace Explicatio.Main
             RenderingManager.ModelMatrix = Matrix4.CreateTranslation(2f, 0, 0);
             Primitive.singleColorTriangle.Draw();
 
-            GlobalRenderer.RenderAllChunks();
+            if (wasGRIT)
+            {
+                GlobalRenderer.InitTemp();
+                GlobalRenderer.RenderChunk(null);
+            }
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
 
             Util.PrintGLError("Render");
@@ -109,6 +120,8 @@ namespace Explicatio.Main
             Display.Instance.SwapBuffers();
             wasUpdated = false;
         }
+
+
 
         public static void Main(String[] args)
         {

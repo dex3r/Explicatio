@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Explicatio.Graphics.Shaders
 {
-    public class ShaderSimpleColor : Shader
+    public class ShaderSimpleColor : ShaderSimple
     {
         private Vector3 color;
         private int colorHandle;
