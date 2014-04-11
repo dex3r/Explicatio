@@ -61,17 +61,17 @@ namespace Explicatio.Worlds
             int[] c = {mapX,mapY};
             return c;
         }
-        /// <summary>
-        /// Zwraca pozycję bloku w świecie
-        /// </summary>
-        /// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
-        public bool CheckMapBoundry()
-        {
-            float mapX = MyMouse.XRelative / Block.BLOCK_WIDTH + MyMouse.YRelative / Block.BLOCK_HEIGHT;
-            float mapY = MyMouse.YRelative / Block.BLOCK_HEIGHT - MyMouse.XRelative / Block.BLOCK_WIDTH;
-            return Utils.Util.IntersectPointRectangle(mapX, mapY, 0, 0, GameMain.CurrentWorld.Size, GameMain.CurrentWorld.Size);
+        ///// <summary>
+        ///// Zwraca pozycję bloku w świecie
+        ///// </summary>
+        ///// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
+        //public bool CheckMapBoundry()
+        //{
+        //    float mapX = MyMouse.XRelative / Block.BLOCK_WIDTH + MyMouse.YRelative / Block.BLOCK_HEIGHT;
+        //    float mapY = MyMouse.YRelative / Block.BLOCK_HEIGHT - MyMouse.XRelative / Block.BLOCK_WIDTH;
+        //    return Utils.Util.IntersectPointRectangle(mapX, mapY, 0, 0, GameMain.CurrentWorld.Size, GameMain.CurrentWorld.Size);
             
-        }
+        //}
         /// <summary>
         /// Zwraca pozycję chunk w świecie
         /// </summary>

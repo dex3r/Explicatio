@@ -38,8 +38,8 @@ namespace Explicatio.Utils
             DisplayString.AppendLine(MyMouse.XClient + " " + MyMouse.YClient);
             DisplayString.Append("Mouse world pos: ");
             DisplayString.AppendLine(MyMouse.XWorld + " " + MyMouse.YWorld);
-            DisplayString.Append("Mouse in boundry: ");
-            DisplayString.AppendLine(GameMain.CurrentWorld.CheckMapBoundry() + " ");
+            //DisplayString.Append("Mouse in boundry: ");
+            //DisplayString.AppendLine(GameMain.CurrentWorld.CheckMapBoundry() + " ");
             //DisplayString.Append("Chunk: ");
             //DisplayString.Append("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "} ");
             //DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
