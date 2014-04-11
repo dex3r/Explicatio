@@ -41,7 +41,7 @@ namespace Explicatio.Main
 
         public static void Load(object sender, EventArgs e)
         {
-            currentWorld = new World(2048);
+            currentWorld = new World(512);
 
             Shader.Init();
             Util.PrintGLError("Shaders init");
@@ -71,12 +71,7 @@ namespace Explicatio.Main
         {
             MyKeyboard.Update();
             Camera.Update();
-            Console.Clear();
-            Console.WriteLine(MyMouse.XRelative + " " + MyMouse.YRelative);
-            Console.WriteLine(Camera.PosX + " " + Camera.PosY);
-            Console.WriteLine(Camera.width + " " + Camera.height);
-            Console.WriteLine(MyMouse.X + " " + MyMouse.Y);
-            Console.WriteLine(Camera.Zoom);
+            DebugConsole.Show();
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {
@@ -87,8 +82,6 @@ namespace Explicatio.Main
                 Display.FullScreenSwitch();
             }
             MyMouse.EndStep();
-
-            Console.WriteLine(Display.Instance.RenderFrequency);
             wasUpdated = true;
         }
 
