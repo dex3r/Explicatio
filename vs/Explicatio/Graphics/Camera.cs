@@ -11,9 +11,9 @@ namespace Explicatio.Graphics
 {
     public static class Camera
     {
-        private static float zoom = 1.0f;
-        private static float posX = -1; //0->4
-        private static float posY = -1; //0->-1.9375
+        private static float zoom = 10.0f;
+        private static float posX = 0; //0->4
+        private static float posY = 0; //0->-1.9375
         private static readonly int BORDERSIZE = 50;
         private static readonly float STEPSPEED = 1f;
         private static readonly float ZOOMSPEED = 1f;
@@ -25,16 +25,6 @@ namespace Explicatio.Graphics
             get { return Camera.zoom; }
             set { Camera.zoom = value; }
         }
-        //public static float PosX
-        //{
-        //    get { return Camera.posX / 0.0625f; }
-        //    set { Camera.posX = value * 0.0625f; }
-        //}
-        //public static float PosY
-        //{
-        //    get { return Camera.posY / 0.0625f; }
-        //    set { Camera.posY = value * 0.0625f; }
-        //}
         public static float PosX
         {
             get { return Camera.posX; }
@@ -52,8 +42,6 @@ namespace Explicatio.Graphics
         public static void Update()
         {
             cameraMove();
-            //width = (((float)Display.Instance.ClientSize.Width) / 40f / zoom);
-            //height = (((float)Display.Instance.ClientSize.Height) / 40f / zoom);
             width = (((float)Display.Instance.ClientSize.Width) / zoom);
             height = (((float)Display.Instance.ClientSize.Height) / zoom);
             RenderingManager.ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
@@ -64,6 +52,7 @@ namespace Explicatio.Graphics
 
         private static void cameraMove()
         {
+            float scrollSpeed = STEPSPEED / (Camera.Zoom / 15);
             if (MyMouse.ButtonMiddle.IsToggled)
             {
                 MyMouse.MouseDragPositionX = MyMouse.X;
@@ -74,19 +63,19 @@ namespace Explicatio.Graphics
                 //Keyboard move and zoom
                 if (MyKeyboard.KeyMoveCameraLeft.IsPressed)
                 {
-                    Camera.posX += STEPSPEED / Camera.Zoom;
+                    Camera.posX += scrollSpeed;
                 }
                 if (MyKeyboard.KeyMoveCameraRight.IsPressed)
                 {
-                    Camera.posX -= STEPSPEED / Camera.Zoom;
+                    Camera.posX -= scrollSpeed;
                 }
                 if (MyKeyboard.KeyMoveCameraDown.IsPressed)
                 {
-                    Camera.posY += STEPSPEED / Camera.Zoom;
+                    Camera.posY += scrollSpeed;
                 }
                 if (MyKeyboard.KeyMoveCameraUp.IsPressed)
                 {
-                    Camera.posY -= STEPSPEED / Camera.Zoom;
+                    Camera.posY -= scrollSpeed;
                 }
                 if (MyKeyboard.KeyZoomDown.IsToggled)
                 {
@@ -106,19 +95,19 @@ namespace Explicatio.Graphics
                 {
                     if (MyMouse.ChceckMouseRectangle(0, 0, Display.Instance.Height, Display.Instance.Height / Display.Instance.Height * BORDERSIZE))
                     {
-                        Camera.posY -= STEPSPEED / Camera.Zoom;
+                        Camera.posY -= scrollSpeed;
                     }
                     if (MyMouse.ChceckMouseRectangle(0, Display.Instance.Height - Display.Instance.Height / Display.Instance.Height * BORDERSIZE, Display.Instance.Width, Display.Instance.Height))
                     {
-                        Camera.posY += STEPSPEED / Camera.Zoom;
+                        Camera.posY += scrollSpeed;
                     }
                     if (MyMouse.ChceckMouseRectangle(0, 0, Display.Instance.Width / Display.Instance.Width * BORDERSIZE, Display.Instance.Height))
                     {
-                        Camera.posX += STEPSPEED / Camera.Zoom;
+                        Camera.posX += scrollSpeed;
                     }
                     if (MyMouse.ChceckMouseRectangle(Display.Instance.Width - Display.Instance.Width / Display.Instance.Width * BORDERSIZE, 0, Display.Instance.Width, Display.Instance.Height))
                     {
-                        Camera.posX -= STEPSPEED / Camera.Zoom;
+                        Camera.posX -= scrollSpeed;
                     }
                 }
 
@@ -128,8 +117,8 @@ namespace Explicatio.Graphics
             else
             {
                 //Middle button move
-                Camera.posX += (float)(MyMouse.MouseDragPositionX - MyMouse.X) / (STEPSPEED * 200) / Camera.Zoom;
-                Camera.posY -= (float)(MyMouse.MouseDragPositionY - MyMouse.Y) / (STEPSPEED * 200) / Camera.Zoom;
+                Camera.posX += (float)(MyMouse.MouseDragPositionX - MyMouse.X) / (Camera.Zoom * 40) * Camera.Zoom;
+                Camera.posY -= (float)(MyMouse.MouseDragPositionY - MyMouse.Y) / (Camera.Zoom * 40) * Camera.Zoom;
             }
 
 

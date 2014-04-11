@@ -34,12 +34,27 @@ namespace Explicatio.Utils
 
             DisplayString.Append("Mouse absolutive: ");
             DisplayString.AppendLine(MyMouse.X + " " + MyMouse.Y);
+<<<<<<< HEAD
             DisplayString.Append("Mouse client pos: ");
             DisplayString.AppendLine(MyMouse.XClient + " " + MyMouse.YClient);
             DisplayString.Append("Mouse world pos: ");
             DisplayString.AppendLine(MyMouse.XWorld + " " + MyMouse.YWorld);
+            //DisplayString.Append("Chunk: ");
+            //DisplayString.Append("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "} ");
+            //DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
+            //DisplayString.Append("Block: ");
+            //DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
+=======
+            DisplayString.Append("Mouse relative: ");
+            DisplayString.AppendLine((int)MyMouse.XRelative + " " + (int)MyMouse.YRelative);
             DisplayString.Append("Mouse in boundry: ");
             DisplayString.AppendLine(GameMain.CurrentWorld.CheckMapBoundry() + " ");
+            DisplayString.Append("Chunk: ");
+            DisplayString.Append("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "} ");
+            DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
+            DisplayString.Append("Block: ");
+            DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
+>>>>>>> f1272ac336c0d9641f15389609059dc9370dedd9
             DisplayString.Append("Camera position: ");
             DisplayString.AppendLine(Camera.PosX + " " + Camera.PosY);
             DisplayString.Append("Camera size: ");

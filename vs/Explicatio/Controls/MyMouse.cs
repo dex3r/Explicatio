@@ -149,6 +149,7 @@ namespace Explicatio.Controls
                 xWorld = v.Value.X;
                 yWorld = v.Value.Y;
             }
+
             //Reset wheele delta
             wheelDelta = 0;
             //Reset mouse pos delta
@@ -184,8 +185,8 @@ namespace Explicatio.Controls
             // Prawidłowy, dla textur (n, 2n):
             //DisplayString.Append("Block: ");
             //float mapX = (((clientX) + (clientY * 2f)) / 2f) + 0.5f;
-            float mapX = (clientX / 2f) + clientY + 0.5f;
-            float mapY = (clientX / 2f) - clientY + 0.5f;
+            float mapX = (clientX / 2f) + clientY + 1.5f;
+            float mapY = -((clientX / 2f) - clientY) + 0.5f;
             return new Vector2(mapX, mapY);
         }
 

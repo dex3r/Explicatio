@@ -53,7 +53,7 @@ namespace Explicatio.Rendering
             {
                 for (int j = 0; j < w.ChunksPerDimension; j++)
                 {
-                    Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation((j - i) * (Chunk.CHUNK_SIZE * 2), (j + i) * Chunk.CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
+                    Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation(-(j - i) * (Chunk.CHUNK_SIZE * 2), -(j + i) * Chunk.CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
                     c = w[i, j].ChunkRenderer;
                     c.RebufferUVs();
                     c.Draw();

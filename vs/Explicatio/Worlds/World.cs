@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 
 namespace Explicatio.Worlds
 {
@@ -47,55 +48,32 @@ namespace Explicatio.Worlds
             set { chunks[y * ChunksPerDimension + x] = value; }
         }
 
-
-        /// <summary>
-        /// Zwraca pozycję bloku w świecie
-        /// </summary>
-        /// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
-        public int[] RelativeGetBlock(float inputX, float inputY)
-        {
-            //map.x = (screen.x / TILE_WIDTH + screen.y / TILE_HEIGHT);
-            //map.y = (screen.y / TILE_HEIGHT -(screen.x / TILE_WIDTH));
-            int mapX = (int)((inputX / Block.BLOCK_WIDTH) + (inputY / Block.BLOCK_HEIGHT));
-            int mapY = (int)((inputY / Block.BLOCK_HEIGHT) - (inputX / Block.BLOCK_WIDTH));
-            int[] c = {mapX,mapY};
-            return c;
-        }
         ///// <summary>
         ///// Zwraca pozycję bloku w świecie
         ///// </summary>
         ///// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
-        //public bool CheckMapBoundry()
-        //{
-        //    float mapX = MyMouse.XRelative / Block.BLOCK_WIDTH + MyMouse.YRelative / Block.BLOCK_HEIGHT;
-        //    float mapY = MyMouse.YRelative / Block.BLOCK_HEIGHT - MyMouse.XRelative / Block.BLOCK_WIDTH;
-        //    return Utils.Util.IntersectPointRectangle(mapX, mapY, 0, 0, GameMain.CurrentWorld.Size, GameMain.CurrentWorld.Size);
+        public bool CheckMapBoundry()
+        {
+            return Utils.Util.IntersectPointRectangle(MyMouse.XWorld, MyMouse.YWorld, 0, 0, GameMain.CurrentWorld.Size, GameMain.CurrentWorld.Size);
+        }
             
         //}
         /// <summary>
         /// Zwraca pozycję chunk w świecie
         /// </summary>
         /// <returns>[0] pozycja x chunk, [1] pozycja y chunk </returns>
-        public int[] RelativeGetChunk(float inputX, float inputY)
+        public Vector2 RelativeGetChunk()
         {
-            int[] c = RelativeGetBlock(inputX, inputY);
-            c[0] = c[0] / Chunk.CHUNK_SIZE;
-            c[1] = c[1] / Chunk.CHUNK_SIZE;
-            return c;
+            return new Vector2(MyMouse.XWorld / Chunk.CHUNK_SIZE, MyMouse.YWorld / Chunk.CHUNK_SIZE);
         }
 
         /// <summary>
         /// Zwraca pozycję bloku w chunku
         /// </summary>
         /// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
-        public int[] RelativeGetBlockChunk(float inputX, float inputY)
+        public Vector2 RelativeGetBlockChunk()
         {
-            int[] c = RelativeGetBlock(inputX, inputY);
-            int[] d = RelativeGetChunk(inputX, inputY); 
-            c[0] = c[0] % Chunk.CHUNK_SIZE;
-            c[1] = c[1] % Chunk.CHUNK_SIZE;
-            int[] e = { c[0], c[1], d[0], d[1] };
-            return e;
+            return new Vector2(MyMouse.XWorld % Chunk.CHUNK_SIZE, MyMouse.YWorld % Chunk.CHUNK_SIZE);
         }
     }
 }

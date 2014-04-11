@@ -108,12 +108,12 @@ namespace Explicatio.Main
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
 
             
-            Primitive.singleColorQuad.Color = new Vector3(1.0f, 0.0f, 0.0f);
-            RenderingManager.ModelMatrix = Matrix4.Identity;
-            Primitive.singleColorQuad.Draw();
-            Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
-            RenderingManager.ModelMatrix = Matrix4.CreateTranslation(-2, 0, 0);
-            Primitive.singleColorQuad.Draw();
+            //Primitive.singleColorQuad.Color = new Vector3(1.0f, 0.0f, 0.0f);
+            //RenderingManager.ModelMatrix = Matrix4.Identity;
+            //Primitive.singleColorQuad.Draw();
+            //Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
+            //RenderingManager.ModelMatrix = Matrix4.CreateTranslation(-2, 0, 0);
+            //Primitive.singleColorQuad.Draw();
 
             Util.PrintGLError("Render");
 

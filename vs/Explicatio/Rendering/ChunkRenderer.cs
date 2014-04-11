@@ -55,8 +55,8 @@ namespace Explicatio.Rendering
                 for (int j = 0; j < CHUNK_SIZE; j++)
                 {
                     h = (float)c.GetHeight(i, j);
-                    x = (i + h - j) * 2;
-                    y = (i + j);
+                    x = -(i + h - j) * 2;
+                    y = -(i + j);
 
                     w = (i * 12) + (j * 12 * CHUNK_SIZE);
 
