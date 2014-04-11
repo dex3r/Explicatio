@@ -73,6 +73,7 @@
     <Compile Include="Graphics\Shaders\ShaderChunk.cs" />
     <Compile Include="Graphics\Shaders\ShaderChunk2.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
+    <Compile Include="Worlds\WorldInteractions.cs" />
     <None Include="Rendering\GlobalRenderer.cs.dev1" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Graphics\Shaders\ShaderSimpleTexture.cs" />
     <Compile Include="Graphics\Textures\Textures.cs" />
     <Compile Include="Textures\MyTexture.cs" />
+    <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="Worlds\Block.cs" />
     <Compile Include="Worlds\BlocksEnum.cs" />
     <Compile Include="Worlds\Chunk.cs" />
