@@ -37,5 +37,6 @@ namespace Explicatio.Worlds
     public enum BlocksTypeEnum
     {
         Grass,
+        Road,
     }
 }

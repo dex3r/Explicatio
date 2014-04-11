@@ -19,7 +19,7 @@ namespace Explicatio.Utils
         public static StringBuilder DisplayString = new StringBuilder();
 
         private static int fpsTimer;
-        private static int fps,dps;
+        private static int fps, dps;
         public static void Show()
         {
 
@@ -36,6 +36,8 @@ namespace Explicatio.Utils
             DisplayString.AppendLine(MyMouse.X + " " + MyMouse.Y);
             DisplayString.Append("Mouse relative: ");
             DisplayString.AppendLine((int)MyMouse.XRelative + " " + (int)MyMouse.YRelative);
+            DisplayString.Append("Mouse in boundry: ");
+            DisplayString.AppendLine(GameMain.CurrentWorld.CheckMapBoundry() + " ");
             DisplayString.Append("Chunk: ");
             DisplayString.Append("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "} ");
             DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
@@ -47,6 +49,8 @@ namespace Explicatio.Utils
             DisplayString.AppendLine(Camera.width + " " + Camera.height);
             DisplayString.Append("Camera zoom: ");
             DisplayString.AppendLine(Camera.Zoom + " ");
+
+
             Console.Write(DebugConsole.DisplayString);
         }
     }

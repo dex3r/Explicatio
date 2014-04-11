@@ -21,7 +21,8 @@ namespace Explicatio.Worlds
             get { return Block.blocks; }
         }
 
-        public static Block Grass = new Block(1,0, "Grass");
+        public static Block Grass = new Block(1, 0, "Grass");
+        public static Block Road = new Block(2, 0, "Road");
 
         #endregion
 

@@ -10,6 +10,7 @@ using Explicatio.Graphics;
 using System.Drawing;
 using Explicatio.Worlds;
 using Explicatio.Main;
+using Explicatio.Utils;
 
 namespace Explicatio.Controls
 {
@@ -123,13 +124,9 @@ namespace Explicatio.Controls
    
         }
 
-        public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)
+        public static bool ChceckMouseRectangle(int x, int y, int width, int height)
         {
-            if (X >= x1 && X <= x2 && Y >= y1 && Y <= y2)
-            {
-                return true;
-            }
-            return false;
+            return Util.IntersectPointRectangle(X, Y, x, y, width, height);
         }
 
     }
