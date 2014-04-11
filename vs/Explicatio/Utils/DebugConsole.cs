@@ -37,7 +37,8 @@ namespace Explicatio.Utils
             DisplayString.Append("Mouse relative: ");
             DisplayString.AppendLine((int)MyMouse.XRelative + " " + (int)MyMouse.YRelative);
             DisplayString.Append("Chunk: ");
-            DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
+            DisplayString.Append("{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "} ");
+            DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
             DisplayString.Append("Block: ");
             DisplayString.AppendLine("{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[0] + "},{" + GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative)[1] + "}");
             DisplayString.Append("Camera position: ");

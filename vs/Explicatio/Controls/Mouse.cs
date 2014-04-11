@@ -9,6 +9,7 @@ using OpenTK.Input;
 using Explicatio.Graphics;
 using System.Drawing;
 using Explicatio.Worlds;
+using Explicatio.Main;
 
 namespace Explicatio.Controls
 {
@@ -77,11 +78,17 @@ namespace Explicatio.Controls
             get { return MyMouse.mouseDragPositionY; }
             set { MyMouse.mouseDragPositionY = value; }
         }
+        /// <summary>
+        /// Pozycja relatywna względem górnego czubka mapy
+        /// </summary>
         public static float XRelative
         {
             get { return MyMouse.xRelative; }
             set { MyMouse.xRelative = value; }
         }
+        /// <summary>
+        /// Pozycja relatywna względem górnego czubka mapy
+        /// </summary>
         public static float YRelative
         {
             get { return MyMouse.yRelative; }
@@ -102,20 +109,13 @@ namespace Explicatio.Controls
             wheel = e.ValuePrecise;
             wheelDelta = e.DeltaPrecise;
         }
-        //public static void Mouse_ButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public static void Mouse_ButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public static void EndStep()
         {
-            xRelative = -(Camera.PosX + ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom / 1.251167f));
-            yRelative = -(Camera.PosY + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom / 1.251167f));
+            xRelative = -(Camera.PosX - ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom / 1.251167f))-32;
+            yRelative = (Camera.PosY + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom / 1.251167f)) + (GameMain.CurrentWorld.Size * Chunk.CHUNK_SIZE) / 2; ;
+            //Reset wheele delta
             wheelDelta = 0;
             //Reset mouse pos delta
             xDelta = 0;

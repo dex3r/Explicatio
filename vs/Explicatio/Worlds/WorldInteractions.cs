@@ -12,7 +12,8 @@ namespace Explicatio.Worlds
     {
         public static void Mouse()
         {
-            int[] CurrentBlock = GameMain.CurrentWorld.RelativeGetBlock(MyMouse.XRelative, MyMouse.YRelative);
+            int[] CurrentBlock = GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative);
+
         }
 
         public static void Keyboard()

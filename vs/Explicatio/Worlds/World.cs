@@ -33,7 +33,7 @@ namespace Explicatio.Worlds
             }
         }
 
-         //!? Properties region
+        //!? Properties region
         #region PROPERTIES
 
         #endregion
@@ -45,21 +45,45 @@ namespace Explicatio.Worlds
             set { chunks[y * ChunksPerDimension + x] = value; }
         }
 
-        //public Chunk RelativeGetChunk(float inputX, float inputY)
-        //{
-        //    //TODO Camera position (divided by 2)
-        //    //map.x = (screen.x / TILE_WIDTH_HALF + screen.y / TILE_HEIGHT_HALF) /2;
-        //    //map.y = (screen.y / TILE_HEIGHT_HALF -(screen.x / TILE_WIDTH_HALF)) /2;
-        //    return this[(int)(((inputX / chunkSizeWidth) + (inputY / chunkSizeHeight))), (int)(((inputY / chunkSizeHeight) - (inputX / chunkSizeWidth)))];
-        //}
-        //public int RelativeGetBlock(float inputX, float inputY)
-        //{
-        //    Chunk c = RelativeGetChunk(inputX, inputY);
-        //    float inputChunkRelativeX = inputX - c.X*chunkSizeWidth;
-        //    float inputChunkRelativeY = inputY - c.Y*chunkSizeHeight;
-            
-        //    return c[(int)((inputChunkRelativeX / Block.BLOCK_WIDTH) + (inputChunkRelativeY / Block.BLOCK_HEIGHT)), (int)((inputChunkRelativeY / Block.BLOCK_HEIGHT) - (inputChunkRelativeX / Block.BLOCK_WIDTH))];
-        //}
+
+        /// <summary>
+        /// Zwraca pozycję bloku w świecie
+        /// </summary>
+        /// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
+        public int[] RelativeGetBlock(float inputX, float inputY)
+        {
+            //map.x = (screen.x / TILE_WIDTH + screen.y / TILE_HEIGHT);
+            //map.y = (screen.y / TILE_HEIGHT -(screen.x / TILE_WIDTH));
+            int mapX = (int)((inputX / Block.BLOCK_WIDTH) + (inputY / Block.BLOCK_HEIGHT));
+            int mapY = (int)((inputY / Block.BLOCK_HEIGHT) - (inputX / Block.BLOCK_WIDTH));
+            int[] c = {mapX,mapY};
+            return c;
+        }
+        /// <summary>
+        /// Zwraca pozycję chunk w świecie
+        /// </summary>
+        /// <returns>[0] pozycja x chunk, [1] pozycja y chunk </returns>
+        public int[] RelativeGetChunk(float inputX, float inputY)
+        {
+            int[] c = RelativeGetBlock(inputX, inputY);
+            c[0] = c[0] / Chunk.CHUNK_SIZE;
+            c[1] = c[1] / Chunk.CHUNK_SIZE;
+            return c;
+        }
+
+        /// <summary>
+        /// Zwraca pozycję bloku w chunku
+        /// </summary>
+        /// <returns>[0] pozycja x bloku, [1] pozycja y bloku </returns>
+        public int[] RelativeGetBlockChunk(float inputX, float inputY)
+        {
+            int[] c = RelativeGetBlock(inputX, inputY);
+            int[] d = RelativeGetChunk(inputX, inputY); 
+            c[0] = c[0] % Chunk.CHUNK_SIZE;
+            c[1] = c[1] % Chunk.CHUNK_SIZE;
+            int[] e = { c[0], c[1], d[0], d[1] };
+            return e;
+        }
     }
 }
 

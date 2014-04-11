@@ -9,8 +9,8 @@ namespace Explicatio.Worlds
     public class Block
     {
         #region const
-        public const int BLOCK_WIDTH = 128;
-        public const int BLOCK_HEIGHT = 64;
+        public const int BLOCK_WIDTH = 64;
+        public const int BLOCK_HEIGHT = 32;
         #endregion
 
         #region static

@@ -61,6 +61,17 @@ namespace Explicatio.Worlds
                 blocks[y * CHUNK_SIZE + x] = (short)value;
             }
         }
+        ///// <summary>
+        ///// Zwraca blok w chunku x,y to pozycja w tablicy chunka.
+        ///// </summary>
+        //public int this[int flattendPosition]
+        //{
+        //    get { return blocks[flattendPosition]; }
+        //    set
+        //    {
+        //        blocks[flattendPosition] = (short)value;
+        //    }
+        //}
 
     }
 }
