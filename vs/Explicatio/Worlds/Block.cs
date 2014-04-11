@@ -21,42 +21,39 @@ namespace Explicatio.Worlds
             get { return Block.blocks; }
         }
 
-        public static Block Grass = new Block(1, 0, "Grass");
-        public static Block Road = new Block(2, 0, "Road");
+        public static Block Grass = new Block(1, "Grass");
+        public static Block Road = new Block(2, "Road");
 
         #endregion
 
         #region nonstatic
         private int id;
         private string name;
+        private bool isNormalSizedBlock;
+
         //!? Properties region
         #region PROPERTIES
         public int Id
         {
             get { return id; }
-            set { id = value; }
         }
         public string Name
         {
             get { return name; }
         }
+        public bool IsNormalSizedBlock
+        {
+            get { return isNormalSizedBlock; }
+        }
         #endregion
         //!? END of properties region
 
-        /// <summary>
-        /// Ostrożnie z tym, ID zaczyna sie od 16 miejsca
-        /// </summary>
-        /// <param name="flagID"></param>
-        /// <param name="name"></param>
-        public Block(int flagID, string name)
+        public Block(int id, string name)
         {
-            this.id = flagID;
+            this.isNormalSizedBlock = true;
+            this.id = id;
             this.name = name;
-        }
-        public Block(short id, byte meta, string name)
-        {
-            this.id = (id << 16) | (meta << 8);
-            this.name = name;
+            blocks[id] = this;
         }
         #endregion
     }

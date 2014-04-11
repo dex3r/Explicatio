@@ -64,7 +64,7 @@
     <OutputPath>bin\x86\Debug OpenTK\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\Keyboard.cs" />
+    <Compile Include="Controls\MyKeyboard.cs" />
     <Compile Include="Controls\MyMouse.cs" />
     <Compile Include="Controls\Key.cs" />
     <Compile Include="Graphics\Camera.cs" />

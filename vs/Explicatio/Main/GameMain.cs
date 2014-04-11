@@ -41,7 +41,7 @@ namespace Explicatio.Main
 
         public static void Load(object sender, EventArgs e)
         {
-            currentWorld = new World(512);
+            currentWorld = new World(1024);
 
             //GL.Enable(EnableCap.Blend);
             //GL.BlendColor(1.0f, 0.0f, 1.0f, 0.0f);

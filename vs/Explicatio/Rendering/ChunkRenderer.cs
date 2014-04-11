@@ -18,6 +18,10 @@ namespace Explicatio.Rendering
     public class ChunkRenderer : IDisposable
     {
         public const int CHUNK_SIZE = Chunk.CHUNK_SIZE;
+        public const float METADATAS_PER_TEXTURE = 32f;
+        public const float BLOCKS_PER_TEXTURE = 128f;
+        private bool rebuferVertices;
+        private bool rebuferUVs;
 
         private static readonly int[] VDataBlock = new int[] {
                  0,  0,
@@ -33,6 +37,7 @@ namespace Explicatio.Rendering
         private int uvsBufferHandle;
         private float[] vertices;
         private float[] UVs;
+        private Chunk ownerChunk;
         
 #if DEBUG
         private bool isDisposed = false;
@@ -40,6 +45,7 @@ namespace Explicatio.Rendering
 
         public ChunkRenderer(Chunk c)
         {
+            this.ownerChunk = c;
             vertices = new float[CHUNK_SIZE * CHUNK_SIZE * 12];
             UVs = new float[CHUNK_SIZE * CHUNK_SIZE * 12];
 
@@ -48,47 +54,19 @@ namespace Explicatio.Rendering
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
 
-            float x, y, h;
-            int w;
+            Rebuild();
+        }
+
+        public void Rebuild()
+        {
             for (int i = 0; i < CHUNK_SIZE; i++)
             {
                 for (int j = 0; j < CHUNK_SIZE; j++)
                 {
-                    h = (float)c.GetHeight(i, j);
-                    x = -(i + h - j) * 2;
-                    y = -(i + j);
-
-                    w = (i * 12) + (j * 12 * CHUNK_SIZE);
-
-                    vertices[w + 0] = VDataBlock[0] + x;
-                    vertices[w + 1] = VDataBlock[1] + y;
-                    vertices[w + 2] = VDataBlock[2] + x;
-                    vertices[w + 3] = VDataBlock[3] + y;
-                    vertices[w + 4] = VDataBlock[4] + x;
-                    vertices[w + 5] = VDataBlock[5] + y;
-                    vertices[w + 6] = VDataBlock[6] + x;
-                    vertices[w + 7] = VDataBlock[7] + y;
-                    vertices[w + 8] = VDataBlock[8] + x;
-                    vertices[w + 9] = VDataBlock[9] + y;
-                    vertices[w + 10] = VDataBlock[10] + x;
-                    vertices[w + 11] = VDataBlock[11] + y;
-
-                    UVs[w + 0] = 0.0f;
-                    UVs[w + 1] = 0.0f;
-                    UVs[w + 2] = 0f;
-                    UVs[w + 3] = 1f;
-                    UVs[w + 4] = 1f;
-                    UVs[w + 5] = 0.0f;
-                    UVs[w + 6] = 1f;
-                    UVs[w + 7] = 0.0f;
-                    UVs[w + 8] = 0f;
-                    UVs[w + 9] = 1f;
-                    UVs[w + 10] = 1.0f;
-                    UVs[w + 11] = 1f;
+                    SetVertices(i, j, ownerChunk.GetHeight(i, j));
+                    SetUVs(i, j, ownerChunk.GetId(i, j), ownerChunk.GetMeta(i, j));
                 }
             }
-
-            Util.PrintGLError();
         }
 
         public void RebufferUVs()
@@ -106,7 +84,7 @@ namespace Explicatio.Rendering
                 GL.BindBuffer(BufferTarget.ArrayBuffer, uvsBufferHandle);
                 GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * UVs.Length), ref UVs[0], BufferUsageHint.DynamicDraw);
             }
-            
+            rebuferUVs = false;
         }
 
         public void RebufferVertices()
@@ -124,16 +102,30 @@ namespace Explicatio.Rendering
                 GL.BindBuffer(BufferTarget.ArrayBuffer, verticesBufferHandle);
                 GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
             }
+            rebuferVertices = false;
         }
 
         public void Draw()
         {
             GL.BindVertexArray(vertexArrayHandle);
-            if(verticesBufferHandle == 0)
+            if(verticesBufferHandle == 0 || ownerChunk.RebuildChunk)
             {
                 RebufferUVs();
                 RebufferVertices();
+                ownerChunk.RebuildChunk = false;
             }
+            else 
+            {
+                if (rebuferUVs)
+                {
+                    RebufferUVs();
+                }
+                if(rebuferVertices)
+                {
+                    RebufferVertices();
+                }
+            }
+            
             GL.DrawArrays(PrimitiveType.Triangles, 0, CHUNK_SIZE * CHUNK_SIZE * 6);
         }
 
@@ -142,6 +134,49 @@ namespace Explicatio.Rendering
             GL.DeleteBuffer(verticesBufferHandle);
             GL.DeleteBuffer(uvsBufferHandle);
             verticesBufferHandle = uvsBufferHandle = 0;
+        }
+
+        public void SetUVs(int x, int y, int blockID, int blockMeta)
+        {
+            int w = (x * 12) + (y * 12 * CHUNK_SIZE);
+            float xOffset = (float)blockMeta / METADATAS_PER_TEXTURE;
+            float yOffset = (float)(blockID - 1) / BLOCKS_PER_TEXTURE;
+            float maxXOffset = (float)(blockMeta + 1) / METADATAS_PER_TEXTURE;
+            float maxYOffset = (float)(blockID) / BLOCKS_PER_TEXTURE;
+            UVs[w + 0] = xOffset;
+            UVs[w + 1] = yOffset;
+            UVs[w + 2] = xOffset;
+            UVs[w + 3] = maxYOffset;
+            UVs[w + 4] = maxXOffset;
+            UVs[w + 5] = yOffset;
+            UVs[w + 6] = maxXOffset;
+            UVs[w + 7] = yOffset;
+            UVs[w + 8] = xOffset;
+            UVs[w + 9] = maxYOffset;
+            UVs[w + 10] = maxXOffset;
+            UVs[w + 11] = maxYOffset;
+            this.rebuferUVs = true;
+        }
+
+        public void SetVertices(int x, int y, int height)
+        {
+            float px = -(x + height - y) * 2;
+            float py = -(x + y);
+
+            int w = (x * 12) + (y * 12 * CHUNK_SIZE);
+            vertices[w + 0] = VDataBlock[0] + px;
+            vertices[w + 1] = VDataBlock[1] + py;
+            vertices[w + 2] = VDataBlock[2] + px;
+            vertices[w + 3] = VDataBlock[3] + py;
+            vertices[w + 4] = VDataBlock[4] + px;
+            vertices[w + 5] = VDataBlock[5] + py;
+            vertices[w + 6] = VDataBlock[6] + px;
+            vertices[w + 7] = VDataBlock[7] + py;
+            vertices[w + 8] = VDataBlock[8] + px;
+            vertices[w + 9] = VDataBlock[9] + py;
+            vertices[w + 10] = VDataBlock[10] + px;
+            vertices[w + 11] = VDataBlock[11] + py;
+            this.rebuferVertices = true;
         }
 
         public void Dispose()

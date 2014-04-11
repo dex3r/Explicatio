@@ -25,17 +25,11 @@ namespace Explicatio.Controls
         private static int mouseDragPositionX;
         private static int mouseDragPositionY;
         private static float xClient;
-
-
         private static float yClient;
-
-
         private static float xWorld;
-
-
         private static float yWorld;
-
-
+        private static int xBlock;
+        private static int yBlock;
 
         #region Buttons
         private static MyKey buttonMiddle = new MyKey("Middle button??", MouseButton.Middle);
@@ -117,6 +111,17 @@ namespace Explicatio.Controls
         {
             get { return MyMouse.yWorld; }
         }
+        public static int XBlock
+        {
+            get { return MyMouse.xBlock; }
+            set { MyMouse.xBlock = value; }
+        }
+        public static int YBlock
+        {
+            get { return MyMouse.yBlock; }
+            set { MyMouse.yBlock = value; }
+        }
+
         #endregion
         //!? END of properties region
 
@@ -148,6 +153,8 @@ namespace Explicatio.Controls
             {
                 xWorld = v.Value.X;
                 yWorld = v.Value.Y;
+                xBlock = (int)xWorld;
+                yBlock = (int)YWorld;
             }
 
             //Reset wheele delta
@@ -155,6 +162,13 @@ namespace Explicatio.Controls
             //Reset mouse pos delta
             xDelta = 0;
             yDelta = 0;
+            if(MyKeyboard.KeyPlaceBlock.IsToggled)
+            {
+                if(GameMain.CurrentWorld != null)
+                {
+                    GameMain.CurrentWorld.SetBlock(xBlock, yBlock, 2);
+            }
+            }
         }
 
         /// <summary>

@@ -11,11 +11,12 @@ namespace Explicatio.Worlds
     {
         public const int CHUNK_SIZE = 64;
 
-        private ChunkRenderer chunkRenderer;
+        public ChunkRenderer chunkRenderer;
         private int[] blocks;
         //Chunk Coordinates
         private int x;
         private int y;
+        private bool rebuildChunk;
 
         //!? Properties region
         #region PROPERTIES
@@ -31,6 +32,11 @@ namespace Explicatio.Worlds
         {
             get { return chunkRenderer; }
         }
+        public bool RebuildChunk
+        {
+            get { return rebuildChunk; }
+            set { rebuildChunk = value; }
+        }
         #endregion
         //!? END of properties region
 
@@ -44,7 +50,7 @@ namespace Explicatio.Worlds
             {
                 for (int yi = 0; yi < CHUNK_SIZE; yi++)
                 {
-                    this[xi, yi] = Block.Grass.Id;
+                    SetId(xi, yi, 1);
                 }
             }
             chunkRenderer = new ChunkRenderer(this);
@@ -57,10 +63,7 @@ namespace Explicatio.Worlds
         public int this[int x,int y]
         {
             get { return blocks[y * CHUNK_SIZE + x]; }
-            set
-            {
-                blocks[y * CHUNK_SIZE + x] = value;
-            }
+            set { blocks[y * CHUNK_SIZE + x] = value; }
         }
 
         public ushort GetId(int x, int y)
@@ -70,14 +73,36 @@ namespace Explicatio.Worlds
         public void SetId(int x, int y, int id)
         {
             this[x, y] =  (id << 16) | (this[x, y] << 16) >> 16;
+            if(chunkRenderer != null)
+            {
+                chunkRenderer.SetUVs(x, y, id, this[x, y] << 16);
+            }
+            else
+            {
+                rebuildChunk = true;
+            }
+        }
+
+        public void SetIdAndMeta(int x, int y, int id, int meta)
+        {
+            SetId(x, y, id);
+            SetMeta(x, y, meta);
         }
         public byte GetMeta(int x, int y)
         {
             return (byte)((this[x, y] >> (1 << 3)) & 0xFF); // 0xFF = 255
         }
-        public void SetMeta(int x, int y, byte meta)
+        public void SetMeta(int x, int y, int meta)
         {
             this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 24) >> 24;
+            if(chunkRenderer != null)
+            {
+                chunkRenderer.SetUVs(x, y, this[x, y] << 16, meta);
+            }
+            else
+            {
+                rebuildChunk = true;
+            }
         }
         public byte GetHeight(int x, int y)
         {
@@ -86,8 +111,14 @@ namespace Explicatio.Worlds
         public void SetHeight(int x, int y, byte height)
         {
             this[x,y] = (this[x,y] << 8) | (height);
-            chunkRenderer.Dispose();
-            chunkRenderer = new ChunkRenderer(this);
+            if (chunkRenderer != null)
+            {
+                chunkRenderer.SetVertices(x, y, height);
+            }
+            else
+            {
+                rebuildChunk = true;
+            }
         }
     }
 }

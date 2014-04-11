@@ -75,6 +75,25 @@ namespace Explicatio.Worlds
         {
             return new Vector2(MyMouse.XWorld % Chunk.CHUNK_SIZE, MyMouse.YWorld % Chunk.CHUNK_SIZE);
         }
+        public bool SetBlock(int x, int y, int id, int meta = 0)
+        {
+            if(x < 0 || y < 0)
+            {
+                return false;
+            }
+            int cx = x / Chunk.CHUNK_SIZE;
+            int cy = y / Chunk.CHUNK_SIZE;
+            if(cx > ChunksPerDimension || cy > ChunksPerDimension)
+            {
+                return false;
+            }
+            else
+            {
+                this[cx, cy].SetIdAndMeta(x % Chunk.CHUNK_SIZE, y % Chunk.CHUNK_SIZE, id, meta);
+                //this[cx, cy].ChunkRenderer = new Rendering.ChunkRenderer(this[cx, cy]);
+                return true;
+            }
+        }
     }
 }
 

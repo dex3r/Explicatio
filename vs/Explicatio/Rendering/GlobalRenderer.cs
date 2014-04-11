@@ -38,7 +38,6 @@ namespace Explicatio.Rendering
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
 
-
             Util.PrintGLError();
         }
 
@@ -47,15 +46,15 @@ namespace Explicatio.Rendering
             RenderingManager.ChangeCurrentShader(Shader.Chunk2Shader, false);
             ChunkRenderer c;
             World w = GameMain.CurrentWorld;
-            w[0, 0].ChunkRenderer.Dispose();
-            w[0, 0] = new Chunk(0, 0);
+            w[0, 0].chunkRenderer.Dispose();
+            w[0, 0].chunkRenderer = new ChunkRenderer(w[0, 0]);
             for (int i = 0; i < w.ChunksPerDimension; i++)
             {
                 for (int j = 0; j < w.ChunksPerDimension; j++)
                 {
                     Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation(-(j - i) * (Chunk.CHUNK_SIZE * 2), -(j + i) * Chunk.CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
                     c = w[i, j].ChunkRenderer;
-                    c.RebufferUVs();
+                    //c.RebufferUVs();
                     c.Draw();
                 }
             }
