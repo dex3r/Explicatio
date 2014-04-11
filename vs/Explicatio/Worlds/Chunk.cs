@@ -12,7 +12,7 @@ namespace Explicatio.Worlds
         public const int CHUNK_SIZE = 64;
 
         private ChunkRenderer chunkRenderer;
-        private short[] blocks;
+        private int[] blocks;
         //Chunk Coordinates
         private int x;
         private int y;
@@ -38,7 +38,8 @@ namespace Explicatio.Worlds
         {
             this.x = x;
             this.y = y;
-            blocks = new short[CHUNK_SIZE * CHUNK_SIZE];
+            Random r = new Random();
+            blocks = new int[CHUNK_SIZE * CHUNK_SIZE];
             for (int xi = 0; xi < CHUNK_SIZE; xi++)
             {
                 for (int yi = 0; yi < CHUNK_SIZE; yi++)
@@ -46,7 +47,7 @@ namespace Explicatio.Worlds
                     this[xi, yi] = Block.Grass.Id;
                 }
             }
-            chunkRenderer = new ChunkRenderer();
+            chunkRenderer = new ChunkRenderer(this);
         }
         /// <summary>
         /// Zwraca blok w chunku x,y to pozycja w tablicy chunka.
@@ -58,20 +59,35 @@ namespace Explicatio.Worlds
             get { return blocks[y * CHUNK_SIZE + x]; }
             set
             {
-                blocks[y * CHUNK_SIZE + x] = (short)value;
+                blocks[y * CHUNK_SIZE + x] = value;
             }
         }
-        ///// <summary>
-        ///// Zwraca blok w chunku x,y to pozycja w tablicy chunka.
-        ///// </summary>
-        //public int this[int flattendPosition]
-        //{
-        //    get { return blocks[flattendPosition]; }
-        //    set
-        //    {
-        //        blocks[flattendPosition] = (short)value;
-        //    }
-        //}
 
+        public ushort GetId(int x, int y)
+        {
+            return (ushort)((this[x,y] >> (2 << 3)) & 0xFFFF); // 0xFFFF = 65535
+        }
+        public void SetId(int x, int y, int id)
+        {
+            this[x, y] =  (id << 16) | (this[x, y] << 16) >> 16;
+        }
+        public byte GetMeta(int x, int y)
+        {
+            return (byte)((this[x, y] >> (1 << 3)) & 0xFF); // 0xFF = 255
+        }
+        public void SetMeta(int x, int y, byte meta)
+        {
+            this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 24) >> 24;
+        }
+        public byte GetHeight(int x, int y)
+        {
+            return (byte)((this[x, y] >> (0 << 3)) & 0xFF); // 0xFF = 255
+        }
+        public void SetHeight(int x, int y, byte height)
+        {
+            this[x,y] = (this[x,y] << 8) | (height);
+            chunkRenderer.Dispose();
+            chunkRenderer = new ChunkRenderer(this);
+        }
     }
 }

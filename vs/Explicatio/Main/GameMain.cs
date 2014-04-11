@@ -72,6 +72,8 @@ namespace Explicatio.Main
             MyKeyboard.Update();
             Camera.Update();
             DebugConsole.Show();
+            WorldInteractions.Mouse();
+
             wasUpdated = true;
             if (MyKeyboard.KeyExitGame.IsPressed)
             {

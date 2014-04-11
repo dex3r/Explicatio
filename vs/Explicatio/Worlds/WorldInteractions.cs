@@ -20,7 +20,7 @@ namespace Explicatio.Worlds
                 //p[1] - blok y w chunk
                 //p[2] - chunk x
                 //p[3] - chunk y
-                w[p[2], p[3]][p[0],p[1]] = Block.Road.Id;
+                w[p[2], p[3]].SetHeight(p[0], p[1], 10);
             }
         }
 
