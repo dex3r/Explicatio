@@ -11,7 +11,7 @@ namespace Explicatio.Worlds
     {
         public const int CHUNK_SIZE = 64;
 
-        public ChunkRenderer chunkRenderer;
+        private ChunkRenderer chunkRenderer;
         private int[] blocks;
         //Chunk Coordinates
         private int x;
@@ -31,6 +31,7 @@ namespace Explicatio.Worlds
         public ChunkRenderer ChunkRenderer
         {
             get { return chunkRenderer; }
+            set { chunkRenderer = value; }
         }
         public bool RebuildChunk
         {
@@ -97,7 +98,7 @@ namespace Explicatio.Worlds
             this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 24) >> 24;
             if(chunkRenderer != null)
             {
-                chunkRenderer.SetUVs(x, y, this[x, y] << 16, meta);
+                chunkRenderer.SetUVs(x, y, (this[x, y] >> (2 << 3)) & 0xFFFF, meta);
             }
             else
             {

@@ -46,8 +46,8 @@ namespace Explicatio.Rendering
             RenderingManager.ChangeCurrentShader(Shader.Chunk2Shader, false);
             ChunkRenderer c;
             World w = GameMain.CurrentWorld;
-            w[0, 0].chunkRenderer.Dispose();
-            w[0, 0].chunkRenderer = new ChunkRenderer(w[0, 0]);
+            //w[0, 0].chunkRenderer.Dispose();
+            //w[0, 0].chunkRenderer = new ChunkRenderer(w[0, 0]);
             for (int i = 0; i < w.ChunksPerDimension; i++)
             {
                 for (int j = 0; j < w.ChunksPerDimension; j++)

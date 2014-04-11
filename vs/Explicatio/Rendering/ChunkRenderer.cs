@@ -188,6 +188,7 @@ namespace Explicatio.Rendering
 #if DEBUG
             isDisposed = true;
 #endif
+            ownerChunk.ChunkRenderer = null;
         }
 
 #if DEBUG
