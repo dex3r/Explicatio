@@ -31,16 +31,16 @@ namespace Explicatio.Rendering
         private int vertexArrayHandle;
         private int verticesBufferHandle;
         private int uvsBufferHandle;
-        private int[] vertices;
+        private float[] vertices;
         private float[] UVs;
         
 #if DEBUG
         private bool isDisposed = false;
 #endif
 
-        public ChunkRenderer()
+        public ChunkRenderer(Chunk c)
         {
-            vertices = new int[CHUNK_SIZE * CHUNK_SIZE * 12];
+            vertices = new float[CHUNK_SIZE * CHUNK_SIZE * 12];
             UVs = new float[CHUNK_SIZE * CHUNK_SIZE * 12];
 
             vertexArrayHandle = GL.GenVertexArray();
@@ -48,15 +48,17 @@ namespace Explicatio.Rendering
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
 
-            int x, y, w;
-            for (int k = 0; k < CHUNK_SIZE; k++)
+            float x, y, h;
+            int w;
+            for (int i = 0; i < CHUNK_SIZE; i++)
             {
-                for (int l = 0; l < CHUNK_SIZE; l++)
+                for (int j = 0; j < CHUNK_SIZE; j++)
                 {
-                    x = (k - l) * 2;
-                    y = (k + l);
+                    h = (float)c.GetHeight(i, j);
+                    x = (i + h - j) * 2;
+                    y = (i + j);
 
-                    w = (k * 12) + (l * 12 * CHUNK_SIZE);
+                    w = (i * 12) + (j * 12 * CHUNK_SIZE);
 
                     vertices[w + 0] = VDataBlock[0] + x;
                     vertices[w + 1] = VDataBlock[1] + y;
@@ -114,13 +116,13 @@ namespace Explicatio.Rendering
                 GL.BindVertexArray(vertexArrayHandle);
                 verticesBufferHandle = GL.GenBuffer();
                 GL.BindBuffer(BufferTarget.ArrayBuffer, verticesBufferHandle);
-                GL.BufferData<int>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(int) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
-                GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Int, false, 0, IntPtr.Zero);
+                GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
+                GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, IntPtr.Zero);
             }
             else
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, verticesBufferHandle);
-                GL.BufferData<int>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(int) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
+                GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * vertices.Length), vertices, BufferUsageHint.DynamicDraw);
             }
         }
 
