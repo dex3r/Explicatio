@@ -23,8 +23,18 @@ namespace Explicatio.Controls
         private static float wheelDelta;
         private static int mouseDragPositionX;
         private static int mouseDragPositionY;
-        private static float xRelative;
-        private static float yRelative;
+        private static float xClient;
+
+
+        private static float yClient;
+
+
+        private static float xWorld;
+
+
+        private static float yWorld;
+
+
 
         #region Buttons
         private static MyKey buttonMiddle = new MyKey("Middle button??", MouseButton.Middle);
@@ -79,20 +89,32 @@ namespace Explicatio.Controls
             set { MyMouse.mouseDragPositionY = value; }
         }
         /// <summary>
-        /// Pozycja relatywna względem górnego czubka mapy
+        /// Pozycja X myszki względem clienta OpenGL i aktualnej transformacji
         /// </summary>
-        public static float XRelative
+        public static float XClient
         {
-            get { return MyMouse.xRelative; }
-            set { MyMouse.xRelative = value; }
+            get { return MyMouse.xClient; }
         }
         /// <summary>
-        /// Pozycja relatywna względem górnego czubka mapy
+        /// Pozycja Y myszki względem clienta OpenGL i aktualnej transformacji
         /// </summary>
-        public static float YRelative
+        public static float YClient
         {
-            get { return MyMouse.yRelative; }
-            set { MyMouse.yRelative = value; }
+            get { return MyMouse.yClient; }
+        }
+        /// <summary>
+        /// Pozycja X myszki względem świata wyrażona w blokach
+        /// </summary>
+        public static float XWorld
+        {
+            get { return MyMouse.xWorld; }
+        }
+        /// <summary>
+        /// Pozycja Y myszki względem świata wyrażona w blokach
+        /// </summary>
+        public static float YWorld
+        {
+            get { return MyMouse.yWorld; }
         }
         #endregion
         //!? END of properties region
@@ -113,14 +135,57 @@ namespace Explicatio.Controls
 
         public static void EndStep()
         {
-            xRelative = -(Camera.PosX - ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom / 1.251167f))-32;
-            yRelative = (Camera.PosY + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom / 1.251167f)) + (GameMain.CurrentWorld.Size * Chunk.CHUNK_SIZE) / 2; ;
+            y = Display.Instance.Mouse.Y;
+            x = Display.Instance.Mouse.X;
+            //xClient = -(Camera.PosX - ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom / 1.251167f))-32;
+            //yClient = (Camera.PosY + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom / 1.251167f)) + (GameMain.CurrentWorld.Size * Chunk.CHUNK_SIZE) / 2;
+            Vector2? v = ScreenPointToClient(x, y);
+            xClient = v.Value.X;
+            yClient = v.Value.Y;
+            v = ClientPointToWorld(xClient, yClient);
+            if(v.HasValue)
+            {
+                xWorld = v.Value.X;
+                yWorld = v.Value.Y;
+            }
             //Reset wheele delta
             wheelDelta = 0;
             //Reset mouse pos delta
             xDelta = 0;
             yDelta = 0;
-   
+        }
+
+        /// <summary>
+        /// Oblicz pozycję w przestrzeni klienta (OpenGL) z punktu na ekranie
+        /// </summary>
+        /// <param name="screenX"></param>
+        /// <param name="screenY"></param>
+        /// <returns></returns>
+        public static Vector2 ScreenPointToClient(float screenX, float screenY)
+        {
+            return new Vector2(
+                (Camera.PosX / 2) - ((MyMouse.X - Display.Instance.ClientSize.Width / 2f) / Camera.Zoom),
+                (Camera.PosY / 2) + ((MyMouse.Y - Display.Instance.ClientSize.Height / 2f) / Camera.Zoom) );
+        }
+
+        /// <summary>
+        /// Zwraca null jeżeli currentWorld jest pusty, w przeciwnym wypadku pozycję w świecie podaną w blokach (x i y bloku)
+        /// </summary>
+        /// <returns></returns>
+        public static Vector2? ClientPointToWorld(float clientX, float clientY)
+        {
+            if(GameMain.CurrentWorld == null)
+            {
+                return null;
+            }
+            // Zjebany, dla textur (n, 2n - 1) a konkretniej (64, 31)
+            //return new Vector2(clientX / 2, ((clientY / 32) < clie);
+            // Prawidłowy, dla textur (n, 2n):
+            //DisplayString.Append("Block: ");
+            //float mapX = (((clientX) + (clientY * 2f)) / 2f) + 0.5f;
+            float mapX = (clientX / 2f) + clientY + 0.5f;
+            float mapY = (clientX / 2f) - clientY + 0.5f;
+            return new Vector2(mapX, mapY);
         }
 
         public static bool ChceckMouseRectangle(int x1, int y1, int x2, int y2)

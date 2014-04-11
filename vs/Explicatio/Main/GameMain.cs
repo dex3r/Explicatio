@@ -43,6 +43,11 @@ namespace Explicatio.Main
         {
             currentWorld = new World(512);
 
+            //GL.Enable(EnableCap.Blend);
+            //GL.BlendColor(1.0f, 0.0f, 1.0f, 0.0f);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //GL.BlendFunc(BlendingFactorSrc.ConstantColor, BlendingFactorDest.OneMinusConstantAlpha);
+
             Shader.Init();
             Util.PrintGLError("Shaders init");
             GL.UseProgram(0);
@@ -55,17 +60,7 @@ namespace Explicatio.Main
 
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.CullFace);
-            GL.Disable(EnableCap.DepthTest);
-
-            //GL.Enable(EnableCap.Blend);
-            //GL.BlendColor(1.0f, 0.0f, 1.0f, 1.0f);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBufferBindings));
-            Console.WriteLine(GL.GetInteger(GetPName.MaxUniformBlockSize));
         }
-
-
-        static bool wasGRIT = false;
 
         public static void Update(object sender, FrameEventArgs e)
         {
@@ -109,6 +104,14 @@ namespace Explicatio.Main
 
             GlobalRenderer.RenderAllChunks();
             //RenderingManager.ChangeCurrentShader(Shader.SimpleColorShader, false);
+
+            
+            Primitive.singleColorQuad.Color = new Vector3(1.0f, 0.0f, 0.0f);
+            RenderingManager.ModelMatrix = Matrix4.Identity;
+            Primitive.singleColorQuad.Draw();
+            Primitive.singleColorQuad.Color = new Vector3(0.0f, 1.0f, 0.0f);
+            RenderingManager.ModelMatrix = Matrix4.CreateTranslation(-2, 0, 0);
+            Primitive.singleColorQuad.Draw();
 
             Util.PrintGLError("Render");
 

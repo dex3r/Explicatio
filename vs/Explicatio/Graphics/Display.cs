@@ -33,7 +33,7 @@ namespace Explicatio.Graphics
             base.Load += GameMain.Load;
             base.UpdateFrame += GameMain.Update;
             base.RenderFrame += GameMain.Draw;
-            this.Mouse.Move += MyMouse.Mouse_Move;
+            //this.Mouse.Move += MyMouse.Mouse_Move;
             this.Mouse.WheelChanged += MyMouse.Mouse_WheelChanged;
             //this.Mouse.ButtonDown += MyMouse.Mouse_ButtonDown;
             //this.Mouse.ButtonUp += MyMouse.Mouse_ButtonUp;

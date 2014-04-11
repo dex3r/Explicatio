@@ -12,7 +12,7 @@ namespace Explicatio.Worlds
     {
         public static void Mouse()
         {
-            int[] CurrentBlock = GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative);
+            //int[] CurrentBlock = GameMain.CurrentWorld.RelativeGetBlockChunk(MyMouse.XRelative, MyMouse.YRelative);
 
         }
 

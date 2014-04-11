@@ -101,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\gfx\terrain.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Shaders\SimpleTextureVS.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

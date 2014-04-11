@@ -74,13 +74,13 @@ namespace Explicatio.Rendering
                     UVs[w + 0] = 0.0f;
                     UVs[w + 1] = 0.0f;
                     UVs[w + 2] = 0f;
-                    UVs[w + 3] = 1.0f;
+                    UVs[w + 3] = 1f;
                     UVs[w + 4] = 1f;
                     UVs[w + 5] = 0.0f;
                     UVs[w + 6] = 1f;
                     UVs[w + 7] = 0.0f;
                     UVs[w + 8] = 0f;
-                    UVs[w + 9] = 1.0f;
+                    UVs[w + 9] = 1f;
                     UVs[w + 10] = 1.0f;
                     UVs[w + 11] = 1f;
                 }
@@ -147,6 +147,7 @@ namespace Explicatio.Rendering
             GL.DeleteBuffer(verticesBufferHandle);
             GL.DeleteBuffer(uvsBufferHandle);
             GL.DeleteVertexArray(vertexArrayHandle);
+            vertexArrayHandle = uvsBufferHandle = vertexArrayHandle = 0;
 #if DEBUG
             isDisposed = true;
 #endif
