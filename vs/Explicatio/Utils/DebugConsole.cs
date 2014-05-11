@@ -23,11 +23,11 @@ namespace Explicatio.Utils
         public static void Show()
         {
 
-#if DEBUG
+//#if DEBUG
             fpsTimer++; if (fpsTimer >= 4) { fps = (int)Display.Instance.RenderFrequency; dps = (int)Display.Instance.UpdateFrequency; fpsTimer = 0; }
             Console.Title = "Explicatio INDEV  Render Frequency: " + fps + " Update Frequency: " + dps;
             Display.Instance.Title = "Explicatio INDEV  Render Frequency: " + fps + " Update Frequency: " + dps;
-#endif
+//#endif
 
             Console.Clear();
             DisplayString.Clear();

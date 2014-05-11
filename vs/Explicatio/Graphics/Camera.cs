@@ -44,7 +44,7 @@ namespace Explicatio.Graphics
             cameraMove();
             width = (((float)Display.Instance.ClientSize.Width) / zoom);
             height = (((float)Display.Instance.ClientSize.Height) / zoom);
-            RenderingManager.ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, 0.1f, 10000);
+            RenderingManager.ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(-width - posX, width - posX, -height - posY, height - posY, -1f, 1f);
             RenderingManager.ProjectionMatrix = Matrix4.Mult(RenderingManager.ProjectionMatrix, Matrix4.CreateTranslation(0, 0, 1));
 
             RenderingManager.UpdateMatrices();
@@ -112,7 +112,7 @@ namespace Explicatio.Graphics
                 }
 
                 //Scrool zoom
-                Camera.Zoom += (MyMouse.WheelDelta / 8) * Camera.Zoom;
+                Camera.Zoom += (MyMouse.WheelDelta / 8) * zoom;
             }
             else
             {

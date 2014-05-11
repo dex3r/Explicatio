@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Worlds
+namespace Explicatio.Blocks
 {
     public class Block
     {
@@ -22,7 +22,7 @@ namespace Explicatio.Worlds
         }
 
         public static Block Grass = new Block(1, "Grass");
-        public static Block Road = new Block(2, "Road");
+        public static BlockRoad Road = new BlockRoad(2, "Road");
 
         #endregion
 

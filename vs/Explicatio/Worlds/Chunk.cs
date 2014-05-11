@@ -95,7 +95,7 @@ namespace Explicatio.Worlds
         }
         public void SetMeta(int x, int y, int meta)
         {
-            this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 24) >> 24;
+            this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 8) >> 8;
             if(chunkRenderer != null)
             {
                 chunkRenderer.SetUVs(x, y, (this[x, y] >> (2 << 3)) & 0xFFFF, meta);

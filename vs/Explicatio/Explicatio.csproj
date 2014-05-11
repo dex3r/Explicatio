@@ -64,6 +64,8 @@
     <OutputPath>bin\x86\Debug OpenTK\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Blocks\BlockRoad.cs" />
+    <Compile Include="Blocks\EnumRoadState.cs" />
     <Compile Include="Controls\MyKeyboard.cs" />
     <Compile Include="Controls\MyMouse.cs" />
     <Compile Include="Controls\Key.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="Graphics\Textures\Textures.cs" />
     <Compile Include="Textures\MyTexture.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
-    <Compile Include="Worlds\Block.cs" />
+    <Compile Include="Blocks\Block.cs" />
     <Compile Include="Worlds\BlocksEnum.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Main\GameMain.cs" />

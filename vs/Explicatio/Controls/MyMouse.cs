@@ -162,7 +162,7 @@ namespace Explicatio.Controls
             //Reset mouse pos delta
             xDelta = 0;
             yDelta = 0;
-            if(MyKeyboard.KeyPlaceBlock.IsToggled)
+            if(MyKeyboard.KeyPlaceBlock.IsPressed)
             {
                 if(GameMain.CurrentWorld != null)
                 {

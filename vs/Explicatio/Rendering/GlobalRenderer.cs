@@ -35,8 +35,8 @@ namespace Explicatio.Rendering
             //GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
             Util.PrintGLError();
         }
@@ -48,11 +48,13 @@ namespace Explicatio.Rendering
             World w = GameMain.CurrentWorld;
             //w[0, 0].chunkRenderer.Dispose();
             //w[0, 0].chunkRenderer = new ChunkRenderer(w[0, 0]);
+
+            GL.BindVertexArray(w[0, 0].ChunkRenderer.vertexArrayHandle);
             for (int i = 0; i < w.ChunksPerDimension; i++)
             {
                 for (int j = 0; j < w.ChunksPerDimension; j++)
                 {
-                    Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation(-(j - i) * (Chunk.CHUNK_SIZE * 2), -(j + i) * Chunk.CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
+                    Shader.Chunk2Shader.ProjectionModelMatrix = Matrix4.CreateTranslation((j - i) * (Chunk.CHUNK_SIZE * 2), -(j + i) * Chunk.CHUNK_SIZE, 0) * RenderingManager.ProjectionMatrix;
                     c = w[i, j].ChunkRenderer;
                     //c.RebufferUVs();
                     c.Draw();
