@@ -38,6 +38,8 @@ namespace Explicatio.Utils
             DisplayString.AppendLine(MyMouse.XClient + " " + MyMouse.YClient);
             DisplayString.Append("Mouse world pos: ");
             DisplayString.AppendLine(MyMouse.XWorld + " " + MyMouse.YWorld);
+            DisplayString.Append("Mouse block: ");
+            DisplayString.AppendLine(MyMouse.XBlock + " " + MyMouse.YBlock);
             DisplayString.Append("Mouse in boundry: ");
             DisplayString.AppendLine(GameMain.CurrentWorld.CheckMapBoundry() + " ");
             DisplayString.Append("Camera position: ");
