@@ -12,7 +12,14 @@ namespace Explicatio.Worlds
         public const int CHUNK_SIZE = 64;
 
         private ChunkRenderer chunkRenderer;
-        private int[] blocks;
+
+        private blockData[] blocks;
+        public struct blockData
+        {
+            public short id;
+            public short meta;
+            public short height;
+        }
         //Chunk Coordinates
         private int x;
         private int y;
@@ -45,8 +52,7 @@ namespace Explicatio.Worlds
         {
             this.x = x;
             this.y = y;
-            Random r = new Random();
-            blocks = new int[CHUNK_SIZE * CHUNK_SIZE];
+            blocks = new blockData[CHUNK_SIZE * CHUNK_SIZE];
             for (int xi = 0; xi < CHUNK_SIZE; xi++)
             {
                 for (int yi = 0; yi < CHUNK_SIZE; yi++)
@@ -61,22 +67,21 @@ namespace Explicatio.Worlds
         /// </summary>
         /// <param name="x">Pozycja w tablicy</param>
         /// <param name="y">Pozycja w tablicy</param>
-        public int this[int x,int y]
+        public blockData this[int x, int y]
         {
             get { return blocks[y * CHUNK_SIZE + x]; }
-            set { blocks[y * CHUNK_SIZE + x] = value; }
         }
 
-        public ushort GetId(int x, int y)
+        public short GetId(int x, int y)
         {
-            return (ushort)((this[x,y] >> (2 << 3)) & 0xFFFF); // 0xFFFF = 65535
+            return this[x, y].id;
         }
-        public void SetId(int x, int y, int id)
+        public void SetId(int x, int y, short id)
         {
-            this[x, y] =  (id << 16) | (this[x, y] << 16) >> 16;
+            blocks[y * CHUNK_SIZE + x].id = id;
             if(chunkRenderer != null)
             {
-                chunkRenderer.SetUVs(x, y, id, this[x, y] << 16);
+                chunkRenderer.SetUVs(x, y, id, this[x,y].meta);
             }
             else
             {
@@ -84,34 +89,34 @@ namespace Explicatio.Worlds
             }
         }
 
-        public void SetIdAndMeta(int x, int y, int id, int meta)
+        public void SetIdAndMeta(int x, int y, short id, short meta)
         {
             SetId(x, y, id);
             SetMeta(x, y, meta);
         }
-        public byte GetMeta(int x, int y)
+        public short GetMeta(int x, int y)
         {
-            return (byte)((this[x, y] >> (1 << 3)) & 0xFF); // 0xFF = 255
+            return this[x, y].meta;
         }
-        public void SetMeta(int x, int y, int meta)
+        public void SetMeta(int x, int y, short meta)
         {
-            this[x, y] = (this[x, y] << 16) | (meta << 8) | (this[x, y] << 8) >> 8;
+            blocks[y * CHUNK_SIZE + x].meta = meta;
             if(chunkRenderer != null)
             {
-                chunkRenderer.SetUVs(x, y, (this[x, y] >> (2 << 3)) & 0xFFFF, meta);
+                chunkRenderer.SetUVs(x, y, this[x,y].id, meta);
             }
             else
             {
                 rebuildChunk = true;
             }
         }
-        public byte GetHeight(int x, int y)
+        public short GetHeight(int x, int y)
         {
-            return (byte)((this[x, y] >> (0 << 3)) & 0xFF); // 0xFF = 255
+            return this[x, y].height;
         }
         public void SetHeight(int x, int y, byte height)
         {
-            this[x,y] = (this[x,y] << 8) | (height);
+            blocks[y * CHUNK_SIZE + x].height = height;
             if (chunkRenderer != null)
             {
                 chunkRenderer.SetVertices(x, y, height);

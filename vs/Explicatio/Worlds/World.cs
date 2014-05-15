@@ -75,7 +75,7 @@ namespace Explicatio.Worlds
         {
             return new Vector2(MyMouse.XWorld % Chunk.CHUNK_SIZE, MyMouse.YWorld % Chunk.CHUNK_SIZE);
         }
-        public bool SetBlock(int x, int y, int id, int meta = 0)
+        public bool SetBlock(int x, int y, short id, short meta = 0)
         {
             if(x < 0 || y < 0)
             {

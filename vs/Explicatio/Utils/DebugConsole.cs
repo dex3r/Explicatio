@@ -46,8 +46,6 @@ namespace Explicatio.Utils
             DisplayString.AppendLine(Camera.width + " " + Camera.height);
             DisplayString.Append("Camera zoom: ");
             DisplayString.AppendLine(Camera.Zoom + " ");
-                int x = (GameMain.CurrentWorld[0, 0][0, 0] >> ( 2 << 3)) & 65535;
-                DisplayString.Append(0xFF + " ");
 
             Console.Write(DebugConsole.DisplayString);
         }

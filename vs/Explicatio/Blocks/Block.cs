@@ -21,9 +21,6 @@ namespace Explicatio.Blocks
             get { return Block.blocks; }
         }
 
-        public static Block Grass = new Block(1, "Grass");
-        public static BlockRoad Road = new BlockRoad(2, "Road");
-
         #endregion
 
         #region nonstatic
