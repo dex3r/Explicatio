@@ -52,6 +52,13 @@ namespace Explicatio.Blocks
             this.name = name;
             blocks[id] = this;
         }
+        public Block(BlocksTypeEnum id, string name)
+        {
+            this.isNormalSizedBlock = true;
+            this.id = (int)id;
+            this.name = name;
+            blocks[this.id] = this;
+        }
         #endregion
     }
 }

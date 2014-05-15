@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explicatio.Worlds
+namespace Explicatio.Blocks
 {
     public enum BlocksEnum
     {
@@ -36,7 +36,8 @@ namespace Explicatio.Worlds
     }
     public enum BlocksTypeEnum
     {
-        Grass,
+        //Id obiektu
+        Grass =1,
         Road,
     }
 }

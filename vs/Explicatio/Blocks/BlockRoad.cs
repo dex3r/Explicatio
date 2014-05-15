@@ -8,7 +8,7 @@ namespace Explicatio.Blocks
 {
     public class BlockRoad : Block
     {
-        public BlockRoad(int id, string name) : base(id, name)
+        public BlockRoad(BlocksTypeEnum id, string name) : base(id, name)
         {
 
         }
