@@ -142,9 +142,9 @@ namespace Explicatio.Rendering
         {
             int w = (x * 12) + (y * 12 * CHUNK_SIZE);
             float xOffset = (float)blockMeta / METADATAS_PER_TEXTURE;
-            float yOffset = (float)(blockID - 1) / BLOCKS_PER_TEXTURE;
+            float yOffset = (float)(blockID) / BLOCKS_PER_TEXTURE;
             float maxXOffset = (float)(blockMeta + 1) / METADATAS_PER_TEXTURE;
-            float maxYOffset = (float)(blockID) / BLOCKS_PER_TEXTURE;
+            float maxYOffset = (float)(blockID - 1) / BLOCKS_PER_TEXTURE;
             UVs[w + 0] = xOffset;
             UVs[w + 1] = yOffset;
             UVs[w + 2] = xOffset;
