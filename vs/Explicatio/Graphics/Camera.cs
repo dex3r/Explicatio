@@ -117,8 +117,8 @@ namespace Explicatio.Graphics
             else
             {
                 //Middle button move
-                Camera.posX += (float)(MyMouse.MouseDragPositionX - MyMouse.X) / (Camera.Zoom * 40) * Camera.Zoom;
-                Camera.posY -= (float)(MyMouse.MouseDragPositionY - MyMouse.Y) / (Camera.Zoom * 40) * Camera.Zoom;
+                Camera.posX += (float)(MyMouse.MouseDragPositionX - MyMouse.X) /  Camera.Zoom / 5;
+                Camera.posY -= (float)(MyMouse.MouseDragPositionY - MyMouse.Y) /  Camera.Zoom / 5;
             }
 
 
