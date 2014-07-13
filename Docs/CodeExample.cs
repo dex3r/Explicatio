@@ -47,12 +47,10 @@ namespace Explicatio.Main
         //? Use this only for classes with static content
         #region STATIC
 
-        /**
-         * Fields:
-         * 1. Never make public/internal/default fields.
-         * 2. Use auto-implemented properties if both of them should be default.
-         * 3. Properties always should have getter and (private)setter -> don't use field if there is property for it (except for some special cases).
-         * 4. Never use "var" and "dynamic".
+		 /** Properties:
+         * 1. Use properties auto-generation (Encapsulate Field; Ctrl+R, Ctrl+E).
+         * 2. If a property is not default always put brackets in new lines.
+         * 3. Always use this properties section example (repeated in the end of the file) if there are any.
          */
 
         /// <summary>
@@ -61,37 +59,35 @@ namespace Explicatio.Main
         public static int SomeInt { get; set; }
         public static float SomeFloat { get; private set; }
         // Use string instead String (and int rather than Int32 etc.) where possible
-        private static float someHealth;
 
-        // Divide entirely private fields by one blank line (like above)
-        private static int somePrivateInt;
-
-        /* Properties:
-         * 1. Use properties auto-generation (Encapsulate Field; Ctrl+R, Ctrl+E).
-         * 2. If a property is not default always put brackets in new lines.
-         * 3. Always use this properties section example (repeated in the end of the file) if there are any.
-         */
-        //!? Static properties region
-        #region PROPERTIES
-
+		 private static float _someHealth;
+		/// <summary>
+        /// Property comment
+        /// </summary>
         public static string SomeHealth
         {
             /// <summary>
             /// Use summary for property (if exist) and not for field.
             /// </summary>
-            get { return someString; }
+            get { return _someHealth; }
             set
             {
-                someHealth = value;
-                if (someHealth < 0)
+                _someHealth = value;
+                if (_someHealth < 0)
                 {
-                    someHealth = 0;
+                    _someHealth = 0;
                 }
             }
         }
 
-        #endregion
-        //!? END of static properties region
+		/**
+         * Fields:
+         * 1. Never make public/internal/default fields.
+         * 2. Use auto-implemented properties if both of them should be default.
+         * 3. Properties always should have getter and (private)setter -> don't use field if there is property for it (except for some special cases).
+         */
+		 
+        private static int somePrivateInt;
 
         static CodeExample()
         {
@@ -101,35 +97,32 @@ namespace Explicatio.Main
             somePrivateInt = 5;
         }
 
-        #endregion
+        #endregion //STATIC
 
         public float NiceFloat { get; set; }
-        private int someValue;
-
-        private int someNonStaticField;
-
-        //!? Properties region
-        #region PROPERTIES
-
+		
+		private int _someValue;
+		/// <summary>
+        /// Property comment
+        /// </summary>
         public byte SomeValue
         {
             get { return someValue; }
             set
             {
-                someValue = value;
-                if (someValue < 0)
+                _someValue = value;
+                if (_someValue < 0)
                 {
-                    someValue = 0;
+                    _someValue = 0;
                 }
             }
         }
-
-        #endregion
-        //!? END of properties region
+		
+		private int someNonStaticField;
 
         public CodeExample()
         {
-            SomeNonStaticField = 0;
+            someNonStaticField = 0;
         }
 
         public CodeExample(string someString) : this()
@@ -164,18 +157,3 @@ namespace Explicatio.Main
         }
     }
 }
-
-// Recommendation: put these two in your Toolbox
-
-        //!? Properties region
-        #region PROPERTIES
-
-        #endregion
-        //!? END of properties region
-
-
-        //!? Static properties region
-        #region PROPERTIES
-
-        #endregion
-        //!? END of static properties region
