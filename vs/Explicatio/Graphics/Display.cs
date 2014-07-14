@@ -53,7 +53,7 @@ namespace Explicatio.Graphics
             WindowInit();
             GL.ClearColor(Color.CornflowerBlue);
             GL.Viewport(0, 0, Width, Height);
-            VSync = VSyncMode.On;
+            VSync = VSyncMode.Off;
             base.OnLoad(e);
         }
        

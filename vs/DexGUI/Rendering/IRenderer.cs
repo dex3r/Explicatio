@@ -20,6 +20,5 @@ namespace DexGUI.Rendering
         /// Calling after all GUI elements has been drawn.
         /// </summary>
         void PostDraw();
-
     }
 }

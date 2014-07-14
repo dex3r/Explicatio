@@ -43,11 +43,11 @@ namespace DexGUI
             renderer.Initialize();
         }
 
-        public static void Update()
+        public static void Update(UpdateState updateState)
         {
            for(int i = 0; i < Screens.Count; i++)
            {
-               Screens[i].Update();
+               Screens[i].Update(updateState);
            }
         }
 

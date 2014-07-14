@@ -166,7 +166,7 @@ namespace Explicatio.Controls
             {
                 if(GameMain.CurrentWorld != null)
                 {
-                    GameMain.CurrentWorld.SetBlock(xBlock, yBlock, 2);
+                    GameMain.CurrentWorld.SetBlock(xBlock, yBlock, 2, 0);
                     //GameMain.CurrentWorld[0, 0].SetId(xBlock, yBlock, 2);
                     //GameMain.CurrentWorld[0, 0].SetMeta(xBlock, yBlock, 0);
                 }

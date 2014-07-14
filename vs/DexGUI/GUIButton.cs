@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DexGUI
 {
-    public class GUIScreen : GUIComponent
+    public class GUIButton : GUIComponent
     {
-        public GUIScreen() : base()
+        public GUIButton() : base()
         {
-            
+
         }
     }
 }

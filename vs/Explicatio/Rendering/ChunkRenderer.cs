@@ -82,8 +82,8 @@ namespace Explicatio.Rendering
             else
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, uvsBufferHandle);
-                //GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * UVs.Length), ref UVs[0], BufferUsageHint.DynamicDraw);
-                GL.BufferSubData<float>(BufferTarget.ArrayBuffer, IntPtr.Zero, new IntPtr(sizeof(float) * UVs.Length), UVs);
+                GL.BufferData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * UVs.Length), ref UVs[0], BufferUsageHint.DynamicDraw);
+                //GL.BufferSubData<float>(BufferTarget.ArrayBuffer, IntPtr.Zero, new IntPtr(sizeof(float) * UVs.Length), UVs);
                 //GL.BufferSubData<float>(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * 12 * 6), new IntPtr(sizeof(float) * 12), UVs);
             }
             rebuferUVs = false;

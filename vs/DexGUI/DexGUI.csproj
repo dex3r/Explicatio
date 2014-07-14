@@ -37,12 +37,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EState.cs" />
+    <Compile Include="GUIButton.cs" />
     <Compile Include="GUIComponent.cs" />
     <Compile Include="GUIManager.cs" />
     <Compile Include="GUIScreen.cs" />
     <Compile Include="OpenTK\Renderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="UpdateState.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

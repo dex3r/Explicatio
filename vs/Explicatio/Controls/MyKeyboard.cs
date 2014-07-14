@@ -22,8 +22,8 @@ namespace Explicatio.Controls
         private static MyKey keyMoveCameraDown = new MyKey("Move camera down", Key.Down);
 
         private static MyKey keyResUp = new MyKey("Increase resolution", Key.F6);
-        private static MyKey keyResDown = new MyKey("Decrase resolution", Key.F5);
-        private static MyKey keyFullscreen = new MyKey("Switch fullscreen mode", Key.F4);
+        private static MyKey keyResDown = new MyKey("Decrease resolution", Key.F5);
+        private static MyKey keyFullscreen = new MyKey("Switch full screen mode", Key.F4);
         public static readonly MyKey KeyPlaceBlock = new MyKey("Place block", MouseButton.Left);
 
         public static List<MyKey> AllKeys
@@ -81,7 +81,6 @@ namespace Explicatio.Controls
             get { return MyKeyboard.keyFullscreen; }
             set { MyKeyboard.keyFullscreen = value; }
         }
-
 
         public static void Update()
         {
