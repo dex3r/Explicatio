@@ -78,6 +78,7 @@
     <Compile Include="Graphics\Shaders\ShaderChunk2.cs" />
     <Compile Include="Graphics\Shaders\ShaderSimple.cs" />
     <Compile Include="Worlds\WorldInteractions.cs" />
+    <None Include="packages.config" />
     <None Include="Rendering\GlobalRenderer.cs.dev1" />
     <Compile Include="Rendering\ChunkRenderer.cs" />
     <Compile Include="Rendering\GlobalRenderer.cs" />
@@ -99,6 +100,9 @@
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -152,12 +156,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\opentk\Source\OpenTK\OpenTK.csproj">
-      <Project>{a37a7e14-0000-0000-0000-000000000000}</Project>
-      <Name>OpenTK</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
